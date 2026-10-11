@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /favoris.html
+Disallow: /comparateur.html
+
+Sitemap: https://darchakaf.ma/sitemap.xml

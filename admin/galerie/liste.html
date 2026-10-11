@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Galerie — Dar Chakaf Admin</title>
+    <meta name="description" content="Gestion des images de la galerie Dar Chakaf." />
+
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ================================================================
+           DESIGN SYSTEM — DAR CHAKAF ADMIN PREMIUM
+           ================================================================ */
+        :root {
+            --bg-void: #0a0908;
+            --bg-base: #0e0c0a;
+            --bg-panel: #15120e;
+            --bg-panel-2: #1c1712;
+            --bg-panel-raised: #221b14;
+            --border-soft: rgba(201, 169, 97, 0.14);
+            --border-strong: rgba(201, 169, 97, 0.32);
+            --gold: #c9a961;
+            --gold-bright: #e6c988;
+            --gold-dim: #8f7440;
+            --gold-glow: rgba(201, 169, 97, 0.06);
+            --ink: #f2ead9;
+            --ink-soft: #cdc3ae;
+            --ink-mute: #8e8471;
+            --ink-faint: #5c5546;
+            --success: #7a9b6e;
+            --danger: #b9634a;
+            --warning: #d4a04a;
+            --info: #5b8c9e;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --fs-h1: clamp(1.8rem, 2.8vw, 2.4rem);
+            --fs-h2: clamp(1.2rem, 1.8vw, 1.5rem);
+            --gap-xs: 0.5rem;
+            --gap-sm: 1rem;
+            --gap-md: 2rem;
+            --gap-lg: 4rem;
+            --radius-sm: 4px;
+            --radius-md: 10px;
+            --radius-lg: 18px;
+            --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.65);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-gold: 0 10px 40px -12px rgba(201, 169, 97, 0.35);
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --transition: 0.45s var(--ease);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-base);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a { color: inherit; text-decoration: none; transition: var(--transition); }
+        ul { list-style: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        input, select, textarea { font-family: inherit; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-void); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; border: 2px solid var(--bg-void); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 3vw, 2.5rem);
+        }
+
+        .mist-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: var(--bg-void);
+        }
+        .mist-bg::before, .mist-bg::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            animation: mistDrift 22s ease-in-out infinite alternate;
+        }
+        .mist-bg::before {
+            width: 46vw; height: 46vw;
+            top: -12vw; left: -10vw;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.35), transparent 70%);
+        }
+        .mist-bg::after {
+            width: 40vw; height: 40vw;
+            bottom: -14vw; right: -8vw;
+            background: radial-gradient(circle, rgba(140, 110, 60, 0.28), transparent 70%);
+            animation-delay: -9s;
+        }
+        @keyframes mistDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(3vw, 2vw) scale(1.12); }
+        }
+
+        /* ================================================================
+           ANIMATIONS
+           ================================================================ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .fade-up { animation: fadeUp 0.6s var(--ease) forwards; opacity: 0; }
+        .fade-up-delay-1 { animation-delay: 0.1s; }
+        .fade-up-delay-2 { animation-delay: 0.2s; }
+        .fade-up-delay-3 { animation-delay: 0.3s; }
+        .fade-up-delay-4 { animation-delay: 0.4s; }
+
+        /* ================================================================
+           ADMIN HEADER
+           ================================================================ */
+        .admin-header {
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 0.7rem 0;
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(21, 18, 14, 0.94);
+        }
+        .admin-header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+        }
+        .admin-header .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--gold-bright);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .admin-header .logo-text .mark {
+            width: 32px; height: 32px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: var(--gold);
+            overflow: hidden;
+        }
+        .admin-header .logo-text .mark img {
+            width: 24px; height: 24px;
+            object-fit: contain;
+        }
+        .admin-header .logo-text .mark .fallback-text {
+            display: none;
+        }
+        .admin-header .logo-text .mark img.error ~ .fallback-text {
+            display: block;
+        }
+        .admin-header .logo-text .mark img.error {
+            display: none;
+        }
+        .admin-header .logo-text .mark:hover { transform: rotate(90deg); }
+        .admin-header .logo-text span {
+            font-family: var(--font-body);
+            font-size: 0.55rem; letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            display: block; margin-top: -2px;
+        }
+        .admin-header-actions {
+            display: flex; align-items: center; gap: 1.2rem;
+        }
+        .admin-header-actions .user {
+            display: flex; align-items: center; gap: 0.6rem;
+            font-size: 0.82rem; color: var(--ink-mute);
+        }
+        .admin-header-actions .user .avatar {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+            display: flex; align-items: center; justify-content: center;
+            color: #14110b; font-weight: 600; font-size: 0.8rem;
+        }
+        .admin-header-actions .user .name { color: var(--ink-soft); font-weight: 400; }
+        .admin-header-actions .logout-btn {
+            font-size: 0.7rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .admin-header-actions .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+        /* ================================================================
+           ADMIN SIDEBAR
+           ================================================================ */
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: var(--gap-lg);
+            padding: var(--gap-md) 0 var(--gap-lg);
+            align-items: start;
+        }
+        .admin-sidebar {
+            position: sticky; top: 80px; align-self: start;
+        }
+        .admin-sidebar .nav-section { margin-bottom: 1.5rem; }
+        .admin-sidebar .nav-section .label {
+            font-size: 0.6rem; letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            padding: 0 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+        .admin-sidebar a {
+            display: flex; align-items: center; gap: 0.7rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            color: var(--ink-mute);
+            transition: var(--transition);
+            border-left: 2px solid transparent;
+        }
+        .admin-sidebar a i { width: 18px; text-align: center; font-size: 0.9rem; }
+        .admin-sidebar a:hover, .admin-sidebar a.active {
+            background: var(--gold-glow);
+            color: var(--gold-bright);
+            border-left-color: var(--gold);
+        }
+        .admin-sidebar a .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.55rem;
+            padding: 0.05rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .admin-sidebar a .badge.success { background: var(--success); }
+
+        /* ================================================================
+           BUTTONS
+           ================================================================ */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.78rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, var(--gold-dim));
+            color: #14110b;
+            box-shadow: var(--shadow-gold);
+        }
+        .btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        .btn-ghost { border: 1px solid var(--border-soft); color: var(--ink-mute); background: transparent; }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.65rem; }
+        .btn-xs { padding: 0.15rem 0.5rem; font-size: 0.6rem; }
+
+        /* ================================================================
+           MAIN CONTENT
+           ================================================================ */
+        .admin-main { min-width: 0; }
+
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+            margin-bottom: var(--gap-md);
+        }
+        .page-header h1 { font-size: var(--fs-h1); color: var(--ink); font-weight: 600; }
+        .page-header .sub { font-size: 0.85rem; color: var(--ink-mute); display: block; margin-top: -2px; }
+        .page-header .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+        /* ================================================================
+           FILTER BAR
+           ================================================================ */
+        .filter-bar {
+            display: flex; align-items: center; gap: 0.6rem;
+            margin-bottom: var(--gap-md);
+            flex-wrap: wrap;
+        }
+        .filter-bar select {
+            padding: 0.5rem 0.9rem;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink-soft);
+            font-size: 0.8rem;
+        }
+        .filter-bar select:focus { border-color: var(--gold); outline: none; }
+
+        /* ================================================================
+           STATS MINI
+           ================================================================ */
+        .stats-mini {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--gap-sm);
+            margin-bottom: var(--gap-md);
+        }
+        .stats-mini .stat-item {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 0.8rem 1.2rem;
+            display: flex; align-items: center; gap: 1rem;
+            transition: var(--transition);
+        }
+        .stats-mini .stat-item:hover { border-color: var(--border-strong); }
+        .stats-mini .stat-item .icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--gold-glow);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .stats-mini .stat-item .info .number {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            color: var(--gold-bright);
+            line-height: 1.2;
+        }
+        .stats-mini .stat-item .info .label {
+            font-size: 0.65rem;
+            color: var(--ink-mute);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* ================================================================
+           GALLERY GRID
+           ================================================================ */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.1rem;
+        }
+        .gallery-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .gallery-card:hover { border-color: var(--border-strong); transform: translateY(-3px); box-shadow: var(--shadow-card); }
+        .gallery-card .thumb {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background: var(--bg-panel-2);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .gallery-card .thumb img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block;
+        }
+        .gallery-card .thumb .placeholder {
+            color: var(--gold-dim);
+            font-size: 2.2rem;
+            opacity: 0.4;
+        }
+        .gallery-card .thumb .overlay {
+            position: absolute; inset: 0;
+            background: rgba(10, 9, 8, 0.55);
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.5rem;
+            opacity: 0; transition: var(--transition);
+        }
+        .gallery-card:hover .thumb .overlay { opacity: 1; }
+        .gallery-card .thumb .overlay button {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(21, 18, 14, 0.9);
+            border: 1px solid var(--border-strong);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--ink-soft);
+            transition: var(--transition);
+        }
+        .gallery-card .thumb .overlay button:hover { color: var(--gold-bright); border-color: var(--gold); }
+        .gallery-card .thumb .overlay button.danger:hover { color: var(--danger); border-color: var(--danger); }
+        .gallery-card .info {
+            padding: 0.7rem 0.9rem;
+        }
+        .gallery-card .info .title {
+            font-size: 0.85rem;
+            color: var(--ink-soft);
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .gallery-card .info .meta {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 0.4rem;
+            margin-top: 0.3rem;
+        }
+        .gallery-card .info .meta .cat-tag {
+            font-size: 0.62rem;
+            color: var(--gold-dim);
+            background: var(--gold-glow);
+            padding: 0.1rem 0.5rem;
+            border-radius: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 65%;
+        }
+        .gallery-card .info .meta .date {
+            font-size: 0.62rem;
+            color: var(--ink-faint);
+            white-space: nowrap;
+        }
+
+        .gallery-wrapper {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+        }
+
+        .skeleton-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        .skeleton-card .thumb-skel {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: var(--bg-panel-2);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+        .skeleton-card .line-skel {
+            height: 10px;
+            margin: 0.9rem;
+            background: var(--bg-panel-2);
+            border-radius: var(--radius-sm);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--ink-mute);
+            grid-column: 1 / -1;
+        }
+        .empty-state .icon { font-size: 4rem; opacity: 0.15; margin-bottom: 1rem; color: var(--gold); }
+        .empty-state h3 { font-family: var(--font-body); font-size: 1.2rem; color: var(--ink-soft); }
+        .empty-state p { font-size: 0.85rem; margin-top: 0.3rem; }
+        .empty-state .btn { margin-top: 1.2rem; }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-panel-raised);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            color: var(--ink);
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-soft);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 999;
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { border-color: var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-color: var(--danger); }
+        .toast.error i { color: var(--danger); }
+
+        /* ================================================================
+           MODAL — Ajouter image / Aperçu
+           ================================================================ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 2rem;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-lg);
+            padding: 2.4rem;
+            max-width: 520px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-soft);
+            transform: scale(0.95);
+            transition: var(--transition);
+        }
+        .modal-overlay.open .modal-content {
+            transform: scale(1);
+        }
+        .modal-content .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .modal-content .modal-header h3 {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--ink-soft);
+        }
+        .modal-content .modal-header .close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--ink-mute);
+        }
+        .modal-content .modal-header .close-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold-bright);
+        }
+        .modal-content .modal-body .form-group {
+            margin-bottom: 1rem;
+        }
+        .modal-content .modal-body .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-bottom: 0.2rem;
+        }
+        .modal-content .modal-body .form-group .hint {
+            font-size: 0.68rem;
+            color: var(--ink-faint);
+            margin-top: 0.25rem;
+        }
+        .modal-content .modal-body .form-group input,
+        .modal-content .modal-body .form-group select,
+        .modal-content .modal-body .form-group textarea {
+            width: 100%;
+            padding: 0.5rem 0.8rem;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        .modal-content .modal-body .form-group input:focus,
+        .modal-content .modal-body .form-group select:focus,
+        .modal-content .modal-body .form-group textarea:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.06);
+        }
+        .modal-content .modal-body .preview-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--bg-panel-2);
+            border: 1px dashed var(--border-soft);
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            color: var(--ink-faint);
+            font-size: 0.8rem;
+        }
+        .modal-content .modal-body .preview-box img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .modal-content .modal-footer {
+            margin-top: 1.2rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border-soft);
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.88);
+            z-index: 1100;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: var(--transition);
+            padding: 2rem;
+        }
+        .lightbox-overlay.open { opacity: 1; visibility: visible; }
+        .lightbox-overlay img {
+            max-width: 90vw; max-height: 85vh;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-soft);
+        }
+        .lightbox-overlay .close-btn {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border-strong);
+            background: rgba(21, 18, 14, 0.9);
+            color: var(--ink-soft);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+        }
+        .lightbox-overlay .close-btn:hover { color: var(--gold-bright); border-color: var(--gold); }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 1100px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .admin-sidebar {
+                position: static;
+                display: flex; flex-wrap: wrap; gap: 0.3rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-soft);
+            }
+            .admin-sidebar .nav-section {
+                margin-bottom: 0;
+                display: flex; flex-wrap: wrap; gap: 0.2rem;
+            }
+            .admin-sidebar .nav-section .label { display: none; }
+            .admin-sidebar a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.72rem;
+                border-left: none;
+                border-radius: var(--radius-sm);
+            }
+            .admin-sidebar a i { display: none; }
+            .admin-sidebar a .badge { margin-left: 0.3rem; }
+            .stats-mini { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 900px) {
+            .stats-mini { grid-template-columns: repeat(2, 1fr); }
+            .modal-content { padding: 1.5rem; margin: 1rem; }
+        }
+        @media (max-width: 600px) {
+            .admin-header-inner { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+            .admin-header-actions { flex-wrap: wrap; justify-content: space-between; }
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .page-header .actions { width: 100%; justify-content: stretch; }
+            .page-header .actions .btn { flex: 1; justify-content: center; }
+            .stats-mini { grid-template-columns: 1fr 1fr; }
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .toast { left: 1rem; right: 1rem; bottom: 1rem; }
+            .modal-content { padding: 1rem; margin: 0.5rem; }
+        }
+        @media (max-width: 400px) {
+            .stats-mini { grid-template-columns: 1fr; }
+        }
+
+        @media (min-width: 1600px) {
+            html { font-size: 19px; }
+            .container { max-width: 1680px; }
+        }
+        @media (min-width: 2200px) {
+            html { font-size: 23px; }
+            .container { max-width: 2100px; }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/logo-frame.css">
+</head>
+<body>
+    <div class="mist-bg" aria-hidden="true"></div>
+
+    <!-- ============================================================
+    ADMIN HEADER
+    ============================================================ -->
+    <header class="admin-header">
+        <div class="container admin-header-inner">
+            <div class="logo-text">
+                <span class="mark">
+                    <img 
+                        src="/assets/logo/dar-chakaf-logo.svg" 
+                        alt="Dar Chakaf Logo"
+                        width="24" 
+                        height="24"
+                        style="width:24px;height:24px;object-fit:contain;"
+                        onerror="this.classList.add('error'); this.style.display='none'; this.parentElement.querySelector('.fallback-text').style.display='block';"
+                    />
+                    <span class="fallback-text">D</span>
+                </span>
+                <span>Dar Chakaf <span>Administration</span></span>
+            </div>
+            <div class="admin-header-actions">
+                <span class="user">
+                    <span class="avatar" id="adminAvatar">A</span>
+                    <span class="name" id="adminName">Administrateur</span>
+                </span>
+                <a href="../login.html" class="logout-btn" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    ADMIN LAYOUT
+    ============================================================ -->
+    <div class="container admin-layout">
+
+        <!-- SIDEBAR -->
+        <nav class="admin-sidebar">
+            <div class="nav-section">
+                <span class="label">Navigation</span>
+                <a href="../dashboard.html"><i class="fa-solid fa-gauge-high"></i> Tableau de bord</a>
+                <a href="../categories/liste.html"><i class="fa-solid fa-layer-group"></i> Catégories</a>
+                <a href="liste.html" class="active"><i class="fa-solid fa-images"></i> Galerie</a>
+                <a href="../messages/liste.html"><i class="fa-solid fa-envelope"></i> Messages <span class="badge" id="messagesBadge">0</span></a>
+                <a href="../devis/liste.html"><i class="fa-solid fa-file-invoice"></i> Demandes de devis</a>
+                <a href="../blog/liste.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="../newsletter/liste.html"><i class="fa-solid fa-paper-plane"></i> Newsletter</a>
+                <a href="../utilisateurs/liste.html"><i class="fa-solid fa-users"></i> Utilisateurs</a>
+                <a href="../parametres/infos-site.html"><i class="fa-solid fa-gear"></i> Paramètres</a>
+                <a href="../apropos/edit.html"><i class="fa-solid fa-book-open"></i> Page À propos</a>
+                <a href="../logs/activite.html"><i class="fa-solid fa-clock-rotate-left"></i> Logs</a>
+            </div>
+            <div class="nav-section">
+                <span class="label">Produits</span>
+                <div id="sidebarProducts"></div>
+                <a href="../produits/produit-form.html"><i class="fa-solid fa-plus"></i> Ajouter un produit</a>
+            </div>
+        </nav>
+
+        <!-- ============================================================
+        MAIN CONTENT
+        ============================================================ -->
+        <main class="admin-main">
+
+            <!-- Page Header -->
+            <div class="page-header fade-up">
+                <div>
+                    <h1><i class="fa-solid fa-images" style="color:var(--gold);"></i> Galerie</h1>
+                    <span class="sub" id="pageSub">Gestion des images de la galerie</span>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-gold" id="addImageBtn"><i class="fa-solid fa-plus"></i> Ajouter une image</button>
+                    <button class="btn btn-gold" id="addVideoBtn"><i class="fa-solid fa-video"></i> Ajouter une vidéo</button>
+                    <input type="file" id="videoFileInput" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,video/ogg" style="display:none;" />
+                    <button class="btn btn-ghost" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Actualiser</button>
+                    <button class="btn btn-ghost" id="cleanupBtn" title="Supprime les images cassées/vides restées d'anciens essais"><i class="fa-solid fa-broom"></i> Nettoyer les images cassées</button>
+                </div>
+            </div>
+
+            <!-- Stats Mini -->
+            <div class="stats-mini fade-up fade-up-delay-1">
+                <div class="stat-item">
+                    <div class="icon"><i class="fa-solid fa-images"></i></div>
+                    <div class="info">
+                        <div class="number" id="statTotal">0</div>
+                        <div class="label">Total images</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="icon"><i class="fa-solid fa-couch"></i></div>
+                    <div class="info">
+                        <div class="number" id="statLinked">0</div>
+                        <div class="label">Liées à un produit</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="icon"><i class="fa-regular fa-image" style="color:var(--warning);"></i></div>
+                    <div class="info">
+                        <div class="number" id="statUnlinked">0</div>
+                        <div class="label">Sans produit</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="icon"><i class="fa-regular fa-clock" style="color:var(--warning);"></i></div>
+                    <div class="info">
+                        <div class="number" id="statLastUpdate">—</div>
+                        <div class="label">Dernière mise à jour</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter -->
+            <div class="filter-bar fade-up fade-up-delay-2">
+                <select id="categoryFilter">
+                    <option value="all">Toutes les catégories</option>
+                </select>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-wrapper fade-up fade-up-delay-2">
+                <div class="gallery-grid" id="galleryGrid">
+                    <div class="skeleton-card"><div class="thumb-skel"></div><div class="line-skel"></div></div>
+                    <div class="skeleton-card"><div class="thumb-skel"></div><div class="line-skel"></div></div>
+                    <div class="skeleton-card"><div class="thumb-skel"></div><div class="line-skel"></div></div>
+                    <div class="skeleton-card"><div class="thumb-skel"></div><div class="line-skel"></div></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================================
+    MODAL — Ajouter une image
+    ============================================================ -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Ajouter une image</h3>
+                <button class="close-btn" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="preview-box" id="previewBox">Aperçu de l'image</div>
+                <div class="form-group">
+                    <label>Ajouter depuis votre appareil</label>
+                    <input type="file" id="imageFileInput" accept="image/*" style="display:none;" />
+                    <button type="button" class="btn btn-ghost btn-sm" id="chooseFileBtn" style="width:100%;">
+                        <i class="fa-solid fa-camera"></i> Prendre une photo / Choisir un fichier
+                    </button>
+                    <div class="hint">Fonctionne avec l'appareil photo sur téléphone, ou l'explorateur de fichiers sur PC.</div>
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl">— ou — URL de l'image</label>
+                    <input type="text" id="imageUrl" placeholder="Ex: https://..." />
+                    <div class="hint">Collez le lien direct d'une image déjà en ligne.</div>
+                </div>
+                <div class="form-group">
+                    <label for="imageTitre">Titre (optionnel)</label>
+                    <input type="text" id="imageTitre" placeholder="Ex: Salon marocain moderne" />
+                </div>
+                <div class="form-group">
+                    <label for="imageDescription">Description (optionnel)</label>
+                    <textarea id="imageDescription" rows="3" placeholder="Ex: Salon moderne en bois massif, finition dorée, fabrication artisanale..." style="width:100%; resize:vertical; font-family:inherit;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imageProduit">Produit associé (optionnel)</label>
+                    <select id="imageProduit">
+                        <option value="">Aucun produit</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost btn-sm" id="modalCancel">Annuler</button>
+                <button class="btn btn-gold btn-sm" id="modalSave"><i class="fa-solid fa-check"></i> Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    LIGHTBOX — Aperçu plein écran
+    ============================================================ -->
+    <div class="lightbox-overlay" id="lightbox">
+        <button class="close-btn" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+        <img id="lightboxImg" src="" alt="Aperçu" />
+        <video id="lightboxVideo" controls playsinline style="display:none; max-width:90vw; max-height:85vh;"></video>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Opération réussie !</span>
+    </div>
+
+    <!-- ============================================================
+    SCRIPTS — 100% API
+    ============================================================ -->
+    <script src="/assets/js/video-upload.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            'use strict';
+
+            // ============================================================
+            // 1. USER INFO & SESSION
+            // ============================================================
+            var adminName = localStorage.getItem('adminName') || 'Administrateur';
+            document.getElementById('adminName').textContent = adminName;
+            document.getElementById('adminAvatar').textContent = adminName.charAt(0).toUpperCase();
+
+            var token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                    localStorage.clear();
+                    window.location.href = '../login.html';
+                }
+            });
+
+            // ============================================================
+            // 2. ICON MAP
+            // ============================================================
+            var iconMap = {
+                'salons-modernes': 'fa-couch',
+                'salons-traditionnels': 'fa-mosque',
+                'tables': 'fa-table',
+                'decorations': 'fa-vector-square',
+                'meubles-tv': 'fa-tv',
+                'couloirs': 'fa-door-open',
+                'tissus': 'fa-scroll'
+            };
+
+            // ============================================================
+            // 3. LOAD SIDEBAR + CATEGORY FILTER
+            // ============================================================
+            var allCategories = [];
+            function loadSidebar() {
+                fetch('/api/categories', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (!res.success || !Array.isArray(res.data)) return;
+                        allCategories = res.data;
+
+                        var container = document.getElementById('sidebarProducts');
+                        container.innerHTML = '';
+                        res.data.forEach(function(cat) {
+                            var slug = cat.slug || cat.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                            var icon = cat.icone || iconMap[slug] || 'fa-cube';
+                            var a = document.createElement('a');
+                            a.href = '../produits/' + slug + '.html';
+                            a.innerHTML = '<i class="fa-solid ' + icon + '"></i> ' + cat.nom +
+                                ' <span class="badge success">' + (cat.product_count || 0) + '</span>';
+                            container.appendChild(a);
+                        });
+
+                        var filter = document.getElementById('categoryFilter');
+                        filter.innerHTML = '<option value="all">Toutes les catégories</option>';
+                        res.data.forEach(function(cat) {
+                            var opt = document.createElement('option');
+                            opt.value = cat.slug;
+                            opt.textContent = cat.nom;
+                            filter.appendChild(opt);
+                        });
+                    })
+                    .catch(function() {});
+            }
+            loadSidebar();
+
+            // ============================================================
+            // 4. LOAD GALLERY — 100% API
+            // ============================================================
+            var images = [];
+            var grid = document.getElementById('galleryGrid');
+
+            function skeletonHtml() {
+                var html = '';
+                for (var i = 0; i < 8; i++) {
+                    html += '<div class="skeleton-card"><div class="thumb-skel"></div><div class="line-skel"></div></div>';
+                }
+                return html;
+            }
+
+            function loadGallery(category) {
+                grid.innerHTML = skeletonHtml();
+
+                var url = '/api/galerie?limit=100';
+                if (category && category !== 'all') url += '&category=' + encodeURIComponent(category);
+
+                Promise.all([
+                    fetch(url, { headers: { 'Authorization': 'Bearer ' + token } }).then(function(r) { return r.json(); }),
+                    fetch('/api/videos?limit=100', { headers: { 'Authorization': 'Bearer ' + token } }).then(function(r) { return r.json(); }).catch(function() { return { success: false, data: [] }; })
+                ])
+                    .then(function(results) {
+                        var res = results[0];
+                        var videosRes = results[1];
+                        var imgs = (res && res.success && Array.isArray(res.data)) ? res.data : [];
+                        var vids = (videosRes && videosRes.success && Array.isArray(videosRes.data)) ? videosRes.data : [];
+                        vids = vids.map(function(v) {
+                            v.isVideo = true;
+                            return v;
+                        }).filter(function(v) {
+                            return !(category && category !== 'all' && v.categorie_slug !== category);
+                        });
+                        images = vids.concat(imgs);
+                        renderGallery();
+                        updateStats();
+                    })
+                    .catch(function() {
+                        images = [];
+                        renderGallery();
+                        updateStats();
+                    });
+            }
+
+            function updateStats() {
+                var total = images.length;
+                var linked = images.filter(function(img) { return img.produit_id; }).length;
+                var unlinked = total - linked;
+
+                document.getElementById('statTotal').textContent = total;
+                document.getElementById('statLinked').textContent = linked;
+                document.getElementById('statUnlinked').textContent = unlinked;
+                document.getElementById('statLastUpdate').textContent = new Date().toLocaleDateString('fr-FR');
+            }
+
+            function renderGallery() {
+                if (images.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon"><i class="fa-solid fa-images"></i></div>
+                            <h3>Aucune image</h3>
+                            <p>Cliquez sur "Ajouter une image" pour commencer.</p>
+                            <button class="btn btn-gold" id="emptyAddBtn"><i class="fa-solid fa-plus"></i> Ajouter une image</button>
+                        </div>
+                    `;
+                    var emptyBtn = document.getElementById('emptyAddBtn');
+                    if (emptyBtn) emptyBtn.addEventListener('click', function() { openModal(); });
+                    return;
+                }
+
+                var html = '';
+                images.forEach(function(img) {
+                    var titre = img.titre || img.produit_nom || (img.isVideo ? 'Vidéo sans titre' : 'Image sans titre');
+                    var cat = img.categorie_nom || (img.produit_nom ? '' : 'Sans produit lié');
+                    var date = img.created_at ? new Date(img.created_at).toLocaleDateString('fr-FR') : '—';
+                    var url = img.url || '';
+
+                    if (img.isVideo) {
+                        html += `
+                            <div class="gallery-card">
+                                <div class="thumb">
+                                    ${url ? `<video src="${url}#t=0.5" muted preload="metadata" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>` : ''}
+                                    <i class="fa-regular fa-image placeholder" style="${url ? 'display:none;' : ''}"></i>
+                                    <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.6rem; pointer-events:none; background:rgba(0,0,0,0.15);"><i class="fa-solid fa-circle-play"></i></span>
+                                    <div class="overlay">
+                                        <button title="Aperçu" onclick="previewVideo('${url}')"><i class="fa-solid fa-expand"></i></button>
+                                        <button class="danger" title="Supprimer" onclick="deleteVideo(${img.id})"><i class="fa-regular fa-trash-can"></i></button>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <div class="title" title="${titre}"><i class="fa-solid fa-video" style="color:var(--gold); margin-right:4px;"></i>${titre}</div>
+                                    <div class="meta">
+                                        <span class="cat-tag">${cat || 'Sans produit lié'}</span>
+                                        <span class="date">${date}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    html += `
+                        <div class="gallery-card">
+                            <div class="thumb">
+                                ${url ? `<img src="${url}" alt="${titre}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />` : ''}
+                                <i class="fa-regular fa-image placeholder" style="${url ? 'display:none;' : ''}"></i>
+                                <div class="overlay">
+                                    <button title="Aperçu" onclick="previewImage('${url}')"><i class="fa-solid fa-expand"></i></button>
+                                    <button title="Modifier" onclick="editImage(${img.id})"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="danger" title="Supprimer" onclick="deleteImage(${img.id})"><i class="fa-regular fa-trash-can"></i></button>
+                                </div>
+                            </div>
+                            <div class="info">
+                                <div class="title" title="${titre}">${titre}</div>
+                                ${img.description ? `<div class="description" style="font-size:12px; color:var(--text-muted, #9a9a9a); margin-top:4px; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">${img.description}</div>` : ''}
+                                <div class="meta">
+                                    <span class="cat-tag">${cat || 'Sans produit lié'}</span>
+                                    <span class="date">${date}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = html;
+            }
+
+            // ============================================================
+            // 5. FILTER
+            // ============================================================
+            document.getElementById('categoryFilter').addEventListener('change', function() {
+                loadGallery(this.value);
+            });
+
+            // ============================================================
+            // 6. MODAL — Ajouter une image
+            // ============================================================
+            var modal = document.getElementById('imageModal');
+            var imageUrlInput = document.getElementById('imageUrl');
+            var imageTitreInput = document.getElementById('imageTitre');
+            var imageDescriptionInput = document.getElementById('imageDescription');
+            var imageProduitSelect = document.getElementById('imageProduit');
+            var previewBox = document.getElementById('previewBox');
+            var imageFileInput = document.getElementById('imageFileInput');
+            var chooseFileBtn = document.getElementById('chooseFileBtn');
+            var editingImageId = null; // null = ajout, sinon = édition
+
+            var MAX_SOURCE_FILE_SIZE = 25 * 1024 * 1024; // 25MB — tolérant, on compresse après
+            var TARGET_DATA_URL_SIZE = 1.5 * 1024 * 1024; // ~1.5MB une fois encodé en base64
+            var MAX_DIMENSION = 1600; // px, côté le plus long
+
+            chooseFileBtn.addEventListener('click', function() {
+                imageFileInput.click();
+            });
+
+            // Redimensionne + recompresse n'importe quelle photo (téléphone, tablette, PC)
+            // en JPEG léger et standard, quelle que soit sa taille ou son format d'origine.
+            // Ça règle plusieurs problèmes en même temps :
+            //  1) les photos de téléphone (souvent 3-12 Mo) qui dépassaient la limite du serveur
+            //  2) les formats non-standards (ex: HEIC d'iPhone) qui ne s'affichaient pas bien
+            //  3) le bug Safari iOS/iPadOS où <img onload> se déclenche avant que la photo
+            //     soit vraiment décodée, ce qui produisait une image "vide" au final
+            function drawToCanvas(source, srcW, srcH) {
+                var w = srcW, h = srcH;
+                if (w > h && w > MAX_DIMENSION) { h = Math.round(h * (MAX_DIMENSION / w)); w = MAX_DIMENSION; }
+                else if (h >= w && h > MAX_DIMENSION) { w = Math.round(w * (MAX_DIMENSION / h)); h = MAX_DIMENSION; }
+
+                var canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(source, 0, 0, w, h);
+
+                var quality = 0.85;
+                var dataUrl = canvas.toDataURL('image/jpeg', quality);
+                while (dataUrl.length > TARGET_DATA_URL_SIZE && quality > 0.35) {
+                    quality -= 0.15;
+                    dataUrl = canvas.toDataURL('image/jpeg', quality);
+                }
+                return dataUrl;
+            }
+
+            // Chemin 1 (préféré, plus fiable sur iPhone/iPad) : createImageBitmap décode
+            // vraiment le fichier avant de continuer, contrairement à l'événement "onload"
+            // d'un <img> qui peut se déclencher trop tôt sur Safari mobile.
+            function compressViaImageBitmap(file) {
+                return createImageBitmap(file).then(function(bitmap) {
+                    var dataUrl = drawToCanvas(bitmap, bitmap.width, bitmap.height);
+                    bitmap.close && bitmap.close();
+                    return dataUrl;
+                });
+            }
+
+            // Chemin 2 (repli, pour les navigateurs sans createImageBitmap)
+            function compressViaImageElement(file) {
+                return new Promise(function(resolve, reject) {
+                    var img = new Image();
+                    var objectUrl = URL.createObjectURL(file);
+                    img.onload = function() {
+                        URL.revokeObjectURL(objectUrl);
+                        try {
+                            resolve(drawToCanvas(img, img.naturalWidth, img.naturalHeight));
+                        } catch (e) {
+                            reject(e);
+                        }
+                    };
+                    img.onerror = function() {
+                        URL.revokeObjectURL(objectUrl);
+                        reject(new Error('UNREADABLE_IMAGE'));
+                    };
+                    img.src = objectUrl;
+                });
+            }
+
+            // Une image JPEG compressée valide fait au minimum quelques Ko. Si le résultat
+            // est anormalement petit, le fichier n'a pas été décodé correctement (photo "vide") —
+            // on rejette au lieu d'enregistrer une image cassée dans la galerie.
+            var MIN_VALID_DATA_URL_SIZE = 3000;
+            var isProcessingPhoto = false;
+
+            function withTimeout(promise, ms) {
+                return new Promise(function(resolve, reject) {
+                    var timer = setTimeout(function() {
+                        reject(new Error('TIMEOUT'));
+                    }, ms);
+                    promise.then(function(v) {
+                        clearTimeout(timer);
+                        resolve(v);
+                    }, function(e) {
+                        clearTimeout(timer);
+                        reject(e);
+                    });
+                });
+            }
+
+            function singleCompressAttempt(file) {
+                var attempt = (typeof createImageBitmap === 'function')
+                    ? compressViaImageBitmap(file).catch(function() { return compressViaImageElement(file); })
+                    : compressViaImageElement(file);
+
+                // Sur certains téléphones/tablettes sous pression mémoire (Android comme iOS),
+                // le décodage peut rester bloqué indéfiniment sans jamais réussir ni échouer.
+                // On force un délai max pour ne jamais rester coincé silencieusement.
+                return withTimeout(attempt, 15000).then(function(dataUrl) {
+                    if (!dataUrl || dataUrl.length < MIN_VALID_DATA_URL_SIZE) {
+                        throw new Error('BLANK_IMAGE');
+                    }
+                    return dataUrl;
+                });
+            }
+
+            function delay(ms) {
+                return new Promise(function(resolve) { setTimeout(resolve, ms); });
+            }
+
+            // Fonctionne pareil sur Android, iPhone, iPad et PC : un raté isolé (mémoire,
+            // décodage lent, etc.) ne doit jamais bloquer la personne. On réessaie
+            // automatiquement une fois en silence avant de montrer une erreur.
+            function compressImageFile(file) {
+                return singleCompressAttempt(file).catch(function() {
+                    return delay(400).then(function() { return singleCompressAttempt(file); });
+                });
+            }
+
+            imageFileInput.addEventListener('change', function() {
+                var file = this.files && this.files[0];
+                if (!file) return;
+
+                if (isProcessingPhoto) return; // évite deux traitements en même temps
+
+                if (!file.type.startsWith('image/')) {
+                    showToast('Veuillez choisir un fichier image.', 'error');
+                    imageFileInput.value = '';
+                    return;
+                }
+                if (file.size > MAX_SOURCE_FILE_SIZE) {
+                    showToast('Image trop lourde (max 25 Mo).', 'error');
+                    imageFileInput.value = '';
+                    return;
+                }
+
+                isProcessingPhoto = true;
+                chooseFileBtn.disabled = true;
+                previewBox.innerHTML = 'Traitement de la photo...';
+
+                compressImageFile(file)
+                    .then(function(dataUrl) {
+                        imageUrlInput.value = dataUrl;
+                        previewBox.innerHTML = `<img src="${dataUrl}" />`;
+                    })
+                    .catch(function() {
+                        showToast("Cette photo n'a pas pu être traitée correctement (fréquent avec certaines photos iPhone/iPad). Réessayez, ou reprenez la photo puis réessayez.", 'error');
+                        previewBox.innerHTML = 'Aperçu de l\'image';
+                        imageUrlInput.value = '';
+                    })
+                    .then(function() {
+                        isProcessingPhoto = false;
+                        chooseFileBtn.disabled = false;
+                        // Réinitialiser permet de resélectionner la même photo si besoin,
+                        // et évite tout état bloqué pour la prochaine tentative.
+                        imageFileInput.value = '';
+                    });
+            });
+
+            function loadProduitOptions() {
+                imageProduitSelect.innerHTML = '<option value="">Aucun produit</option>';
+                if (!allCategories.length) return;
+
+                var slugs = allCategories.map(function(c) { return c.slug; });
+                var endpoints = slugs.map(function(s) {
+                    return fetch('/api/produits/' + s, { headers: { 'Authorization': 'Bearer ' + token } })
+                        .then(function(r) { return r.json(); })
+                        .catch(function() { return { success: false }; });
+                });
+
+                Promise.all(endpoints).then(function(results) {
+                    results.forEach(function(res) {
+                        if (res && res.success && Array.isArray(res.data)) {
+                            res.data.forEach(function(p) {
+                                var opt = document.createElement('option');
+                                opt.value = p.id;
+                                opt.textContent = p.titre || p.nom || ('Produit #' + p.id);
+                                imageProduitSelect.appendChild(opt);
+                            });
+                        }
+                    });
+                });
+            }
+
+            function openModal(imageToEdit) {
+                editingImageId = imageToEdit ? imageToEdit.id : null;
+                document.getElementById('modalTitle').textContent = editingImageId ? "Modifier l'image" : 'Ajouter une image';
+
+                imageUrlInput.value = imageToEdit ? (imageToEdit.url || '') : '';
+                imageTitreInput.value = imageToEdit ? (imageToEdit.titre || '') : '';
+                imageDescriptionInput.value = imageToEdit ? (imageToEdit.description || '') : '';
+                imageFileInput.value = '';
+                previewBox.innerHTML = (imageToEdit && imageToEdit.url) ? `<img src="${imageToEdit.url}" />` : 'Aperçu de l\'image';
+
+                loadProduitOptions();
+                if (imageToEdit) {
+                    setTimeout(function() {
+                        if (imageToEdit.produit_id) imageProduitSelect.value = imageToEdit.produit_id;
+                    }, 300);
+                } else {
+                    imageProduitSelect.value = '';
+                }
+
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                setTimeout(function() { imageTitreInput.focus(); }, 100);
+            }
+
+            function closeModal() {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+                editingImageId = null;
+            }
+
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+            document.getElementById('modalCancel').addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeModal(); closeLightbox(); } });
+
+            document.getElementById('addImageBtn').addEventListener('click', function() { openModal(); });
+
+            var cleanupBtn = document.getElementById('cleanupBtn');
+            if (cleanupBtn) {
+                cleanupBtn.addEventListener('click', function() {
+                    if (!confirm('Supprimer toutes les images cassées/vides (anciens essais) ? Cette action est irréversible.')) return;
+                    cleanupBtn.disabled = true;
+                    fetch('/api/galerie?cleanup=1', {
+                        method: 'DELETE',
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    })
+                        .then(function(r) { return r.json(); })
+                        .then(function(res) {
+                            cleanupBtn.disabled = false;
+                            showToast(res.message || 'Nettoyage terminé', res.success !== false ? 'success' : 'error');
+                            loadGallery(document.getElementById('categoryFilter').value);
+                        })
+                        .catch(function() {
+                            cleanupBtn.disabled = false;
+                            showToast('Impossible de contacter le serveur.', 'error');
+                        });
+                });
+            }
+
+            window.editImage = function(id) {
+                var img = images.find(function(i) { return i.id === id; });
+                if (img) openModal(img);
+            };
+
+            imageUrlInput.addEventListener('input', function() {
+                var val = this.value.trim();
+                if (val) {
+                    previewBox.innerHTML = `<img src="${val}" onerror="this.parentElement.textContent='Impossible de charger l\\'image';" />`;
+                } else {
+                    previewBox.innerHTML = 'Aperçu de l\'image';
+                }
+            });
+
+            // ============================================================
+            // 7. SAVE IMAGE — 100% API
+            // ============================================================
+            document.getElementById('modalSave').addEventListener('click', function() {
+                var imageUrl = imageUrlInput.value.trim();
+                var titre = imageTitreInput.value.trim();
+                var description = imageDescriptionInput.value.trim();
+                var produitId = imageProduitSelect.value || null;
+
+                if (!imageUrl) { showToast('Veuillez saisir une URL d\'image.', 'error'); return; }
+
+                var isEdit = !!editingImageId;
+                var data = { imageUrl: imageUrl, titre: titre || null, description: description || null, produitId: produitId };
+                var url = isEdit ? ('/api/galerie?id=' + editingImageId) : '/api/galerie';
+                var method = isEdit ? 'PUT' : 'POST';
+
+                var saveBtn = document.getElementById('modalSave');
+                saveBtn.disabled = true;
+
+                fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        saveBtn.disabled = false;
+                        if (res.success) {
+                            showToast(isEdit ? 'Image mise à jour avec succès !' : 'Image ajoutée avec succès !', 'success');
+                            closeModal();
+                            loadGallery(document.getElementById('categoryFilter').value);
+                        } else {
+                            showToast(res.message || 'Erreur lors de l\'enregistrement.', 'error');
+                        }
+                    })
+                    .catch(function() {
+                        saveBtn.disabled = false;
+                        showToast('Impossible de contacter le serveur.', 'error');
+                    });
+            });
+
+            // ============================================================
+            // 8. ACTIONS — delete / preview
+            // ============================================================
+            window.deleteImage = function(id) {
+                if (!confirm('Voulez-vous vraiment supprimer cette image ?')) return;
+
+                fetch('/api/galerie?id=' + id, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        showToast(res.message || 'Image supprimée avec succès !', res.success !== false ? 'success' : 'error');
+                        loadGallery(document.getElementById('categoryFilter').value);
+                    })
+                    .catch(function() {
+                        showToast('Impossible de contacter le serveur.', 'error');
+                    });
+            };
+
+            window.deleteVideo = function(id) {
+                if (!confirm('Voulez-vous vraiment supprimer cette vidéo ?')) return;
+
+                fetch('/api/videos?id=' + id, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        showToast(res.message || 'Vidéo supprimée avec succès !', res.success !== false ? 'success' : 'error');
+                        loadGallery(document.getElementById('categoryFilter').value);
+                    })
+                    .catch(function() {
+                        showToast('Impossible de contacter le serveur.', 'error');
+                    });
+            };
+
+            var lightboxVideo = document.getElementById('lightboxVideo');
+            window.previewVideo = function(url) {
+                if (!url) return;
+                lightboxImg.style.display = 'none';
+                if (lightboxVideo) {
+                    lightboxVideo.style.display = 'block';
+                    lightboxVideo.src = url;
+                    lightboxVideo.play().catch(function() {});
+                }
+                lightbox.classList.add('open');
+            };
+
+            // ============================================================
+            // 8bis. AJOUTER UNE VIDÉO — upload direct vers Vercel Blob
+            // ============================================================
+            var videoFileInput = document.getElementById('videoFileInput');
+            var addVideoBtn = document.getElementById('addVideoBtn');
+            if (addVideoBtn && videoFileInput) {
+                addVideoBtn.addEventListener('click', function() {
+                    videoFileInput.click();
+                });
+                videoFileInput.addEventListener('change', function() {
+                    var file = this.files && this.files[0];
+                    videoFileInput.value = '';
+                    if (!file) return;
+
+                    addVideoBtn.disabled = true;
+                    var originalHtml = addVideoBtn.innerHTML;
+                    addVideoBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Préparation…';
+
+                    // Filet de sécurité : voir le même correctif dans
+                    // produit-form.html / infos-site.html — un premier
+                    // événement de progression à 0% ne doit pas figer
+                    // durablement l'affichage.
+                    var galleryLastPct = 0;
+                    var galleryLastUpdateTs = Date.now();
+                    var galleryDots = 0;
+                    var galleryHeartbeat = setInterval(function() {
+                        var stalled = (Date.now() - galleryLastUpdateTs) > 4000;
+                        if (galleryLastPct > 0 && !stalled) {
+                            addVideoBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi ' + Math.round(galleryLastPct) + '%...';
+                        } else {
+                            galleryDots = (galleryDots + 1) % 4;
+                            addVideoBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours' + new Array(galleryDots + 1).join('.');
+                        }
+                    }, 700);
+
+                    DarChakafVideoUpload.uploadVideo(file, token, function(pct) {
+                        if (pct > 0) {
+                            galleryLastPct = pct;
+                            galleryLastUpdateTs = Date.now();
+                        }
+                    })
+                        .then(function(url) {
+                            clearInterval(galleryHeartbeat);
+                            return DarChakafVideoUpload.saveVideoRecord(url, { titre: file.name }, token);
+                        })
+                        .then(function() {
+                            showToast('Vidéo ajoutée avec succès !', 'success');
+                            loadGallery(document.getElementById('categoryFilter').value);
+                        })
+                        .catch(function(err) {
+                            clearInterval(galleryHeartbeat);
+                            showToast(err.message || "Erreur lors de l'upload de la vidéo.", 'error');
+                        })
+                        .then(function() {
+                            addVideoBtn.disabled = false;
+                            addVideoBtn.innerHTML = originalHtml;
+                        });
+                });
+            }
+
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightboxImg');
+            window.previewImage = function(url) {
+                if (!url) return;
+                if (lightboxVideo) { lightboxVideo.pause(); lightboxVideo.style.display = 'none'; lightboxVideo.removeAttribute('src'); }
+                lightboxImg.style.display = 'block';
+                lightboxImg.src = url;
+                lightbox.classList.add('open');
+            };
+            function closeLightbox() {
+                lightbox.classList.remove('open');
+                lightboxImg.src = '';
+                if (lightboxVideo) { lightboxVideo.pause(); lightboxVideo.removeAttribute('src'); }
+            }
+            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                var original = this.innerHTML;
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Chargement...';
+                this.disabled = true;
+
+                setTimeout(function() {
+                    document.getElementById('refreshBtn').innerHTML = original;
+                    document.getElementById('refreshBtn').disabled = false;
+                    loadGallery(document.getElementById('categoryFilter').value);
+                    loadSidebar();
+                    showToast('Données actualisées !', 'success');
+                }, 800);
+            });
+
+            // ============================================================
+            // 9. LOAD MESSAGES BADGE
+            // ============================================================
+            function loadMessagesBadge() {
+                fetch('/api/messages?lu=false&limit=1', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res.success && Array.isArray(res.data)) {
+                            document.getElementById('messagesBadge').textContent = res.data.length;
+                        }
+                    })
+                    .catch(function() {});
+            }
+            loadMessagesBadge();
+
+            // ============================================================
+            // 10. TOAST
+            // ============================================================
+            function showToast(message, type) {
+                var toast = document.getElementById('toast');
+                var toastMsg = document.getElementById('toastMessage');
+                toastMsg.textContent = message;
+                toast.className = 'toast ' + (type || 'success');
+                toast.classList.add('show');
+
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // ============================================================
+            // 11. INIT
+            // ============================================================
+            loadGallery('all');
+
+            console.log('🚀 Admin Galerie — 100% API-ready');
+
+        });
+    </script>
+
+    <script src="/assets/js/logo-sync.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Produits — Salons traditionnels — Dar Chakaf Admin</title>
+
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ================================================================
+           ADMIN DESIGN SYSTEM — DAR CHAKAF PREMIUM
+           ================================================================ */
+        :root {
+            --bg-void: #0a0908;
+            --bg-base: #0e0c0a;
+            --bg-panel: #15120e;
+            --bg-panel-2: #1c1712;
+            --bg-panel-raised: #221b14;
+            --border-soft: rgba(201, 169, 97, 0.14);
+            --border-strong: rgba(201, 169, 97, 0.32);
+            --gold: #c9a961;
+            --gold-bright: #e6c988;
+            --gold-dim: #8f7440;
+            --gold-glow: rgba(201, 169, 97, 0.06);
+            --ink: #f2ead9;
+            --ink-soft: #cdc3ae;
+            --ink-mute: #8e8471;
+            --ink-faint: #5c5546;
+            --success: #7a9b6e;
+            --danger: #b9634a;
+            --warning: #d4a04a;
+            --info: #5b8c9e;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --fs-h1: clamp(1.8rem, 2.8vw, 2.4rem);
+            --fs-h2: clamp(1.2rem, 1.8vw, 1.5rem);
+            --gap-xs: 0.5rem;
+            --gap-sm: 1rem;
+            --gap-md: 2rem;
+            --gap-lg: 4rem;
+            --radius-sm: 4px;
+            --radius-md: 10px;
+            --radius-lg: 18px;
+            --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.65);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-gold: 0 10px 40px -12px rgba(201, 169, 97, 0.35);
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --transition: 0.45s var(--ease);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-base);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a { color: inherit; text-decoration: none; transition: var(--transition); }
+        ul { list-style: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        input, select { font-family: inherit; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-void); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; border: 2px solid var(--bg-void); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 3vw, 2.5rem);
+        }
+
+        /* ================================================================
+           ANIMATIONS
+           ================================================================ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .fade-up { animation: fadeUp 0.6s var(--ease) forwards; opacity: 0; }
+        .fade-up-delay-1 { animation-delay: 0.1s; }
+        .fade-up-delay-2 { animation-delay: 0.2s; }
+        .fade-up-delay-3 { animation-delay: 0.3s; }
+        .fade-up-delay-4 { animation-delay: 0.4s; }
+
+        /* ================================================================
+           MIST BG
+           ================================================================ */
+        .mist-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: var(--bg-void, #0a0908);
+        }
+        .mist-bg::before,
+        .mist-bg::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            animation: mistDrift 22s ease-in-out infinite alternate;
+        }
+        .mist-bg::before {
+            width: 46vw; height: 46vw;
+            top: -12vw; left: -10vw;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.35), transparent 70%);
+        }
+        .mist-bg::after {
+            width: 40vw; height: 40vw;
+            bottom: -14vw; right: -8vw;
+            background: radial-gradient(circle, rgba(140, 110, 60, 0.28), transparent 70%);
+            animation-delay: -9s;
+        }
+        @keyframes mistDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(3vw, 2vw) scale(1.12); }
+        }
+
+        /* ================================================================
+           ADMIN HEADER
+           ================================================================ */
+        .admin-header {
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 0.7rem 0;
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(21, 18, 14, 0.94);
+        }
+        .admin-header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+        }
+        .admin-header .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--gold-bright);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .admin-header .logo-text .mark {
+            width: 32px; height: 32px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: var(--gold);
+            overflow: hidden;
+        }
+        .admin-header .logo-text .mark img {
+            width: 24px; height: 24px;
+            object-fit: contain;
+        }
+        .admin-header .logo-text .mark .fallback-text {
+            display: none;
+        }
+        .admin-header .logo-text .mark img.error ~ .fallback-text {
+            display: block;
+        }
+        .admin-header .logo-text .mark img.error {
+            display: none;
+        }
+        .admin-header .logo-text .mark:hover { transform: rotate(90deg); }
+        .admin-header .logo-text span {
+            font-family: var(--font-body);
+            font-size: 0.55rem; letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            display: block; margin-top: -2px;
+        }
+        .admin-header-actions {
+            display: flex; align-items: center; gap: 1.2rem;
+        }
+        .admin-header-actions .user {
+            display: flex; align-items: center; gap: 0.6rem;
+            font-size: 0.82rem; color: var(--ink-mute);
+        }
+        .admin-header-actions .user .avatar {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+            display: flex; align-items: center; justify-content: center;
+            color: #14110b; font-weight: 600; font-size: 0.8rem;
+        }
+        .admin-header-actions .user .name { color: var(--ink-soft); font-weight: 400; }
+        .admin-header-actions .logout-btn {
+            font-size: 0.7rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .admin-header-actions .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+        /* ================================================================
+           ADMIN SIDEBAR
+           ================================================================ */
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: var(--gap-lg);
+            padding: var(--gap-md) 0 var(--gap-lg);
+            align-items: start;
+        }
+        .admin-sidebar {
+            position: sticky; top: 80px; align-self: start;
+        }
+        .admin-sidebar .nav-section { margin-bottom: 1.5rem; }
+        .admin-sidebar .nav-section .label {
+            font-size: 0.6rem; letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            padding: 0 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+        .admin-sidebar a {
+            display: flex; align-items: center; gap: 0.7rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            color: var(--ink-mute);
+            transition: var(--transition);
+            border-left: 2px solid transparent;
+        }
+        .admin-sidebar a i { width: 18px; text-align: center; font-size: 0.9rem; }
+        .admin-sidebar a:hover, .admin-sidebar a.active {
+            background: var(--gold-glow);
+            color: var(--gold-bright);
+            border-left-color: var(--gold);
+        }
+        .admin-sidebar a .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.55rem;
+            padding: 0.05rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .admin-sidebar a .badge.success { background: var(--success); }
+
+        /* ================================================================
+           BUTTONS
+           ================================================================ */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.78rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, var(--gold-dim));
+            color: #14110b;
+            box-shadow: var(--shadow-gold);
+        }
+        .btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        .btn-ghost { border: 1px solid var(--border-soft); color: var(--ink-mute); background: transparent; }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.65rem; }
+        .btn-xs { padding: 0.15rem 0.5rem; font-size: 0.6rem; }
+
+        /* ================================================================
+           MAIN CONTENT
+           ================================================================ */
+        .admin-main { min-width: 0; }
+
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+            margin-bottom: var(--gap-md);
+        }
+        .page-header h1 { font-size: var(--fs-h1); color: var(--ink); font-weight: 600; }
+        .page-header .sub { font-size: 0.85rem; color: var(--ink-mute); display: block; margin-top: -2px; }
+        .page-header .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+        /* ================================================================
+           STATS MINI
+           ================================================================ */
+        .stats-mini {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--gap-sm);
+            margin-bottom: var(--gap-md);
+        }
+        .stats-mini .stat-item {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 0.8rem 1.2rem;
+            display: flex; align-items: center; gap: 1rem;
+            transition: var(--transition);
+        }
+        .stats-mini .stat-item:hover { border-color: var(--border-strong); }
+        .stats-mini .stat-item .icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--gold-glow);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .stats-mini .stat-item .info .number {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            color: var(--gold-bright);
+            line-height: 1.2;
+        }
+        .stats-mini .stat-item .info .label {
+            font-size: 0.65rem;
+            color: var(--ink-mute);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* ================================================================
+           TOOLBAR
+           ================================================================ */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--gap-sm);
+            margin-bottom: var(--gap-sm);
+            padding: 0.8rem 1rem;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+        }
+        .toolbar .filters {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .toolbar .filters input,
+        .toolbar .filters select {
+            padding: 0.4rem 0.8rem;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.78rem;
+            transition: var(--transition);
+        }
+        .toolbar .filters input:focus,
+        .toolbar .filters select:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.06);
+        }
+        .toolbar .filters input::placeholder { color: var(--ink-faint); }
+        .toolbar .filters .search-wrap { position: relative; }
+        .toolbar .filters .search-wrap i {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-faint);
+            font-size: 0.8rem;
+        }
+        .toolbar .filters .search-wrap input { padding-left: 2rem; min-width: 200px; }
+        .toolbar .bulk-actions {
+            display: flex;
+            gap: 0.4rem;
+            align-items: center;
+        }
+        .toolbar .bulk-actions .count-selected {
+            font-size: 0.72rem;
+            color: var(--ink-mute);
+            margin-right: 0.3rem;
+        }
+
+        /* ================================================================
+           TABLE
+           ================================================================ */
+        .table-wrapper {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            overflow-x: auto;
+        }
+        .table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .table-wrapper th {
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border-soft);
+            color: var(--ink-faint);
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 500;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            background: var(--bg-panel);
+            z-index: 5;
+        }
+        .table-wrapper th .sort {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: var(--transition);
+        }
+        .table-wrapper th .sort:hover { color: var(--gold-bright); }
+        .table-wrapper td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--border-soft);
+            color: var(--ink-mute);
+            vertical-align: middle;
+        }
+        .table-wrapper tr:hover td { background: var(--gold-glow); }
+        .table-wrapper tr:last-child td { border-bottom: none; }
+        .table-wrapper tr.selected td { background: rgba(201, 169, 97, 0.08); }
+
+        .table-wrapper .product-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            flex-shrink: 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .table-wrapper .product-thumb .empty-frame {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-faint);
+            font-size: 0.5rem;
+            background: var(--bg-panel-2);
+        }
+        .table-wrapper .product-thumb .empty-frame .icon { font-size: 1.2rem; opacity: 0.15; }
+        .table-wrapper .product-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .table-wrapper .product-thumb img.loaded { display: block; }
+        .table-wrapper .product-thumb img.loaded ~ .empty-frame { display: none; }
+        .table-wrapper .product-name { color: var(--ink-soft); font-weight: 400; }
+        .table-wrapper .product-name .sub {
+            font-size: 0.7rem;
+            color: var(--ink-faint);
+            display: block;
+            font-weight: 300;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+        .status-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-badge.active {
+            background: rgba(122, 155, 110, 0.15);
+            color: var(--success);
+        }
+        .status-badge.active .dot { background: var(--success); }
+        .status-badge.inactive {
+            background: rgba(185, 99, 74, 0.15);
+            color: var(--danger);
+        }
+        .status-badge.inactive .dot { background: var(--danger); }
+        .status-badge.draft {
+            background: rgba(212, 160, 74, 0.15);
+            color: var(--warning);
+        }
+        .status-badge.draft .dot { background: var(--warning); }
+
+        .action-btns {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .action-btns .btn-ghost {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.65rem;
+        }
+        .action-btns .btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold-bright);
+        }
+        .action-btns .btn-danger {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.65rem;
+        }
+
+        .checkbox-col {
+            width: 30px;
+            text-align: center;
+        }
+        .checkbox-col input[type="checkbox"] {
+            accent-color: var(--gold);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* ================================================================
+           SKELETON
+           ================================================================ */
+        .skeleton-row td { padding: 0.7rem 1rem; }
+        .skeleton-row .skeleton-line {
+            height: 12px;
+            background: var(--bg-panel-2);
+            border-radius: var(--radius-sm);
+            animation: pulse 1.6s ease-in-out infinite;
+            width: 80%;
+        }
+        .skeleton-row .skeleton-line.short { width: 40%; }
+
+        /* ================================================================
+           PAGINATION
+           ================================================================ */
+        .pagination-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--gap-sm);
+            padding: 0.8rem 1rem;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            margin-top: var(--gap-sm);
+        }
+        .pagination-wrap .info {
+            font-size: 0.78rem;
+            color: var(--ink-mute);
+        }
+        .pagination-wrap .info b { color: var(--ink-soft); }
+        .pagination-wrap .pages {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .pagination-wrap .pages button {
+            min-width: 32px;
+            height: 32px;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink-mute);
+            font-size: 0.78rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.5rem;
+        }
+        .pagination-wrap .pages button:hover {
+            border-color: var(--gold);
+            color: var(--gold-bright);
+        }
+        .pagination-wrap .pages button.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #14110b;
+            font-weight: 600;
+        }
+        .pagination-wrap .pages button.arrow {
+            width: auto;
+            padding: 0 0.6rem;
+            gap: 0.3rem;
+        }
+        .pagination-wrap .pages button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .pagination-wrap .per-page {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.72rem;
+            color: var(--ink-mute);
+        }
+        .pagination-wrap .per-page select {
+            padding: 0.2rem 0.4rem;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.72rem;
+        }
+
+        /* ================================================================
+           EMPTY STATE
+           ================================================================ */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--ink-mute);
+        }
+        .empty-state .icon {
+            font-size: 4rem;
+            opacity: 0.15;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+        .empty-state h3 {
+            font-family: var(--font-body);
+            font-size: 1.2rem;
+            color: var(--ink-soft);
+        }
+        .empty-state p {
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+        .empty-state .btn { margin-top: 1.2rem; }
+
+        /* ================================================================
+           TOAST
+           ================================================================ */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-panel-raised);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            color: var(--ink);
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-soft);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 999;
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { border-color: var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-color: var(--danger); }
+        .toast.error i { color: var(--danger); }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 1100px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .admin-sidebar {
+                position: static;
+                display: flex; flex-wrap: wrap; gap: 0.3rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-soft);
+            }
+            .admin-sidebar .nav-section {
+                margin-bottom: 0;
+                display: flex; flex-wrap: wrap; gap: 0.2rem;
+            }
+            .admin-sidebar .nav-section .label { display: none; }
+            .admin-sidebar a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.72rem;
+                border-left: none;
+                border-radius: var(--radius-sm);
+            }
+            .admin-sidebar a i { display: none; }
+            .admin-sidebar a .badge { margin-left: 0.3rem; }
+            .stats-mini { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 900px) {
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar .filters { flex-direction: column; align-items: stretch; }
+            .toolbar .filters .search-wrap input { min-width: auto; width: 100%; }
+            .toolbar .bulk-actions { justify-content: flex-start; }
+            .pagination-wrap { flex-direction: column; align-items: center; gap: 0.5rem; }
+            .pagination-wrap .info { text-align: center; }
+        }
+        @media (max-width: 600px) {
+            .admin-header-inner { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+            .admin-header-actions { flex-wrap: wrap; justify-content: space-between; }
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .page-header .actions { width: 100%; justify-content: stretch; }
+            .page-header .actions .btn { flex: 1; justify-content: center; }
+            .stats-mini { grid-template-columns: 1fr 1fr; }
+            .table-wrapper { font-size: 0.75rem; }
+            .table-wrapper th,
+            .table-wrapper td { padding: 0.4rem 0.5rem; }
+            .table-wrapper .product-thumb { width: 32px; height: 32px; }
+            .action-btns .btn-ghost,
+            .action-btns .btn-danger { padding: 0.15rem 0.4rem; font-size: 0.55rem; }
+            .toast { left: 1rem; right: 1rem; bottom: 1rem; }
+        }
+        @media (max-width: 400px) {
+            .stats-mini { grid-template-columns: 1fr; }
+            .action-btns { flex-direction: column; gap: 0.2rem; }
+            .pagination-wrap .pages button { min-width: 28px; height: 28px; font-size: 0.7rem; }
+        }
+
+        @media (min-width: 1600px) {
+            html { font-size: 19px; }
+            .container { max-width: 1680px; }
+        }
+        @media (min-width: 2200px) {
+            html { font-size: 23px; }
+            .container { max-width: 2100px; }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/logo-frame.css">
+</head>
+<body>
+    <div class="mist-bg" aria-hidden="true"></div>
+
+    <!-- ============================================================
+    ADMIN HEADER
+    ============================================================ -->
+    <header class="admin-header">
+        <div class="container admin-header-inner">
+            <div class="logo-text">
+                <span class="mark">
+                    <img 
+                        src="/assets/logo/dar-chakaf-logo.svg" 
+                        alt="Dar Chakaf Logo"
+                        width="24" 
+                        height="24"
+                        style="width:24px;height:24px;object-fit:contain;"
+                        onerror="this.classList.add('error'); this.style.display='none'; this.parentElement.querySelector('.fallback-text').style.display='block';"
+                    />
+                    <span class="fallback-text">D</span>
+                </span>
+                <span>Dar Chakaf <span>Administration</span></span>
+            </div>
+            <div class="admin-header-actions">
+                <span class="user">
+                    <span class="avatar" id="adminAvatar">A</span>
+                    <span class="name" id="adminName">Administrateur</span>
+                </span>
+                <a href="../login.html" class="logout-btn" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    ADMIN LAYOUT
+    ============================================================ -->
+    <div class="container admin-layout">
+
+        <!-- SIDEBAR -->
+        <nav class="admin-sidebar">
+            <div class="nav-section">
+                <span class="label">Navigation</span>
+                <a href="../dashboard.html"><i class="fa-solid fa-gauge-high"></i> Tableau de bord</a>
+                <a href="../categories/liste.html"><i class="fa-solid fa-layer-group"></i> Catégories</a>
+                <a href="../galerie/liste.html"><i class="fa-solid fa-images"></i> Galerie</a>
+                <a href="../messages/liste.html"><i class="fa-solid fa-envelope"></i> Messages <span class="badge" id="messagesBadge">0</span></a>
+                <a href="../devis/liste.html"><i class="fa-solid fa-file-invoice"></i> Demandes de devis</a>
+                <a href="../blog/liste.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="../newsletter/liste.html"><i class="fa-solid fa-paper-plane"></i> Newsletter</a>
+                <a href="../utilisateurs/liste.html"><i class="fa-solid fa-users"></i> Utilisateurs</a>
+                <a href="../parametres/infos-site.html"><i class="fa-solid fa-gear"></i> Paramètres</a>
+                <a href="../apropos/edit.html"><i class="fa-solid fa-book-open"></i> Page À propos</a>
+                <a href="../logs/activite.html"><i class="fa-solid fa-clock-rotate-left"></i> Logs</a>
+            </div>
+            <div class="nav-section">
+                <span class="label">Produits</span>
+                <div id="sidebarProducts">
+                    <!-- Rempli dynamiquement -->
+                </div>
+                <a href="produit-form.html"><i class="fa-solid fa-plus"></i> Ajouter un produit</a>
+            </div>
+        </nav>
+
+        <!-- ============================================================
+        MAIN CONTENT
+        ============================================================ -->
+        <main class="admin-main">
+
+            <!-- Page Header -->
+            <div class="page-header fade-up">
+                <div>
+                    <h1><i class="fa-solid fa-mosque" style="color:var(--gold);"></i> Salons traditionnels</h1>
+                    <span class="sub" id="pageSub">Gestion des produits</span>
+                </div>
+                <div class="actions">
+                    <a href="produit-form.html" class="btn btn-gold"><i class="fa-solid fa-plus"></i> Ajouter un produit</a>
+                    <button class="btn btn-ghost" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Actualiser</button>
+                    <button class="btn btn-ghost" id="exportBtn"><i class="fa-solid fa-file-export"></i> Exporter</button>
+                </div>
+            </div>
+
+            <!-- Mini Stats -->
+            <div class="stats-mini fade-up fade-up-delay-1">
+                <div class="stat-item">
+                    <div class="icon"><i class="fa-solid fa-mosque"></i></div>
+                    <div class="info">
+                        <div class="number" id="statTotal">0</div>
+                        <div class="label">Total produits</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="icon"><i class="fa-solid fa-circle-check" style="color:var(--success);"></i></div>
+                    <div class="info">
+                        <div class="number" id="statActive">0</div>
+                        <div class="label">Actifs</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="icon"><i class="fa-solid fa-circle-exclamation" style="color:var(--warning);"></i></div>
+                    <div class="info">
+                        <div class="number" id="statDraft">0</div>
+                        <div class="label">Brouillons</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="icon"><i class="fa-solid fa-circle-xmark" style="color:var(--danger);"></i></div>
+                    <div class="info">
+                        <div class="number" id="statInactive">0</div>
+                        <div class="label">Inactifs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar fade-up fade-up-delay-2">
+                <div class="filters">
+                    <div class="search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Rechercher un produit..." />
+                    </div>
+                    <select id="statusFilter">
+                        <option value="all">Tous les statuts</option>
+                        <option value="active">Actifs</option>
+                        <option value="draft">Brouillons</option>
+                        <option value="inactive">Inactifs</option>
+                    </select>
+                    <select id="sortFilter">
+                        <option value="name">Nom A-Z</option>
+                        <option value="name-desc">Nom Z-A</option>
+                        <option value="price">Prix croissant</option>
+                        <option value="price-desc">Prix décroissant</option>
+                        <option value="date">Date récent</option>
+                        <option value="date-desc">Date ancien</option>
+                    </select>
+                </div>
+                <div class="bulk-actions">
+                    <span class="count-selected" id="selectedCount">0 sélectionné</span>
+                    <button class="btn btn-danger btn-xs" id="bulkDeleteBtn" disabled><i class="fa-regular fa-trash-can"></i></button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrapper fade-up fade-up-delay-3">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="checkbox-col">
+                                <input type="checkbox" id="selectAll" />
+                            </th>
+                            <th style="width:60px;">Image</th>
+                            <th>Nom</th>
+                            <th>Prix</th>
+                            <th>Statut</th>
+                            <th style="width:140px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <tr class="skeleton-row"><td colspan="6"><div class="skeleton-line"></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="6"><div class="skeleton-line short"></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="6"><div class="skeleton-line"></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="6"><div class="skeleton-line short"></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="6"><div class="skeleton-line"></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="6"><div class="skeleton-line short"></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="6"><div class="skeleton-line"></div></td></tr>
+                        <tr class="skeleton-row"><td colspan="6"><div class="skeleton-line short"></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-wrap fade-up fade-up-delay-4">
+                <div class="info">
+                    Affichage de <b id="startCount">0</b> à <b id="endCount">0</b> sur <b id="totalCount">0</b> produits
+                </div>
+                <div class="pages" id="paginationButtons">
+                    <button class="arrow" id="prevPage"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div id="pageNumbers"></div>
+                    <button class="arrow" id="nextPage"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="per-page">
+                    <label for="perPageSelect">Afficher :</label>
+                    <select id="perPageSelect">
+                        <option value="8">8</option>
+                        <option value="16" selected>16</option>
+                        <option value="32">32</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Opération réussie !</span>
+    </div>
+
+    <!-- ============================================================
+    SCRIPTS — 100% API-READY
+    ============================================================ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            'use strict';
+
+            // ============================================================
+            // 1. USER INFO & SESSION
+            // ============================================================
+            var adminName = localStorage.getItem('adminName') || 'Administrateur';
+            document.getElementById('adminName').textContent = adminName;
+            document.getElementById('adminAvatar').textContent = adminName.charAt(0).toUpperCase();
+
+            var token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                    localStorage.clear();
+                    window.location.href = '../login.html';
+                }
+            });
+
+            // ============================================================
+            // 2. ICON MAP
+            // ============================================================
+            var iconMap = {
+                'salons-modernes': 'fa-couch',
+                'salons-traditionnels': 'fa-mosque',
+                'tables': 'fa-table',
+                'decorations': 'fa-vector-square',
+                'meubles-tv': 'fa-tv',
+                'couloirs': 'fa-door-open',
+                'tissus': 'fa-scroll'
+            };
+
+            // ============================================================
+            // 3. LOAD CATEGORIES FOR SIDEBAR
+            // ============================================================
+            function loadCategories() {
+                fetch('/api/categories', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (!res.success || !Array.isArray(res.data)) return;
+                        var cats = res.data;
+
+                        var sidebarContainer = document.getElementById('sidebarProducts');
+                        sidebarContainer.innerHTML = '';
+                        cats.forEach(function(cat) {
+                            var slug = cat.slug || cat.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                            var icon = cat.icone || iconMap[slug] || 'fa-cube';
+                            var a = document.createElement('a');
+                            a.href = slug + '.html';
+                            a.innerHTML = '<i class="fa-solid ' + icon + '"></i> ' + cat.nom +
+                                ' <span class="badge success">' + (cat.product_count || 0) + '</span>';
+                            sidebarContainer.appendChild(a);
+                        });
+                    })
+                    .catch(function(e) { console.warn('Erreur chargement catégories:', e); });
+            }
+
+            loadCategories();
+
+            // ============================================================
+            // 4. MESSAGES BADGE
+            // ============================================================
+            function loadMessagesBadge() {
+                fetch('/api/messages?lu=false&limit=1', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res.success && Array.isArray(res.data)) {
+                            document.getElementById('messagesBadge').textContent = res.data.length;
+                        }
+                    })
+                    .catch(function() {});
+            }
+            loadMessagesBadge();
+
+            // ============================================================
+            // 5. PRODUITS — SALONS TRADITIONNELS
+            // ============================================================
+            var products = [];
+            var filteredProducts = [];
+            var currentPage = 1;
+            var perPage = 16;
+            var searchTerm = '';
+            var statusFilter = 'all';
+            var sortBy = 'name';
+            var selectedIds = new Set();
+
+            var tbody = document.getElementById('productsTableBody');
+
+            // ============================================================
+            // 6. MAP API PRODUCT
+            // ============================================================
+            function mapApiProduct(p) {
+                return {
+                    id: p.id,
+                    nom: p.titre || 'Produit sans nom',
+                    prix: p.prix || 0,
+                    ancien_prix: p.ancien_prix || null,
+                    statut: p.statut || 'draft',
+                    date: p.created_at ? p.created_at.substring(0, 10) : new Date().toISOString().substring(0, 10),
+                    image: (p.images && p.images.length && p.images[0]) || p.image_principale || null,
+                    dimensions: p.dimensions || '',
+                    material: p.materiau || '',
+                    color: p.coloris || '',
+                    type: p.type || '',
+                    style: p.type || ''
+                };
+            }
+
+            // ============================================================
+            // 7. LOAD PRODUCTS
+            // ============================================================
+            function loadProducts() {
+                tbody.innerHTML =
+                    '<tr class="skeleton-row"><td colspan="6"><div class="skeleton-line"></div></td></tr>'.repeat(8);
+
+                fetch('/api/produits/salons-traditionnels', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res.success && Array.isArray(res.data)) {
+                            products = res.data.map(mapApiProduct);
+                        }
+                        applyFilters();
+                    })
+                    .catch(function() {
+                        products = [];
+                        applyFilters();
+                    });
+            }
+
+            // ============================================================
+            // 8. GET FILTERED PRODUCTS
+            // ============================================================
+            function getFilteredProducts() {
+                var filtered = products.slice();
+
+                if (searchTerm.trim()) {
+                    var term = searchTerm.trim().toLowerCase();
+                    filtered = filtered.filter(function(p) {
+                        return p.nom.toLowerCase().includes(term);
+                    });
+                }
+
+                if (statusFilter !== 'all') {
+                    filtered = filtered.filter(function(p) { return p.statut === statusFilter; });
+                }
+
+                switch (sortBy) {
+                    case 'name':
+                        filtered.sort(function(a, b) { return a.nom.localeCompare(b.nom); });
+                        break;
+                    case 'name-desc':
+                        filtered.sort(function(a, b) { return b.nom.localeCompare(a.nom); });
+                        break;
+                    case 'price':
+                        filtered.sort(function(a, b) { return a.prix - b.prix; });
+                        break;
+                    case 'price-desc':
+                        filtered.sort(function(a, b) { return b.prix - a.prix; });
+                        break;
+                    case 'date':
+                        filtered.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+                        break;
+                    case 'date-desc':
+                        filtered.sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+                        break;
+                    default:
+                        break;
+                }
+
+                return filtered;
+            }
+
+            // ============================================================
+            // 9. RENDER TABLE
+            // ============================================================
+            function renderProducts() {
+                filteredProducts = getFilteredProducts();
+                var total = filteredProducts.length;
+                var totalPages = Math.ceil(total / perPage);
+                if (currentPage > totalPages) currentPage = totalPages || 1;
+
+                var start = (currentPage - 1) * perPage;
+                var end = Math.min(start + perPage, total);
+                var pageItems = filteredProducts.slice(start, end);
+
+                document.getElementById('totalCount').textContent = total;
+                document.getElementById('startCount').textContent = total > 0 ? start + 1 : 0;
+                document.getElementById('endCount').textContent = end;
+                document.getElementById('pageSub').textContent = 'Gestion des produits — ' + total + ' modèles disponibles';
+
+                // Stats
+                var totalCount = products.length;
+                var activeCount = products.filter(function(p) { return p.statut === 'active'; }).length;
+                var draftCount = products.filter(function(p) { return p.statut === 'draft'; }).length;
+                var inactiveCount = products.filter(function(p) { return p.statut === 'inactive'; }).length;
+
+                document.getElementById('statTotal').textContent = totalCount;
+                document.getElementById('statActive').textContent = activeCount;
+                document.getElementById('statDraft').textContent = draftCount;
+                document.getElementById('statInactive').textContent = inactiveCount;
+
+                if (pageItems.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="6"><div class="empty-state"><div class="icon"><i class="fa-solid fa-mosque"></i></div><h3>Aucun produit trouvé</h3><p>Essayez de modifier les filtres ou ajoutez un nouveau produit.</p><a href="produit-form.html" class="btn btn-gold"><i class="fa-solid fa-plus"></i> Ajouter un produit</a></div></td></tr>';
+                    renderPagination(total, totalPages);
+                    return;
+                }
+
+                var html = '';
+                pageItems.forEach(function(p) {
+                    var statusClass = p.statut;
+                    var statusLabel = p.statut === 'active' ? 'Actif' : p.statut === 'draft' ? 'Brouillon' : 'Inactif';
+                    var isChecked = selectedIds.has(p.id);
+
+                    var imgHtml = '';
+                    if (p.image) {
+                        imgHtml = '<img src="' + p.image + '" alt="' + p.nom + '" loading="lazy" class="loaded" style="display:block;">';
+                    } else {
+                        imgHtml =
+                            '<div class="empty-frame"><span class="icon">🪑</span><span class="label">Aucune image</span></div>';
+                    }
+
+                    html +=
+                        '<tr class="' + (isChecked ? 'selected' : '') + '" data-id="' + p.id + '">' +
+                        '<td class="checkbox-col"><input type="checkbox" class="row-select" data-id="' + p.id +
+                        '" ' + (isChecked ? 'checked' : '') + ' /></td>' +
+                        '<td><div class="product-thumb">' + imgHtml + '</div></td>' +
+                        '<td><div class="product-name">' + p.nom + '<span class="sub">Salons traditionnels</span></div></td>' +
+                        '<td>' + p.prix.toLocaleString() +
+                        ' <span style="font-size:0.65rem;color:var(--ink-faint);">DH</span></td>' +
+                        '<td><span class="status-badge ' + statusClass + '"><span class="dot"></span> ' + statusLabel +
+                        '</span></td>' +
+                        '<td><div class="action-btns">' +
+                        '<a href="produit-form.html?id=' + p.id +
+                        '" class="btn btn-ghost btn-xs" title="Modifier"><i class="fa-regular fa-pen-to-square"></i></a>' +
+                        '<button class="btn btn-ghost btn-xs" title="Aperçu" onclick="viewProduct(' + p.id +
+                        ')"><i class="fa-regular fa-eye"></i></button>' +
+                        '<button class="btn btn-danger btn-xs" title="Supprimer" onclick="deleteProduct(' + p.id +
+                        ')"><i class="fa-regular fa-trash-can"></i></button>' +
+                        '</div></td>' +
+                        '</tr>';
+                });
+
+                tbody.innerHTML = html;
+                renderPagination(total, totalPages);
+                updateSelectedCount();
+            }
+
+            // ============================================================
+            // 10. PAGINATION
+            // ============================================================
+            function renderPagination(total, totalPages) {
+                var container = document.getElementById('pageNumbers');
+                if (!container) return;
+
+                if (totalPages <= 1) {
+                    container.innerHTML = '';
+                    return;
+                }
+
+                var html = '';
+                var maxVisible = 5;
+                var startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+                var endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+                if (endPage - startPage < maxVisible - 1) {
+                    startPage = Math.max(1, endPage - maxVisible + 1);
+                }
+
+                if (startPage > 1) {
+                    html += '<button class="page-btn" data-page="1">1</button>';
+                    if (startPage > 2) html += '<button disabled>…</button>';
+                }
+
+                for (var i = startPage; i <= endPage; i++) {
+                    html += '<button class="page-btn ' + (i === currentPage ? 'active' : '') + '" data-page="' + i +
+                        '">' + i + '</button>';
+                }
+
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) html += '<button disabled>…</button>';
+                    html += '<button class="page-btn" data-page="' + totalPages + '">' + totalPages + '</button>';
+                }
+
+                container.innerHTML = html;
+
+                container.querySelectorAll('.page-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var page = parseInt(this.dataset.page);
+                        if (!isNaN(page) && page !== currentPage) {
+                            currentPage = page;
+                            renderProducts();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    });
+                });
+
+                var prevBtn = document.getElementById('prevPage');
+                var nextBtn = document.getElementById('nextPage');
+                prevBtn.onclick = function() {
+                    if (currentPage > 1) { currentPage--;
+                        renderProducts();
+                        window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                };
+                nextBtn.onclick = function() {
+                    if (currentPage < totalPages) { currentPage++;
+                        renderProducts();
+                        window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                };
+                prevBtn.disabled = currentPage <= 1;
+                nextBtn.disabled = currentPage >= totalPages;
+            }
+
+            // ============================================================
+            // 11. SELECTION
+            // ============================================================
+            function updateSelectedCount() {
+                var count = selectedIds.size;
+                document.getElementById('selectedCount').textContent = count + ' sélectionné' + (count > 1 ? 's' : '');
+                document.getElementById('bulkDeleteBtn').disabled = count === 0;
+            }
+
+            document.getElementById('selectAll').addEventListener('change', function() {
+                var checked = this.checked;
+                var total = filteredProducts.length;
+                var start = (currentPage - 1) * perPage;
+                var end = Math.min(start + perPage, total);
+                var pageItems = filteredProducts.slice(start, end);
+
+                pageItems.forEach(function(p) {
+                    if (checked) { selectedIds.add(p.id); } else { selectedIds.delete(p.id); }
+                });
+
+                renderProducts();
+            });
+
+            document.addEventListener('change', function(e) {
+                if (e.target.classList.contains('row-select')) {
+                    var id = parseInt(e.target.dataset.id);
+                    if (e.target.checked) { selectedIds.add(id); } else { selectedIds.delete(id); }
+                    updateSelectedCount();
+                    var row = e.target.closest('tr');
+                    if (row) row.classList.toggle('selected', e.target.checked);
+                }
+            });
+
+            // ============================================================
+            // 12. ACTIONS
+            // ============================================================
+            window.viewProduct = function(id) {
+                var p = products.find(function(prod) { return prod.id === id; });
+                if (p) {
+                    alert('👁️ Aperçu du produit :\n\n' +
+                        'Nom : ' + p.nom + '\n' +
+                        'Prix : ' + p.prix.toLocaleString() + ' DH\n' +
+                        'Dimensions : ' + (p.dimensions || '—') + '\n' +
+                        'Matière : ' + (p.material || '—') + '\n' +
+                        'Coloris : ' + (p.color || '—') + '\n' +
+                        'Statut : ' + (p.statut === 'active' ? 'Actif' : p.statut === 'draft' ? 'Brouillon' :
+                            'Inactif') + '\n' +
+                        'Date : ' + p.date);
+                }
+            };
+
+            window.deleteProduct = function(id) {
+                if (!confirm('Voulez-vous vraiment supprimer ce produit ?')) return;
+
+                fetch('/api/produits/salons-traditionnels?id=' + id, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .catch(function() {})
+                    .finally(function() {
+                        products = products.filter(function(p) { return p.id !== id; });
+                        selectedIds.delete(id);
+                        showToast('Produit supprimé avec succès !', 'success');
+                        renderProducts();
+                    });
+            };
+
+            document.getElementById('bulkDeleteBtn').addEventListener('click', function() {
+                if (selectedIds.size === 0) return;
+                if (!confirm('Voulez-vous vraiment supprimer les ' + selectedIds.size +
+                        ' produits sélectionnés ?')) return;
+                var ids = Array.from(selectedIds);
+
+                Promise.all(ids.map(function(id) {
+                    return fetch('/api/produits/salons-traditionnels?id=' + id, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    }).catch(function() {});
+                })).finally(function() {
+                    var count = selectedIds.size;
+                    products = products.filter(function(p) { return !selectedIds.has(p.id); });
+                    selectedIds.clear();
+                    showToast(count + ' produits supprimés !', 'success');
+                    renderProducts();
+                });
+            });
+
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                var original = this.innerHTML;
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Chargement...';
+                this.disabled = true;
+
+                loadProducts();
+                setTimeout(function() {
+                    document.getElementById('refreshBtn').innerHTML = original;
+                    document.getElementById('refreshBtn').disabled = false;
+                    showToast('Données actualisées !', 'success');
+                }, 800);
+            });
+
+            document.getElementById('exportBtn').addEventListener('click', function() {
+                var filtered = getFilteredProducts();
+                var csv = 'ID,Nom,Prix,Statut,Date\n';
+                filtered.forEach(function(p) {
+                    csv += p.id + ',"' + p.nom + '",' + p.prix + ',' + p.statut + ',' + p.date + '\n';
+                });
+
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'salons-traditionnels_export_' + new Date().toISOString().slice(0, 10) + '.csv';
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('Export CSV terminé !', 'success');
+            });
+
+            // ============================================================
+            // 13. FILTERS
+            // ============================================================
+            document.getElementById('searchInput').addEventListener('input', function() {
+                searchTerm = this.value;
+                currentPage = 1;
+                selectedIds.clear();
+                renderProducts();
+            });
+
+            document.getElementById('statusFilter').addEventListener('change', function() {
+                statusFilter = this.value;
+                currentPage = 1;
+                selectedIds.clear();
+                renderProducts();
+            });
+
+            document.getElementById('sortFilter').addEventListener('change', function() {
+                sortBy = this.value;
+                currentPage = 1;
+                renderProducts();
+            });
+
+            document.getElementById('perPageSelect').addEventListener('change', function() {
+                perPage = parseInt(this.value);
+                currentPage = 1;
+                renderProducts();
+            });
+
+            function applyFilters() {
+                currentPage = 1;
+                selectedIds.clear();
+                renderProducts();
+            }
+
+            // ============================================================
+            // 14. TOAST
+            // ============================================================
+            function showToast(message, type) {
+                var toast = document.getElementById('toast');
+                var toastMsg = document.getElementById('toastMessage');
+                toastMsg.textContent = message;
+                toast.className = 'toast ' + (type || 'success');
+                toast.classList.add('show');
+
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // ============================================================
+            // 15. INIT
+            // ============================================================
+            loadProducts();
+
+            console.log('🚀 Admin Produits — Salons traditionnels (100% API-ready)');
+
+        });
+    </script>
+
+    <script src="/assets/js/logo-sync.js" defer></script>
+</body>
+</html>

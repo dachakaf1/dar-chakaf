@@ -1,0 +1,56 @@
+/* ================================================================
+   LOGO-FRAME.CSS — Cadre circulaire (bordure blanche + liseré doré)
+   pour le logo, avec l'image qui REMPLIT tout le cercle (comme une
+   photo de profil) : zéro zone vide, aucun coin blanc visible.
+   S'applique partout où le logo apparaît (header, footer, admin,
+   préchargement). Chargé après les styles internes de chaque page
+   pour les remplacer (mêmes sélecteurs, !important par sécurité).
+   ================================================================ */
+
+/* Header + footer (pages publiques) */
+.logo-mark {
+    background: #ffffff !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    /* Sans ceci, le <img> à l'intérieur n'est pas découpé par le cercle du
+       parent (border-radius s'applique au span, pas à son contenu) : le logo
+       apparaît carré/déformé au lieu de rond. */
+    overflow: hidden !important;
+    border-radius: 50% !important;
+}
+.logo-mark img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+/* Header (pages admin) */
+.admin-header .logo-text .mark {
+    background: #ffffff !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border-radius: 50% !important;
+}
+.admin-header .logo-text .mark img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+/* Écran de préchargement (dkhla / intro) */
+.preloader-logo {
+    width: min(200px, 46vw) !important;
+    height: min(200px, 46vw) !important;
+    background: #ffffff;
+    border: 3px solid var(--gold, #c9a961);
+    border-radius: 50%;
+    object-fit: cover !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.55);
+}

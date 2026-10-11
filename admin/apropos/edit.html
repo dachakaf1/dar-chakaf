@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Page À propos — Dar Chakaf Admin</title>
+
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ================================================================
+           ADMIN DESIGN SYSTEM — DAR CHAKAF PREMIUM
+           ================================================================ */
+        :root {
+            --bg-void: #0a0908;
+            --bg-base: #0e0c0a;
+            --bg-panel: #15120e;
+            --bg-panel-2: #1c1712;
+            --bg-panel-raised: #221b14;
+            --border-soft: rgba(201, 169, 97, 0.14);
+            --border-strong: rgba(201, 169, 97, 0.32);
+            --gold: #c9a961;
+            --gold-bright: #e6c988;
+            --gold-dim: #8f7440;
+            --gold-glow: rgba(201, 169, 97, 0.06);
+            --ink: #f2ead9;
+            --ink-soft: #cdc3ae;
+            --ink-mute: #8e8471;
+            --ink-faint: #5c5546;
+            --success: #7a9b6e;
+            --danger: #b9634a;
+            --warning: #d4a04a;
+            --info: #5b8c9e;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --fs-h1: clamp(1.8rem, 2.8vw, 2.4rem);
+            --fs-h2: clamp(1.2rem, 1.8vw, 1.5rem);
+            --gap-xs: 0.5rem;
+            --gap-sm: 1rem;
+            --gap-md: 2rem;
+            --gap-lg: 4rem;
+            --radius-sm: 4px;
+            --radius-md: 10px;
+            --radius-lg: 18px;
+            --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.65);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-gold: 0 10px 40px -12px rgba(201, 169, 97, 0.35);
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --transition: 0.45s var(--ease);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-base);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a { color: inherit; text-decoration: none; transition: var(--transition); }
+        ul { list-style: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        input, select, textarea { font-family: inherit; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-void); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; border: 2px solid var(--bg-void); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 3vw, 2.5rem);
+        }
+
+        /* ================================================================
+           ANIMATIONS
+           ================================================================ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .fade-up { animation: fadeUp 0.6s var(--ease) forwards; opacity: 0; }
+        .fade-up-delay-1 { animation-delay: 0.1s; }
+        .fade-up-delay-2 { animation-delay: 0.2s; }
+        .fade-up-delay-3 { animation-delay: 0.3s; }
+        .fade-up-delay-4 { animation-delay: 0.4s; }
+
+        /* ================================================================
+           MIST BG
+           ================================================================ */
+        .mist-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: var(--bg-void, #0a0908);
+        }
+        .mist-bg::before,
+        .mist-bg::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            animation: mistDrift 22s ease-in-out infinite alternate;
+        }
+        .mist-bg::before {
+            width: 46vw; height: 46vw;
+            top: -12vw; left: -10vw;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.35), transparent 70%);
+        }
+        .mist-bg::after {
+            width: 40vw; height: 40vw;
+            bottom: -14vw; right: -8vw;
+            background: radial-gradient(circle, rgba(140, 110, 60, 0.28), transparent 70%);
+            animation-delay: -9s;
+        }
+        @keyframes mistDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(3vw, 2vw) scale(1.12); }
+        }
+
+        /* ================================================================
+           ADMIN HEADER
+           ================================================================ */
+        .admin-header {
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 0.7rem 0;
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(21, 18, 14, 0.94);
+        }
+        .admin-header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+        }
+        .admin-header .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--gold-bright);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .admin-header .logo-text .mark {
+            width: 32px; height: 32px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: var(--gold);
+            overflow: hidden;
+        }
+        .admin-header .logo-text .mark img {
+            width: 24px; height: 24px;
+            object-fit: contain;
+        }
+        .admin-header .logo-text .mark .fallback-text {
+            display: none;
+        }
+        .admin-header .logo-text .mark img.error ~ .fallback-text {
+            display: block;
+        }
+        .admin-header .logo-text .mark img.error {
+            display: none;
+        }
+        .admin-header .logo-text .mark:hover { transform: rotate(90deg); }
+        .admin-header .logo-text span {
+            font-family: var(--font-body);
+            font-size: 0.55rem; letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            display: block; margin-top: -2px;
+        }
+        .admin-header-actions {
+            display: flex; align-items: center; gap: 1.2rem;
+        }
+        .admin-header-actions .user {
+            display: flex; align-items: center; gap: 0.6rem;
+            font-size: 0.82rem; color: var(--ink-mute);
+        }
+        .admin-header-actions .user .avatar {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+            display: flex; align-items: center; justify-content: center;
+            color: #14110b; font-weight: 600; font-size: 0.8rem;
+        }
+        .admin-header-actions .user .name { color: var(--ink-soft); font-weight: 400; }
+        .admin-header-actions .logout-btn {
+            font-size: 0.7rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .admin-header-actions .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+        /* ================================================================
+           ADMIN SIDEBAR
+           ================================================================ */
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: var(--gap-lg);
+            padding: var(--gap-md) 0 var(--gap-lg);
+            align-items: start;
+        }
+        .admin-sidebar {
+            position: sticky; top: 80px; align-self: start;
+        }
+        .admin-sidebar .nav-section { margin-bottom: 1.5rem; }
+        .admin-sidebar .nav-section .label {
+            font-size: 0.6rem; letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            padding: 0 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+        .admin-sidebar a {
+            display: flex; align-items: center; gap: 0.7rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            color: var(--ink-mute);
+            transition: var(--transition);
+            border-left: 2px solid transparent;
+        }
+        .admin-sidebar a i { width: 18px; text-align: center; font-size: 0.9rem; }
+        .admin-sidebar a:hover, .admin-sidebar a.active {
+            background: var(--gold-glow);
+            color: var(--gold-bright);
+            border-left-color: var(--gold);
+        }
+        .admin-sidebar a .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.55rem;
+            padding: 0.05rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .admin-sidebar a .badge.success { background: var(--success); }
+
+        /* ================================================================
+           BUTTONS
+           ================================================================ */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.78rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, var(--gold-dim));
+            color: #14110b;
+            box-shadow: var(--shadow-gold);
+        }
+        .btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        .btn-ghost { border: 1px solid var(--border-soft); color: var(--ink-mute); background: transparent; }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.65rem; }
+        .btn-xs { padding: 0.15rem 0.5rem; font-size: 0.6rem; }
+
+        /* ================================================================
+           MAIN CONTENT
+           ================================================================ */
+        .admin-main { min-width: 0; }
+
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+            margin-bottom: var(--gap-md);
+        }
+        .page-header h1 { font-size: var(--fs-h1); color: var(--ink); font-weight: 600; }
+        .page-header .sub { font-size: 0.85rem; color: var(--ink-mute); display: block; margin-top: -2px; }
+        .page-header .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+        /* ================================================================
+           FORM
+           ================================================================ */
+        .form-container {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 2.4rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            margin-bottom: 0.3rem;
+            font-weight: 400;
+        }
+        .form-group label .required {
+            color: var(--danger);
+            margin-left: 0.2rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.88rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.06);
+            background: var(--bg-panel-raised);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group .help-text {
+            font-size: 0.7rem;
+            color: var(--ink-faint);
+            margin-top: 0.2rem;
+        }
+        .cover-tools { display: flex; gap: 0.6rem; margin-top: 0.55rem; flex-wrap: wrap; }
+        .cover-preview {
+            margin-top: 0.7rem;
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 16/9;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            background: var(--bg-panel-2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-faint);
+            font-size: 0.8rem;
+        }
+        .cover-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .cover-preview img.loaded { display: block; }
+        .cover-preview img.loaded + span { display: none; }
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold-bright);
+            font-weight: 600;
+            margin: 1.6rem 0 1rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--border-soft);
+        }
+        .form-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.6rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border-soft);
+        }
+        .form-actions .btn {
+            padding: 0.7rem 2rem;
+        }
+
+        /* Image preview */
+        .image-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.4rem;
+            position: relative;
+        }
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .image-preview img.loaded {
+            display: block;
+        }
+        .image-preview .empty-frame {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-faint);
+            font-size: 0.6rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .image-preview .empty-frame .icon {
+            font-size: 2rem;
+            opacity: 0.15;
+            margin-bottom: 0.2rem;
+        }
+        .image-preview img.loaded ~ .empty-frame {
+            display: none;
+        }
+
+        /* Hero slideshow manager */
+        .hero-slides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.8rem;
+            margin-top: 0.6rem;
+        }
+        .hero-slide-item {
+            position: relative;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-2);
+            aspect-ratio: 16/10;
+        }
+        .hero-slide-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-slide-item .hero-slide-order {
+            position: absolute;
+            top: 0.4rem;
+            left: 0.4rem;
+            background: rgba(10, 9, 8, 0.75);
+            color: var(--gold-bright);
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.1rem 0.45rem;
+            border-radius: 20px;
+        }
+        .hero-slide-actions {
+            position: absolute;
+            inset: auto 0 0 0;
+            display: flex;
+            justify-content: center;
+            gap: 0.3rem;
+            padding: 0.35rem;
+            background: linear-gradient(0deg, rgba(10,9,8,0.9), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .hero-slide-item:hover .hero-slide-actions { opacity: 1; }
+        .hero-slide-actions button {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel);
+            color: var(--ink-mute);
+            cursor: pointer;
+            font-size: 0.7rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .hero-slide-actions button:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .hero-slide-actions button.delete:hover { border-color: var(--danger); color: var(--danger); }
+        .hero-slide-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--ink-faint);
+            font-size: 0.75rem;
+            padding: 1rem;
+            border: 1px dashed var(--border-soft);
+            border-radius: var(--radius-sm);
+        }
+        .hero-slide-add-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .hero-slide-add-row input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* ================================================================
+           VALUES EDITOR — cartes "Nos valeurs" (nombre libre)
+           ================================================================ */
+        .values-editor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-top: 0.6rem;
+        }
+        .value-editor-item {
+            display: grid;
+            grid-template-columns: 90px 1fr auto;
+            gap: 0.9rem;
+            align-items: start;
+            padding: 1rem;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            background: var(--bg-panel-2);
+        }
+        .value-editor-item .icon-preview {
+            width: 90px;
+            height: 68px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-raised);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 1.4rem;
+        }
+        .value-editor-item .icon-preview input {
+            width: 100%;
+            text-align: center;
+            border: none;
+            background: transparent;
+            color: var(--ink-faint);
+            font-size: 0.6rem;
+            margin-top: 0.3rem;
+        }
+        .value-editor-fields { display: flex; flex-direction: column; gap: 0.5rem; }
+        .value-editor-fields input,
+        .value-editor-fields textarea {
+            width: 100%;
+            padding: 0.55rem 0.8rem;
+            background: var(--bg-panel-raised);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.85rem;
+        }
+        .value-editor-fields textarea { min-height: 60px; resize: vertical; }
+        .value-editor-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .value-editor-actions button {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel);
+            color: var(--ink-mute);
+            cursor: pointer;
+            font-size: 0.75rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .value-editor-actions button:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .value-editor-actions button.delete:hover { border-color: var(--danger); color: var(--danger); }
+        .values-editor-empty {
+            text-align: center;
+            color: var(--ink-faint);
+            font-size: 0.8rem;
+            padding: 1.2rem;
+            border: 1px dashed var(--border-soft);
+            border-radius: var(--radius-sm);
+        }
+        @media (max-width: 720px) {
+            .value-editor-item { grid-template-columns: 1fr; }
+            .value-editor-item .icon-preview { width: 100%; flex-direction: row; gap: 0.5rem; height: auto; padding: 0.5rem; }
+            .value-editor-actions { flex-direction: row; }
+        }
+
+        /* ================================================================
+           OFFERS EDITOR — offres avec affiche + compte à rebours
+           ================================================================ */
+        .offer-editor-item { grid-template-columns: 110px 1fr auto; }
+        .offer-editor-item .offer-thumb {
+            width: 110px;
+            height: 82px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-raised);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--ink-faint);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        .offer-editor-item .offer-thumb img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .offer-editor-item .offer-thumb img.loaded { display: block; }
+        .offer-editor-item .offer-thumb img.loaded ~ i { display: none; }
+        .offer-editor-item .offer-thumb-label {
+            width: 110px;
+            text-align: center;
+            font-size: 0.6rem;
+            color: var(--ink-faint);
+            margin-top: 0.3rem;
+        }
+        .offer-editor-fields .offer-datetime-row { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.2rem; }
+        .offer-editor-fields .offer-datetime-row label { font-size: 0.75rem; color: var(--ink-mute); white-space: nowrap; }
+        .offer-editor-fields input[type="datetime-local"] {
+            width: auto;
+            flex: 1;
+            padding: 0.5rem 0.7rem;
+            background: var(--bg-panel-raised);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.85rem;
+        }
+        @media (max-width: 720px) {
+            .offer-editor-item { grid-template-columns: 1fr; }
+            .offer-editor-item .offer-thumb, .offer-editor-item .offer-thumb-label { width: 100%; }
+        }
+
+        /* ================================================================
+           TOAST
+           ================================================================ */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-panel-raised);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            color: var(--ink);
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-soft);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 999;
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { border-color: var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-color: var(--danger); }
+        .toast.error i { color: var(--danger); }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 1100px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .admin-sidebar {
+                position: static;
+                display: flex; flex-wrap: wrap; gap: 0.3rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-soft);
+            }
+            .admin-sidebar .nav-section {
+                margin-bottom: 0;
+                display: flex; flex-wrap: wrap; gap: 0.2rem;
+            }
+            .admin-sidebar .nav-section .label { display: none; }
+            .admin-sidebar a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.72rem;
+                border-left: none;
+                border-radius: var(--radius-sm);
+            }
+            .admin-sidebar a i { display: none; }
+            .admin-sidebar a .badge { margin-left: 0.3rem; }
+        }
+        @media (max-width: 900px) {
+            .form-row { grid-template-columns: 1fr; }
+            .form-container { padding: 1.5rem; }
+        }
+        @media (max-width: 600px) {
+            .admin-header-inner { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+            .admin-header-actions { flex-wrap: wrap; justify-content: space-between; }
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .page-header .actions { width: 100%; justify-content: stretch; }
+            .page-header .actions .btn { flex: 1; justify-content: center; }
+            .form-container { padding: 1rem; }
+            .form-actions { flex-direction: column; }
+            .form-actions .btn { width: 100%; justify-content: center; }
+            .toast { left: 1rem; right: 1rem; bottom: 1rem; }
+        }
+        @media (max-width: 400px) {
+            .form-actions { flex-direction: column; }
+        }
+
+        @media (min-width: 1600px) {
+            html { font-size: 19px; }
+            .container { max-width: 1680px; }
+        }
+        @media (min-width: 2200px) {
+            html { font-size: 23px; }
+            .container { max-width: 2100px; }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/logo-frame.css">
+</head>
+<body>
+    <div class="mist-bg" aria-hidden="true"></div>
+
+    <!-- ============================================================
+    ADMIN HEADER
+    ============================================================ -->
+    <header class="admin-header">
+        <div class="container admin-header-inner">
+            <div class="logo-text">
+                <span class="mark">
+                    <img 
+                        src="/assets/logo/dar-chakaf-logo.svg" 
+                        alt="Dar Chakaf Logo"
+                        width="24" 
+                        height="24"
+                        style="width:24px;height:24px;object-fit:contain;"
+                        onerror="this.classList.add('error'); this.style.display='none'; this.parentElement.querySelector('.fallback-text').style.display='block';"
+                    />
+                    <span class="fallback-text">D</span>
+                </span>
+                <span>Dar Chakaf <span>Administration</span></span>
+            </div>
+            <div class="admin-header-actions">
+                <span class="user">
+                    <span class="avatar" id="adminAvatar">A</span>
+                    <span class="name" id="adminName">Administrateur</span>
+                </span>
+                <a href="../login.html" class="logout-btn" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    ADMIN LAYOUT
+    ============================================================ -->
+    <div class="container admin-layout">
+
+        <!-- SIDEBAR -->
+        <nav class="admin-sidebar">
+            <div class="nav-section">
+                <span class="label">Navigation</span>
+                <a href="../dashboard.html"><i class="fa-solid fa-gauge-high"></i> Tableau de bord</a>
+                <a href="../categories/liste.html"><i class="fa-solid fa-layer-group"></i> Catégories</a>
+                <a href="../galerie/liste.html"><i class="fa-solid fa-images"></i> Galerie</a>
+                <a href="../messages/liste.html"><i class="fa-solid fa-envelope"></i> Messages <span class="badge" id="messagesBadge">0</span></a>
+                <a href="../devis/liste.html"><i class="fa-solid fa-file-invoice"></i> Demandes de devis</a>
+                <a href="../blog/liste.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="../newsletter/liste.html"><i class="fa-solid fa-paper-plane"></i> Newsletter</a>
+                <a href="../utilisateurs/liste.html"><i class="fa-solid fa-users"></i> Utilisateurs</a>
+                <a href="../parametres/infos-site.html"><i class="fa-solid fa-gear"></i> Paramètres</a>
+                <a href="edit.html" class="active"><i class="fa-solid fa-book-open"></i> Page À propos</a>
+                <a href="../logs/activite.html"><i class="fa-solid fa-clock-rotate-left"></i> Logs</a>
+            </div>
+            <div class="nav-section">
+                <span class="label">Produits</span>
+                <div id="sidebarProducts">
+                    <!-- Rempli dynamiquement -->
+                </div>
+                <a href="../produits/produit-form.html"><i class="fa-solid fa-plus"></i> Ajouter un produit</a>
+            </div>
+            <div class="nav-section">
+                <span class="label">Page À propos</span>
+                <a href="#contentSection"><i class="fa-solid fa-align-left"></i> Textes de la page</a>
+                <a href="#valuesSection"><i class="fa-solid fa-gem"></i> Nos valeurs</a>
+                <a href="#offersSection"><i class="fa-solid fa-tags"></i> Nos offres</a>
+            </div>
+        </nav>
+
+        <!-- ============================================================
+        MAIN CONTENT
+        ============================================================ -->
+        <main class="admin-main">
+
+            <!-- Page Header -->
+            <div class="page-header fade-up">
+                <div>
+                    <h1><i class="fa-solid fa-book-open" style="color:var(--gold);"></i> Page À propos</h1>
+                    <span class="sub" id="pageSub">Modifiez les textes et les valeurs affichés sur la page « À propos » du site</span>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-ghost" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Actualiser</button>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            FORM — 100% API
+            ============================================================ -->
+            <!-- ============================================================
+            CONTENU DE LA PAGE — TEXTES (100% API)
+            ============================================================ -->
+            <div class="form-container fade-up fade-up-delay-1" id="contentSection">
+                <form id="contentForm" novalidate>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="heroTitle">Titre principal (haut de page)</label>
+                            <input type="text" id="heroTitle" placeholder="Ex: Notre histoire" />
+                        </div>
+                        <div class="form-group">
+                            <label for="badgeNumber">Nombre affiché sur le badge</label>
+                            <input type="text" id="badgeNumber" placeholder="Ex: 15" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="heroSubtitle">Sous-titre (sous le titre principal)</label>
+                            <textarea id="heroSubtitle" placeholder="Une phrase d'introduction pour la page"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="badgeText">Texte du badge (à côté du nombre)</label>
+                        <input type="text" id="badgeText" placeholder="Ex: Ans de savoir-faire artisanal" />
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="valuesEyebrow">Nos valeurs — sur-titre</label>
+                            <input type="text" id="valuesEyebrow" placeholder="Ex: Nos valeurs" />
+                        </div>
+                        <div class="form-group">
+                            <label for="valuesTitle">Nos valeurs — titre</label>
+                            <input type="text" id="valuesTitle" placeholder="Ex: Ce qui nous anime" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="valuesDesc">Nos valeurs — description</label>
+                        <textarea id="valuesDesc"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="statYearsLabel">Statistique — libellé « Années »</label>
+                            <input type="text" id="statYearsLabel" />
+                        </div>
+                        <div class="form-group">
+                            <label for="statProjectsLabel">Statistique — libellé « Projets »</label>
+                            <input type="text" id="statProjectsLabel" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="statCollectionsLabel">Statistique — libellé « Collections »</label>
+                            <input type="text" id="statCollectionsLabel" />
+                        </div>
+                        <div class="form-group" style="display:grid; grid-template-columns:1fr 1fr; gap:0.7rem;">
+                            <div>
+                                <label for="statExtraValue">4ᵉ statistique — valeur</label>
+                                <input type="text" id="statExtraValue" placeholder="Ex: 100%" />
+                            </div>
+                            <div>
+                                <label for="statExtraLabel">4ᵉ statistique — libellé</label>
+                                <input type="text" id="statExtraLabel" placeholder="Ex: Fabrication sur mesure" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ctaEyebrow">Bandeau final — sur-titre</label>
+                            <input type="text" id="ctaEyebrow" placeholder="Ex: Prêt à collaborer ?" />
+                        </div>
+                        <div class="form-group">
+                            <label for="ctaButtonText">Bandeau final — texte du bouton</label>
+                            <input type="text" id="ctaButtonText" placeholder="Ex: Demander un devis" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ctaTitle">Bandeau final — titre</label>
+                        <input type="text" id="ctaTitle" placeholder="Ex: Donnons vie à votre intérieur" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ctaDesc">Bandeau final — description</label>
+                            <textarea id="ctaDesc"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ctaButtonLink">Bandeau final — lien du bouton</label>
+                            <input type="text" id="ctaButtonLink" placeholder="Ex: /contact.html" />
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-gold" id="submitBtn">
+                            <span id="submitText"><i class="fa-solid fa-check"></i> Enregistrer les textes</span>
+                            <span id="submitSpinner" style="display:none;"><i class="fa-solid fa-spinner fa-spin"></i> Enregistrement...</span>
+                        </button>
+                        <button type="button" class="btn btn-ghost" id="reloadContentBtn">Annuler les modifications</button>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- ============================================================
+            NOS VALEURS — cartes en nombre libre (2, 3, 4, ...)
+            ============================================================ -->
+            <div class="form-container fade-up fade-up-delay-2" id="valuesSection" style="margin-top:2rem;">
+                <div class="page-header" style="margin-bottom:1rem;">
+                    <div>
+                        <h2 style="font-size:var(--fs-h2); color:var(--ink);"><i class="fa-solid fa-gem" style="color:var(--gold);"></i> Cartes « Nos valeurs »</h2>
+                        <span class="sub">Ajoutez, modifiez, réordonnez ou supprimez autant de cartes que vous voulez (2, 3, 4 ou plus).</span>
+                    </div>
+                </div>
+
+                <div class="help-text" style="margin-bottom:0.8rem;">
+                    Icône : indiquez le nom d'une icône <a href="https://fontawesome.com/search?o=r&m=free&s=solid" target="_blank" rel="noopener" style="color:var(--gold-bright);">Font Awesome</a>
+                    (solide), par ex. <code>fa-hands</code>, <code>fa-leaf</code>, <code>fa-heart</code>, <code>fa-gem</code>, <code>fa-star</code>.
+                </div>
+
+                <div class="values-editor-list" id="valuesEditorList">
+                    <div class="values-editor-empty">Chargement…</div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-ghost" id="addValueBtn"><i class="fa-solid fa-plus"></i> Ajouter une carte</button>
+                    <button type="button" class="btn btn-gold" id="saveValuesBtn">
+                        <span id="saveValuesText"><i class="fa-solid fa-check"></i> Enregistrer les valeurs</span>
+                        <span id="saveValuesSpinner" style="display:none;"><i class="fa-solid fa-spinner fa-spin"></i> Enregistrement...</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            NOS OFFRES — affiche + titre + description + compte à rebours
+            ============================================================ -->
+            <div class="form-container fade-up fade-up-delay-2" id="offersSection" style="margin-top:2rem;">
+                <div class="page-header" style="margin-bottom:1rem;">
+                    <div>
+                        <h2 style="font-size:var(--fs-h2); color:var(--ink);"><i class="fa-solid fa-tags" style="color:var(--gold);"></i> Nos offres</h2>
+                        <span class="sub">Cette section remplace « Notre histoire » sur la page À propos. Ajoutez autant d'offres que vous voulez, chacune avec une affiche, un titre, une description et une date de fin (compte à rebours).</span>
+                    </div>
+                </div>
+
+                <div class="values-editor-list" id="offersEditorList">
+                    <div class="values-editor-empty">Chargement…</div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-ghost" id="addOfferBtn"><i class="fa-solid fa-plus"></i> Ajouter une offre</button>
+                    <button type="button" class="btn btn-gold" id="saveOffersBtn">
+                        <span id="saveOffersText"><i class="fa-solid fa-check"></i> Enregistrer les offres</span>
+                        <span id="saveOffersSpinner" style="display:none;"><i class="fa-solid fa-spinner fa-spin"></i> Enregistrement...</span>
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Opération réussie !</span>
+    </div>
+
+    <!-- ============================================================
+    SCRIPTS — 100% API-READY
+    ============================================================ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            'use strict';
+
+            // ============================================================
+            // 1. USER INFO & SESSION
+            // ============================================================
+            var adminName = localStorage.getItem('adminName') || 'Administrateur';
+            document.getElementById('adminName').textContent = adminName;
+            document.getElementById('adminAvatar').textContent = adminName.charAt(0).toUpperCase();
+
+            var token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                    localStorage.clear();
+                    window.location.href = '../login.html';
+                }
+            });
+
+            // ============================================================
+            // 2. ICON MAP
+            // ============================================================
+            var iconMap = {
+                'salons-modernes': 'fa-couch',
+                'salons-traditionnels': 'fa-mosque',
+                'tables': 'fa-table',
+                'decorations': 'fa-vector-square',
+                'meubles-tv': 'fa-tv',
+                'couloirs': 'fa-door-open',
+                'tissus': 'fa-scroll'
+            };
+
+            // ============================================================
+            // 3. LOAD CATEGORIES FOR SIDEBAR
+            // ============================================================
+            function loadCategories() {
+                fetch('/api/categories', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (!res.success || !Array.isArray(res.data)) return;
+                        var cats = res.data;
+
+                        var sidebarContainer = document.getElementById('sidebarProducts');
+                        sidebarContainer.innerHTML = '';
+                        cats.forEach(function(cat) {
+                            var slug = cat.slug || cat.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                            var icon = cat.icone || iconMap[slug] || 'fa-cube';
+                            var a = document.createElement('a');
+                            a.href = '../produits/' + slug + '.html';
+                            a.innerHTML = '<i class="fa-solid ' + icon + '"></i> ' + cat.nom +
+                                ' <span class="badge success">' + (cat.product_count || 0) + '</span>';
+                            sidebarContainer.appendChild(a);
+                        });
+                    })
+                    .catch(function(e) { console.warn('Erreur chargement catégories:', e); });
+            }
+
+            loadCategories();
+
+            // ============================================================
+            // 4. MESSAGES BADGE
+            // ============================================================
+            function loadMessagesBadge() {
+                fetch('/api/messages?lu=false&limit=1', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res.success && Array.isArray(res.data)) {
+                            document.getElementById('messagesBadge').textContent = res.data.length;
+                        }
+                    })
+                    .catch(function() {});
+            }
+            loadMessagesBadge();
+
+            // ============================================================
+            // 5. LOAD PAGE CONTENT — 100% API
+            // ============================================================
+            var contentData = {};
+
+            var CONTENT_FIELDS = {
+                heroTitle: 'hero_title',
+                heroSubtitle: 'hero_subtitle',
+                badgeNumber: 'badge_number',
+                badgeText: 'badge_text',
+                valuesEyebrow: 'values_eyebrow',
+                valuesTitle: 'values_title',
+                valuesDesc: 'values_desc',
+                statYearsLabel: 'stat_years_label',
+                statProjectsLabel: 'stat_projects_label',
+                statCollectionsLabel: 'stat_collections_label',
+                statExtraValue: 'stat_extra_value',
+                statExtraLabel: 'stat_extra_label',
+                ctaEyebrow: 'cta_eyebrow',
+                ctaTitle: 'cta_title',
+                ctaDesc: 'cta_desc',
+                ctaButtonText: 'cta_button_text',
+                ctaButtonLink: 'cta_button_link'
+            };
+
+            function loadContent() {
+                fetch('/api/apropos', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res && res.success && res.data) {
+                            contentData = res.data;
+                            populateContentForm(contentData);
+                        }
+                    })
+                    .catch(function() { showToast('Impossible de charger le contenu de la page.', 'error'); });
+            }
+
+            function populateContentForm(data) {
+                Object.keys(CONTENT_FIELDS).forEach(function(inputId) {
+                    var el = document.getElementById(inputId);
+                    if (el) el.value = data[CONTENT_FIELDS[inputId]] || '';
+                });
+            }
+
+            // ============================================================
+            // 6. SAVE PAGE CONTENT — 100% API
+            // ============================================================
+            var contentForm = document.getElementById('contentForm');
+            var submitBtn = document.getElementById('submitBtn');
+            var submitText = document.getElementById('submitText');
+            var submitSpinner = document.getElementById('submitSpinner');
+
+            contentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                var payload = {};
+                Object.keys(CONTENT_FIELDS).forEach(function(inputId) {
+                    var el = document.getElementById(inputId);
+                    if (el) payload[CONTENT_FIELDS[inputId]] = el.value.trim();
+                });
+
+                submitBtn.disabled = true;
+                submitText.style.display = 'none';
+                submitSpinner.style.display = 'inline';
+
+                fetch('/api/apropos', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        submitBtn.disabled = false;
+                        submitText.style.display = 'inline';
+                        submitSpinner.style.display = 'none';
+
+                        if (res && res.success) {
+                            showToast('Textes de la page mis à jour avec succès !', 'success');
+                            contentData = res.data || contentData;
+                        } else {
+                            showToast(res.message || "Erreur lors de l'enregistrement.", 'error');
+                        }
+                    })
+                    .catch(function(err) {
+                        submitBtn.disabled = false;
+                        submitText.style.display = 'inline';
+                        submitSpinner.style.display = 'none';
+                        showToast('Erreur de connexion au serveur.', 'error');
+                        console.error(err);
+                    });
+            });
+
+            document.getElementById('reloadContentBtn').addEventListener('click', function() {
+                loadContent();
+                showToast('Modifications annulées.', 'success');
+            });
+
+            // ============================================================
+            // 7. VALUES EDITOR — cartes "Nos valeurs" (nombre libre)
+            // ============================================================
+            var valuesEditorList = document.getElementById('valuesEditorList');
+            var addValueBtn = document.getElementById('addValueBtn');
+            var saveValuesBtn = document.getElementById('saveValuesBtn');
+            var saveValuesText = document.getElementById('saveValuesText');
+            var saveValuesSpinner = document.getElementById('saveValuesSpinner');
+
+            var valuesList = [];       // { id|null, icone, titre, description, ordre }
+            var removedValueIds = [];  // ids to delete on save
+
+            function loadValues() {
+                fetch('/api/apropos-values')
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        valuesList = (res && res.success && Array.isArray(res.data)) ? res.data : [];
+                        removedValueIds = [];
+                        renderValues();
+                    })
+                    .catch(function() {
+                        valuesList = [];
+                        renderValues();
+                    });
+            }
+
+            function renderValues() {
+                if (!valuesEditorList) return;
+                if (valuesList.length === 0) {
+                    valuesEditorList.innerHTML = '<div class="values-editor-empty">Aucune carte pour le moment — cliquez sur « Ajouter une carte ».</div>';
+                    return;
+                }
+                valuesEditorList.innerHTML = valuesList.map(function(v, index) {
+                    var icon = (v.icone || 'fa-gem').trim();
+                    return '<div class="value-editor-item" data-index="' + index + '">' +
+                        '<div class="icon-preview">' +
+                            '<i class="fa-solid ' + icon + '" data-role="icon-glyph"></i>' +
+                        '</div>' +
+                        '<div class="value-editor-fields">' +
+                            '<input type="text" data-role="icone" placeholder="Icône Font Awesome, ex: fa-hands" value="' + escapeAttr(v.icone || '') + '" />' +
+                            '<input type="text" data-role="titre" placeholder="Titre de la carte" value="' + escapeAttr(v.titre || '') + '" />' +
+                            '<textarea data-role="description" placeholder="Description">' + escapeHtml(v.description || '') + '</textarea>' +
+                        '</div>' +
+                        '<div class="value-editor-actions">' +
+                            '<button type="button" class="up" title="Monter"><i class="fa-solid fa-arrow-up"></i></button>' +
+                            '<button type="button" class="down" title="Descendre"><i class="fa-solid fa-arrow-down"></i></button>' +
+                            '<button type="button" class="delete" title="Supprimer"><i class="fa-regular fa-trash-can"></i></button>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            }
+
+            function escapeAttr(str) {
+                return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+            }
+            function escapeHtml(str) {
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            }
+
+            if (addValueBtn) {
+                addValueBtn.addEventListener('click', function() {
+                    valuesList.push({ id: null, icone: 'fa-gem', titre: '', description: '', ordre: valuesList.length });
+                    renderValues();
+                    valuesEditorList.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                });
+            }
+
+            if (valuesEditorList) {
+                // Champs texte : on met à jour le modèle en direct (y compris l'aperçu de l'icône)
+                valuesEditorList.addEventListener('input', function(e) {
+                    var item = e.target.closest('.value-editor-item');
+                    if (!item) return;
+                    var index = parseInt(item.getAttribute('data-index'), 10);
+                    var role = e.target.getAttribute('data-role');
+                    if (!role || !valuesList[index]) return;
+
+                    if (role === 'icone') {
+                        valuesList[index].icone = e.target.value;
+                        var glyph = item.querySelector('[data-role="icon-glyph"]');
+                        if (glyph) glyph.className = 'fa-solid ' + (e.target.value.trim() || 'fa-gem');
+                    } else if (role === 'titre') {
+                        valuesList[index].titre = e.target.value;
+                    } else if (role === 'description') {
+                        valuesList[index].description = e.target.value;
+                    }
+                });
+
+                // Boutons monter / descendre / supprimer
+                valuesEditorList.addEventListener('click', function(e) {
+                    var btn = e.target.closest('button');
+                    if (!btn) return;
+                    var item = e.target.closest('.value-editor-item');
+                    var index = parseInt(item.getAttribute('data-index'), 10);
+
+                    if (btn.classList.contains('delete')) {
+                        var removed = valuesList.splice(index, 1)[0];
+                        if (removed && removed.id) removedValueIds.push(removed.id);
+                        renderValues();
+                    } else if (btn.classList.contains('up') && index > 0) {
+                        var tmp = valuesList[index - 1];
+                        valuesList[index - 1] = valuesList[index];
+                        valuesList[index] = tmp;
+                        renderValues();
+                    } else if (btn.classList.contains('down') && index < valuesList.length - 1) {
+                        var tmp2 = valuesList[index + 1];
+                        valuesList[index + 1] = valuesList[index];
+                        valuesList[index] = tmp2;
+                        renderValues();
+                    }
+                });
+            }
+
+            if (saveValuesBtn) {
+                saveValuesBtn.addEventListener('click', function() {
+                    var missingTitle = valuesList.some(function(v) { return !v.titre || !v.titre.trim(); });
+                    if (missingTitle) {
+                        showToast('Chaque carte doit avoir un titre.', 'error');
+                        return;
+                    }
+
+                    saveValuesBtn.disabled = true;
+                    saveValuesText.style.display = 'none';
+                    saveValuesSpinner.style.display = 'inline';
+
+                    var tasks = [];
+
+                    removedValueIds.forEach(function(id) {
+                        tasks.push(fetch('/api/apropos-values?id=' + id, {
+                            method: 'DELETE',
+                            headers: { 'Authorization': 'Bearer ' + token }
+                        }));
+                    });
+
+                    valuesList.forEach(function(v, index) {
+                        var body = JSON.stringify({ icone: v.icone, titre: v.titre, description: v.description, ordre: index });
+                        if (v.id) {
+                            tasks.push(fetch('/api/apropos-values?id=' + v.id, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                                body: body
+                            }));
+                        } else {
+                            tasks.push(fetch('/api/apropos-values', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                                body: body
+                            }));
+                        }
+                    });
+
+                    Promise.all(tasks)
+                        .then(function() {
+                            saveValuesBtn.disabled = false;
+                            saveValuesText.style.display = 'inline';
+                            saveValuesSpinner.style.display = 'none';
+                            showToast('Cartes « Nos valeurs » enregistrées !', 'success');
+                            loadValues();
+                        })
+                        .catch(function(err) {
+                            saveValuesBtn.disabled = false;
+                            saveValuesText.style.display = 'inline';
+                            saveValuesSpinner.style.display = 'none';
+                            showToast('Erreur lors de l\'enregistrement des valeurs.', 'error');
+                            console.error(err);
+                        });
+                });
+            }
+
+            // ============================================================
+            // 7bis. OFFERS EDITOR — "Nos offres" (affiche + compte à rebours)
+            // ============================================================
+            var offersEditorList = document.getElementById('offersEditorList');
+            var addOfferBtn = document.getElementById('addOfferBtn');
+            var saveOffersBtn = document.getElementById('saveOffersBtn');
+            var saveOffersText = document.getElementById('saveOffersText');
+            var saveOffersSpinner = document.getElementById('saveOffersSpinner');
+
+            var offersList = [];      // { id|null, image, titre, description, countdown_end, ordre }
+            var removedOfferIds = [];
+
+            function toDatetimeLocal(value) {
+                if (!value) return '';
+                var d = new Date(value);
+                if (isNaN(d.getTime())) return '';
+                var pad = function(n) { return String(n).padStart(2, '0'); };
+                return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+            }
+
+            function loadOffers() {
+                fetch('/api/apropos-offers', { cache: 'no-store' })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        offersList = (res && res.success && Array.isArray(res.data)) ? res.data : [];
+                        removedOfferIds = [];
+                        renderOffers();
+                    })
+                    .catch(function() {
+                        offersList = [];
+                        renderOffers();
+                    });
+            }
+
+            function renderOffers() {
+                if (!offersEditorList) return;
+                if (offersList.length === 0) {
+                    offersEditorList.innerHTML = '<div class="values-editor-empty">Aucune offre pour le moment — cliquez sur « Ajouter une offre ».</div>';
+                    return;
+                }
+                offersEditorList.innerHTML = offersList.map(function(o, index) {
+                    var img = o.image ? '<img class="loaded" src="' + escapeAttr(o.image) + '" />' : '';
+                    return '<div class="value-editor-item offer-editor-item" data-index="' + index + '">' +
+                        '<div>' +
+                            '<div class="offer-thumb" data-role="offer-thumb" title="Cliquer pour choisir une image">' + img + '<i class="fa-solid fa-image"></i></div>' +
+                            '<div class="offer-thumb-label">Affiche</div>' +
+                            '<input type="file" data-role="offer-file" accept="image/*" style="display:none;" />' +
+                        '</div>' +
+                        '<div class="value-editor-fields offer-editor-fields">' +
+                            '<input type="text" data-role="titre" placeholder="Titre de l\'offre" value="' + escapeAttr(o.titre || '') + '" />' +
+                            '<textarea data-role="description" placeholder="Description de l\'offre">' + escapeHtml(o.description || '') + '</textarea>' +
+                            '<div class="offer-datetime-row">' +
+                                '<label>Fin de l\'offre :</label>' +
+                                '<input type="datetime-local" data-role="countdown_end" value="' + escapeAttr(toDatetimeLocal(o.countdown_end)) + '" />' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="value-editor-actions">' +
+                            '<button type="button" class="up" title="Monter"><i class="fa-solid fa-arrow-up"></i></button>' +
+                            '<button type="button" class="down" title="Descendre"><i class="fa-solid fa-arrow-down"></i></button>' +
+                            '<button type="button" class="delete" title="Supprimer"><i class="fa-regular fa-trash-can"></i></button>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            }
+
+            if (addOfferBtn) {
+                addOfferBtn.addEventListener('click', function() {
+                    offersList.push({ id: null, image: '', titre: '', description: '', countdown_end: null, ordre: offersList.length });
+                    renderOffers();
+                    offersEditorList.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                });
+            }
+
+            if (offersEditorList) {
+                offersEditorList.addEventListener('input', function(e) {
+                    var item = e.target.closest('.offer-editor-item');
+                    if (!item) return;
+                    var index = parseInt(item.getAttribute('data-index'), 10);
+                    var role = e.target.getAttribute('data-role');
+                    if (!role || !offersList[index]) return;
+
+                    if (role === 'titre') offersList[index].titre = e.target.value;
+                    else if (role === 'description') offersList[index].description = e.target.value;
+                    else if (role === 'countdown_end') offersList[index].countdown_end = e.target.value ? new Date(e.target.value).toISOString() : null;
+                });
+
+                offersEditorList.addEventListener('click', function(e) {
+                    var thumb = e.target.closest('[data-role="offer-thumb"]');
+                    if (thumb) {
+                        var thumbItem = thumb.closest('.offer-editor-item');
+                        var fileInput = thumbItem.querySelector('[data-role="offer-file"]');
+                        if (fileInput) fileInput.click();
+                        return;
+                    }
+
+                    var btn = e.target.closest('button');
+                    if (!btn) return;
+                    var item = e.target.closest('.offer-editor-item');
+                    var index = parseInt(item.getAttribute('data-index'), 10);
+
+                    if (btn.classList.contains('delete')) {
+                        var removed = offersList.splice(index, 1)[0];
+                        if (removed && removed.id) removedOfferIds.push(removed.id);
+                        renderOffers();
+                    } else if (btn.classList.contains('up') && index > 0) {
+                        var tmp = offersList[index - 1];
+                        offersList[index - 1] = offersList[index];
+                        offersList[index] = tmp;
+                        renderOffers();
+                    } else if (btn.classList.contains('down') && index < offersList.length - 1) {
+                        var tmp2 = offersList[index + 1];
+                        offersList[index + 1] = offersList[index];
+                        offersList[index] = tmp2;
+                        renderOffers();
+                    }
+                });
+
+                offersEditorList.addEventListener('change', function(e) {
+                    var fileInput = e.target.closest('[data-role="offer-file"]');
+                    if (!fileInput) return;
+                    var item = e.target.closest('.offer-editor-item');
+                    var index = parseInt(item.getAttribute('data-index'), 10);
+                    var file = fileInput.files && fileInput.files[0];
+                    if (!file || !offersList[index]) return;
+
+                    var reader = new FileReader();
+                    reader.onload = function(e2) {
+                        offersList[index].image = e2.target.result;
+                        var thumb = item.querySelector('[data-role="offer-thumb"]');
+                        var thumbImg = thumb.querySelector('img');
+                        if (!thumbImg) {
+                            thumbImg = document.createElement('img');
+                            thumb.insertBefore(thumbImg, thumb.firstChild);
+                        }
+                        thumbImg.src = e2.target.result;
+                        thumbImg.classList.add('loaded');
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            if (saveOffersBtn) {
+                saveOffersBtn.addEventListener('click', function() {
+                    var missingTitle = offersList.some(function(o) { return !o.titre || !o.titre.trim(); });
+                    if (missingTitle) {
+                        showToast('Chaque offre doit avoir un titre.', 'error');
+                        return;
+                    }
+
+                    saveOffersBtn.disabled = true;
+                    saveOffersText.style.display = 'none';
+                    saveOffersSpinner.style.display = 'inline';
+
+                    // Chaque tâche retourne maintenant { ok, status, label, data } au lieu
+                    // d'une simple Response — ça permet de vérifier si CHAQUE requête a
+                    // réellement réussi (avant, une réponse 401/400/500 était traitée
+                    // comme un succès tant que le fetch ne plantait pas au niveau réseau).
+                    function runTask(promise, label) {
+                        return promise
+                            .then(function(r) {
+                                return r.json().catch(function() { return null; }).then(function(data) {
+                                    return { ok: r.ok, status: r.status, label: label, data: data };
+                                });
+                            })
+                            .catch(function(err) {
+                                return { ok: false, status: 0, label: label, data: null, networkError: err };
+                            });
+                    }
+
+                    var tasks = [];
+
+                    removedOfferIds.forEach(function(id) {
+                        tasks.push(runTask(fetch('/api/apropos-offers?id=' + id, {
+                            method: 'DELETE',
+                            headers: { 'Authorization': 'Bearer ' + token }
+                        }), 'Suppression offre #' + id));
+                    });
+
+                    offersList.forEach(function(o, index) {
+                        var body = JSON.stringify({
+                            image: o.image || null,
+                            titre: o.titre,
+                            description: o.description,
+                            countdown_end: o.countdown_end,
+                            ordre: index
+                        });
+                        var label = 'Offre "' + (o.titre || '(' + (index + 1) + ')') + '"';
+                        if (o.id) {
+                            tasks.push(runTask(fetch('/api/apropos-offers?id=' + o.id, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                                body: body
+                            }), label));
+                        } else {
+                            tasks.push(runTask(fetch('/api/apropos-offers', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                                body: body
+                            }), label));
+                        }
+                    });
+
+                    Promise.all(tasks)
+                        .then(function(results) {
+                            saveOffersBtn.disabled = false;
+                            saveOffersText.style.display = 'inline';
+                            saveOffersSpinner.style.display = 'none';
+
+                            var failed = results.filter(function(r) { return !r.ok; });
+
+                            if (failed.length > 0) {
+                                // Session expirée -> on renvoie direct vers le login pour éviter
+                                // de perdre le travail en silence.
+                                var authFailed = failed.some(function(r) { return r.status === 401; });
+                                var firstMsg = (failed[0].data && failed[0].data.message) || failed[0].label;
+                                showToast('Erreur : ' + firstMsg + (failed.length > 1 ? ' (+' + (failed.length - 1) + ' autre(s))' : ''), 'error');
+                                console.error('Echec sauvegarde offres:', failed);
+                                if (authFailed) {
+                                    setTimeout(function() { window.location.href = '../login.html'; }, 1500);
+                                }
+                            } else {
+                                showToast('Offres enregistrées !', 'success');
+                            }
+
+                            loadOffers();
+                        })
+                        .catch(function(err) {
+                            saveOffersBtn.disabled = false;
+                            saveOffersText.style.display = 'inline';
+                            saveOffersSpinner.style.display = 'none';
+                            showToast('Erreur lors de l\'enregistrement des offres.', 'error');
+                            console.error(err);
+                        });
+                });
+            }
+
+            // ============================================================
+            // 8. REFRESH
+            // ============================================================
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                var original = this.innerHTML;
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Chargement...';
+                this.disabled = true;
+
+                loadContent();
+                loadValues();
+                loadOffers();
+                setTimeout(function() {
+                    document.getElementById('refreshBtn').innerHTML = original;
+                    document.getElementById('refreshBtn').disabled = false;
+                    showToast('Données actualisées !', 'success');
+                }, 800);
+            });
+
+            // ============================================================
+            // 9. TOAST
+            // ============================================================
+            function showToast(message, type) {
+                var toast = document.getElementById('toast');
+                var toastMsg = document.getElementById('toastMessage');
+                toastMsg.textContent = message;
+                toast.className = 'toast ' + (type || 'success');
+                toast.classList.add('show');
+
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // ============================================================
+            // 10. INIT
+            // ============================================================
+            loadContent();
+            loadValues();
+            loadOffers();
+
+            console.log('🚀 Admin — Page À propos (100% API)');
+
+        });
+    </script>
+
+    <script src="/assets/js/logo-sync.js" defer></script>
+</body>
+</html>

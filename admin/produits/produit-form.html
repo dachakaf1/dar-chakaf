@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Formulaire Produit — Dar Chakaf Admin</title>
+
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ================================================================
+           ADMIN DESIGN SYSTEM — DAR CHAKAF PREMIUM
+           ================================================================ */
+        :root {
+            --bg-void: #0a0908;
+            --bg-base: #0e0c0a;
+            --bg-panel: #15120e;
+            --bg-panel-2: #1c1712;
+            --bg-panel-raised: #221b14;
+            --border-soft: rgba(201, 169, 97, 0.14);
+            --border-strong: rgba(201, 169, 97, 0.32);
+            --gold: #c9a961;
+            --gold-bright: #e6c988;
+            --gold-dim: #8f7440;
+            --gold-glow: rgba(201, 169, 97, 0.06);
+            --ink: #f2ead9;
+            --ink-soft: #cdc3ae;
+            --ink-mute: #8e8471;
+            --ink-faint: #5c5546;
+            --success: #7a9b6e;
+            --danger: #b9634a;
+            --warning: #d4a04a;
+            --info: #5b8c9e;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --fs-h1: clamp(1.8rem, 2.8vw, 2.4rem);
+            --fs-h2: clamp(1.2rem, 1.8vw, 1.5rem);
+            --gap-xs: 0.5rem;
+            --gap-sm: 1rem;
+            --gap-md: 2rem;
+            --gap-lg: 4rem;
+            --radius-sm: 4px;
+            --radius-md: 10px;
+            --radius-lg: 18px;
+            --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.65);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-gold: 0 10px 40px -12px rgba(201, 169, 97, 0.35);
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --transition: 0.45s var(--ease);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-base);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a { color: inherit; text-decoration: none; transition: var(--transition); }
+        ul { list-style: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        input, select, textarea { font-family: inherit; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-void); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; border: 2px solid var(--bg-void); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 3vw, 2.5rem);
+        }
+
+        /* ================================================================
+           ANIMATIONS
+           ================================================================ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .fade-up { animation: fadeUp 0.6s var(--ease) forwards; opacity: 0; }
+        .fade-up-delay-1 { animation-delay: 0.1s; }
+        .fade-up-delay-2 { animation-delay: 0.2s; }
+        .fade-up-delay-3 { animation-delay: 0.3s; }
+        .fade-up-delay-4 { animation-delay: 0.4s; }
+
+        /* ================================================================
+           MIST BG
+           ================================================================ */
+        .mist-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: var(--bg-void, #0a0908);
+        }
+        .mist-bg::before,
+        .mist-bg::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            animation: mistDrift 22s ease-in-out infinite alternate;
+        }
+        .mist-bg::before {
+            width: 46vw; height: 46vw;
+            top: -12vw; left: -10vw;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.35), transparent 70%);
+        }
+        .mist-bg::after {
+            width: 40vw; height: 40vw;
+            bottom: -14vw; right: -8vw;
+            background: radial-gradient(circle, rgba(140, 110, 60, 0.28), transparent 70%);
+            animation-delay: -9s;
+        }
+        @keyframes mistDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(3vw, 2vw) scale(1.12); }
+        }
+
+        /* ================================================================
+           ADMIN HEADER
+           ================================================================ */
+        .admin-header {
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 0.7rem 0;
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(21, 18, 14, 0.94);
+        }
+        .admin-header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+        }
+        .admin-header .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--gold-bright);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .admin-header .logo-text .mark {
+            width: 32px; height: 32px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: var(--gold);
+            overflow: hidden;
+        }
+        .admin-header .logo-text .mark img {
+            width: 24px; height: 24px;
+            object-fit: contain;
+        }
+        .admin-header .logo-text .mark .fallback-text {
+            display: none;
+        }
+        .admin-header .logo-text .mark img.error ~ .fallback-text {
+            display: block;
+        }
+        .admin-header .logo-text .mark img.error {
+            display: none;
+        }
+        .admin-header .logo-text .mark:hover { transform: rotate(90deg); }
+        .admin-header .logo-text span {
+            font-family: var(--font-body);
+            font-size: 0.55rem; letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            display: block; margin-top: -2px;
+        }
+        .admin-header-actions {
+            display: flex; align-items: center; gap: 1.2rem;
+        }
+        .admin-header-actions .user {
+            display: flex; align-items: center; gap: 0.6rem;
+            font-size: 0.82rem; color: var(--ink-mute);
+        }
+        .admin-header-actions .user .avatar {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+            display: flex; align-items: center; justify-content: center;
+            color: #14110b; font-weight: 600; font-size: 0.8rem;
+        }
+        .admin-header-actions .user .name { color: var(--ink-soft); font-weight: 400; }
+        .admin-header-actions .logout-btn {
+            font-size: 0.7rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .admin-header-actions .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+        /* ================================================================
+           ADMIN SIDEBAR
+           ================================================================ */
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: var(--gap-lg);
+            padding: var(--gap-md) 0 var(--gap-lg);
+            align-items: start;
+        }
+        .admin-sidebar {
+            position: sticky; top: 80px; align-self: start;
+        }
+        .admin-sidebar .nav-section { margin-bottom: 1.5rem; }
+        .admin-sidebar .nav-section .label {
+            font-size: 0.6rem; letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            padding: 0 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+        .admin-sidebar a {
+            display: flex; align-items: center; gap: 0.7rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            color: var(--ink-mute);
+            transition: var(--transition);
+            border-left: 2px solid transparent;
+        }
+        .admin-sidebar a i { width: 18px; text-align: center; font-size: 0.9rem; }
+        .admin-sidebar a:hover, .admin-sidebar a.active {
+            background: var(--gold-glow);
+            color: var(--gold-bright);
+            border-left-color: var(--gold);
+        }
+        .admin-sidebar a .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.55rem;
+            padding: 0.05rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .admin-sidebar a .badge.success { background: var(--success); }
+
+        /* ================================================================
+           BUTTONS
+           ================================================================ */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.78rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, var(--gold-dim));
+            color: #14110b;
+            box-shadow: var(--shadow-gold);
+        }
+        .btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        .btn-ghost { border: 1px solid var(--border-soft); color: var(--ink-mute); background: transparent; }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.65rem; }
+        .btn-xs { padding: 0.15rem 0.5rem; font-size: 0.6rem; }
+
+        /* ================================================================
+           MAIN CONTENT
+           ================================================================ */
+        .admin-main { min-width: 0; }
+
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+            margin-bottom: var(--gap-md);
+        }
+        .page-header h1 { font-size: var(--fs-h1); color: var(--ink); font-weight: 600; }
+        .page-header .sub { font-size: 0.85rem; color: var(--ink-mute); display: block; margin-top: -2px; }
+        .page-header .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+        /* ================================================================
+           FORM
+           ================================================================ */
+        .form-container {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 2.4rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            margin-bottom: 0.3rem;
+            font-weight: 400;
+        }
+        .form-group label .required {
+            color: var(--danger);
+            margin-left: 0.2rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.88rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.06);
+            background: var(--bg-panel-raised);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group .help-text {
+            font-size: 0.7rem;
+            color: var(--ink-faint);
+            margin-top: 0.2rem;
+        }
+        .form-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.6rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border-soft);
+        }
+        .form-actions .btn {
+            padding: 0.7rem 2rem;
+        }
+
+        /* Image preview */
+        .image-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.4rem;
+            position: relative;
+        }
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .image-preview img.loaded {
+            display: block;
+        }
+        .image-preview .empty-frame {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-faint);
+            font-size: 0.6rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .image-preview .empty-frame .icon {
+            font-size: 2rem;
+            opacity: 0.15;
+            margin-bottom: 0.2rem;
+        }
+        .image-preview img.loaded ~ .empty-frame {
+            display: none;
+        }
+
+        /* Gallery (multi-images) */
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.6rem;
+        }
+        .gallery-item {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-2);
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-item .cover-badge {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            background: var(--gold, #c9a24b);
+            color: #1a1a1a;
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+        }
+        .gallery-item .remove-btn {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.65);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            line-height: 1;
+        }
+        .gallery-item .remove-btn:hover {
+            background: #c0392b;
+        }
+        .gallery-add-tile {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-sm);
+            border: 1px dashed var(--border-soft);
+            background: var(--bg-panel-2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            color: var(--ink-faint);
+            cursor: pointer;
+            font-size: 0.6rem;
+            text-align: center;
+        }
+        .gallery-add-tile:hover {
+            border-color: var(--gold, #c9a24b);
+            color: var(--gold, #c9a24b);
+        }
+        .gallery-add-tile i {
+            font-size: 1.3rem;
+        }
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-item .video-play-badge {
+            position: absolute;
+            bottom: 3px;
+            left: 3px;
+            background: rgba(0,0,0,0.65);
+            color: #fff;
+            font-size: 0.7rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gallery-item .video-progress {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ================================================================
+           TOAST
+           ================================================================ */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-panel-raised);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            color: var(--ink);
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-soft);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 999;
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { border-color: var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-color: var(--danger); }
+        .toast.error i { color: var(--danger); }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 1100px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .admin-sidebar {
+                position: static;
+                display: flex; flex-wrap: wrap; gap: 0.3rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-soft);
+            }
+            .admin-sidebar .nav-section {
+                margin-bottom: 0;
+                display: flex; flex-wrap: wrap; gap: 0.2rem;
+            }
+            .admin-sidebar .nav-section .label { display: none; }
+            .admin-sidebar a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.72rem;
+                border-left: none;
+                border-radius: var(--radius-sm);
+            }
+            .admin-sidebar a i { display: none; }
+            .admin-sidebar a .badge { margin-left: 0.3rem; }
+        }
+        @media (max-width: 900px) {
+            .form-row { grid-template-columns: 1fr; }
+            .form-container { padding: 1.5rem; }
+        }
+        @media (max-width: 600px) {
+            .admin-header-inner { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+            .admin-header-actions { flex-wrap: wrap; justify-content: space-between; }
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .page-header .actions { width: 100%; justify-content: stretch; }
+            .page-header .actions .btn { flex: 1; justify-content: center; }
+            .form-container { padding: 1rem; }
+            .form-actions { flex-direction: column; }
+            .form-actions .btn { width: 100%; justify-content: center; }
+            .toast { left: 1rem; right: 1rem; bottom: 1rem; }
+        }
+        @media (max-width: 400px) {
+            .form-actions { flex-direction: column; }
+        }
+
+        @media (min-width: 1600px) {
+            html { font-size: 19px; }
+            .container { max-width: 1680px; }
+        }
+        @media (min-width: 2200px) {
+            html { font-size: 23px; }
+            .container { max-width: 2100px; }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/logo-frame.css">
+</head>
+<body>
+    <div class="mist-bg" aria-hidden="true"></div>
+
+    <!-- ============================================================
+    ADMIN HEADER
+    ============================================================ -->
+    <header class="admin-header">
+        <div class="container admin-header-inner">
+            <div class="logo-text">
+                <span class="mark">
+                    <img 
+                        src="/assets/logo/dar-chakaf-logo.svg" 
+                        alt="Dar Chakaf Logo"
+                        width="24" 
+                        height="24"
+                        style="width:24px;height:24px;object-fit:contain;"
+                        onerror="this.classList.add('error'); this.style.display='none'; this.parentElement.querySelector('.fallback-text').style.display='block';"
+                    />
+                    <span class="fallback-text">D</span>
+                </span>
+                <span>Dar Chakaf <span>Administration</span></span>
+            </div>
+            <div class="admin-header-actions">
+                <span class="user">
+                    <span class="avatar" id="adminAvatar">A</span>
+                    <span class="name" id="adminName">Administrateur</span>
+                </span>
+                <a href="../login.html" class="logout-btn" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    ADMIN LAYOUT
+    ============================================================ -->
+    <div class="container admin-layout">
+
+        <!-- SIDEBAR -->
+        <nav class="admin-sidebar">
+            <div class="nav-section">
+                <span class="label">Navigation</span>
+                <a href="../dashboard.html"><i class="fa-solid fa-gauge-high"></i> Tableau de bord</a>
+                <a href="../categories/liste.html"><i class="fa-solid fa-layer-group"></i> Catégories</a>
+                <a href="../galerie/liste.html"><i class="fa-solid fa-images"></i> Galerie</a>
+                <a href="../messages/liste.html"><i class="fa-solid fa-envelope"></i> Messages <span class="badge" id="messagesBadge">0</span></a>
+                <a href="../devis/liste.html"><i class="fa-solid fa-file-invoice"></i> Demandes de devis</a>
+                <a href="../blog/liste.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="../newsletter/liste.html"><i class="fa-solid fa-paper-plane"></i> Newsletter</a>
+                <a href="../utilisateurs/liste.html"><i class="fa-solid fa-users"></i> Utilisateurs</a>
+                <a href="../parametres/infos-site.html"><i class="fa-solid fa-gear"></i> Paramètres</a>
+                <a href="../apropos/edit.html"><i class="fa-solid fa-book-open"></i> Page À propos</a>
+                <a href="../logs/activite.html"><i class="fa-solid fa-clock-rotate-left"></i> Logs</a>
+            </div>
+            <div class="nav-section">
+                <span class="label">Produits</span>
+                <div id="sidebarProducts">
+                    <!-- Rempli dynamiquement -->
+                </div>
+                <a href="produit-form.html" class="active"><i class="fa-solid fa-plus"></i> Ajouter un produit</a>
+            </div>
+        </nav>
+
+        <!-- ============================================================
+        MAIN CONTENT
+        ============================================================ -->
+        <main class="admin-main">
+
+            <!-- Page Header -->
+            <div class="page-header fade-up">
+                <div>
+                    <h1 id="formTitle"><i class="fa-solid fa-plus" style="color:var(--gold);"></i> Ajouter un produit</h1>
+                    <span class="sub" id="pageSub">Remplissez les informations ci-dessous</span>
+                </div>
+                <div class="actions">
+                    <a href="salons-modernes.html" class="btn btn-ghost"><i class="fa-solid fa-arrow-left"></i> Retour</a>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            FORM
+            ============================================================ -->
+            <div class="form-container fade-up fade-up-delay-1">
+                <form id="productForm" novalidate>
+
+                    <!-- Catégorie -->
+                    <div class="form-group">
+                        <label for="category">Catégorie <span class="required">*</span></label>
+                        <select id="category" required>
+                            <option value="">Sélectionner une catégorie</option>
+                            <!-- Rempli dynamiquement -->
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Titre -->
+                        <div class="form-group">
+                            <label for="title">Nom du produit <span class="required">*</span></label>
+                            <input type="text" id="title" placeholder="Ex: Salon Majestueux" required />
+                        </div>
+                        <!-- Prix -->
+                        <div class="form-group">
+                            <label for="price">Prix (DH) <span class="required">*</span></label>
+                            <input type="number" id="price" placeholder="Ex: 25000" required />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Ancien prix -->
+                        <div class="form-group">
+                            <label for="oldPrice">Ancien prix (DH) <span class="help-text">(Optionnel — pour les soldes)</span></label>
+                            <input type="number" id="oldPrice" placeholder="Ex: 32000" />
+                        </div>
+                        <!-- Statut -->
+                        <div class="form-group">
+                            <label for="status">Statut <span class="required">*</span></label>
+                            <select id="status" required>
+                                <option value="active">Actif</option>
+                                <option value="draft" selected>Brouillon</option>
+                                <option value="inactive">Inactif</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Dimensions -->
+                        <div class="form-group">
+                            <label for="dimensions">Dimensions <span class="help-text">(Ex: 220x100x85 cm)</span></label>
+                            <input type="text" id="dimensions" placeholder="Ex: 220x100x85 cm" />
+                        </div>
+                        <!-- Matériau -->
+                        <div class="form-group">
+                            <label for="material">Matériau</label>
+                            <input type="text" id="material" placeholder="Ex: Bois massif, MDF, etc." />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Type -->
+                        <div class="form-group">
+                            <label for="type">Type <span class="help-text">(Ex: Moderne, Traditionnel, etc.)</span></label>
+                            <input type="text" id="type" placeholder="Ex: Moderne" />
+                        </div>
+                        <!-- Coloris -->
+                        <div class="form-group">
+                            <label for="color">Coloris</label>
+                            <input type="text" id="color" placeholder="Ex: Beige, Bordeaux, etc." />
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="description">Description <span class="help-text">(Optionnel)</span></label>
+                        <textarea id="description" placeholder="Décrivez votre produit..."></textarea>
+                    </div>
+
+                    <!-- Badge -->
+                    <div class="form-group">
+                        <label for="badge">Badge <span class="help-text">(Ex: Nouveau, Promo, Best-seller)</span></label>
+                        <select id="badge">
+                            <option value="">Aucun badge</option>
+                            <option value="new">Nouveau</option>
+                            <option value="sale">Promo</option>
+                            <option value="bestseller">Best-seller</option>
+                        </select>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="form-group">
+                        <label for="image">Image principale</label>
+                        <input type="file" id="imageFileInput" accept="image/*" style="display:none;" />
+                        <button type="button" class="btn btn-ghost btn-sm" id="chooseImageFileBtn" style="width:100%; margin-bottom:0.5rem;">
+                            <i class="fa-solid fa-camera"></i> Prendre une photo / Choisir un fichier
+                        </button>
+                        <input type="text" id="image" placeholder="— ou — URL de l'image (Ex: https://...)" />
+                        <div class="image-preview" id="imagePreview">
+                            <img id="previewImg" src="" alt="Aperçu" />
+                            <div class="empty-frame">
+                                <span class="icon">🖼️</span>
+                                <span>Aucune image</span>
+                            </div>
+                        </div>
+                        <div class="help-text">Choisissez une photo depuis votre appareil, ou collez directement un lien d'image.</div>
+                    </div>
+
+                    <!-- Galerie photos (plusieurs images) -->
+                    <div class="form-group">
+                        <label>Galerie photos (plusieurs images)</label>
+                        <input type="file" id="galleryFileInput" accept="image/*" multiple style="display:none;" />
+                        <div class="gallery-grid" id="galleryGrid">
+                            <div class="gallery-add-tile" id="galleryAddTile">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Ajouter des photos</span>
+                            </div>
+                        </div>
+                        <div class="help-text">Ajoutez autant de photos que vous voulez (plusieurs vues du produit). La 1ère photo de la galerie sera utilisée comme image principale si aucune n'est choisie ci-dessus. Ces photos s'affichent toutes sur la fiche produit détaillée, vue par le client.</div>
+                    </div>
+
+                    <!-- Vidéos du produit -->
+                    <div class="form-group">
+                        <label>Vidéos du produit</label>
+                        <div id="videoSectionLocked" style="display:none; padding:0.85rem 1rem; border:1px dashed var(--border, #444); border-radius:8px; font-size:0.85rem; opacity:0.8;">
+                            <i class="fa-solid fa-circle-info"></i> Enregistrez d'abord le produit (bouton ci-dessous) — vous pourrez ensuite revenir ici pour ajouter des vidéos.
+                        </div>
+                        <div id="videoSectionUnlocked" style="display:none;">
+                            <input type="file" id="videoFileInput" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,video/ogg" multiple style="display:none;" />
+                            <button type="button" class="btn btn-ghost btn-sm" id="chooseVideoFileBtn" style="width:100%; margin-bottom:0.5rem;">
+                                <i class="fa-solid fa-video"></i> Ajouter une vidéo depuis l'appareil
+                            </button>
+                            <div class="gallery-grid" id="videoGrid"></div>
+                            <div class="help-text">Formats acceptés : MP4, WebM, MOV, MKV (max 2 Go). Ces vidéos s'affichent sur la fiche produit détaillée et dans la Galerie du site.</div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-gold" id="submitBtn">
+                            <span id="submitText"><i class="fa-solid fa-check"></i> Enregistrer</span>
+                            <span id="submitSpinner" style="display:none;"><i class="fa-solid fa-spinner fa-spin"></i> Enregistrement...</span>
+                        </button>
+                        <a href="salons-modernes.html" class="btn btn-ghost">Annuler</a>
+                    </div>
+
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Opération réussie !</span>
+    </div>
+
+    <!-- ============================================================
+    SCRIPTS — 100% API-READY
+    ============================================================ -->
+    <script src="/assets/js/video-upload.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            'use strict';
+
+            // ============================================================
+            // 1. USER INFO & SESSION
+            // ============================================================
+            var adminName = localStorage.getItem('adminName') || 'Administrateur';
+            document.getElementById('adminName').textContent = adminName;
+            document.getElementById('adminAvatar').textContent = adminName.charAt(0).toUpperCase();
+
+            var token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                    localStorage.clear();
+                    window.location.href = '../login.html';
+                }
+            });
+
+            // ============================================================
+            // 2. ICON MAP
+            // ============================================================
+            var iconMap = {
+                'salons-modernes': 'fa-couch',
+                'salons-traditionnels': 'fa-mosque',
+                'tables': 'fa-table',
+                'decorations': 'fa-vector-square',
+                'meubles-tv': 'fa-tv',
+                'couloirs': 'fa-door-open',
+                'tissus': 'fa-scroll'
+            };
+
+            // ============================================================
+            // 3. LOAD CATEGORIES FOR SIDEBAR
+            // ============================================================
+            function loadCategories() {
+                fetch('/api/categories', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (!res.success || !Array.isArray(res.data)) return;
+                        var cats = res.data;
+
+                        var sidebarContainer = document.getElementById('sidebarProducts');
+                        sidebarContainer.innerHTML = '';
+                        cats.forEach(function(cat) {
+                            var slug = cat.slug || cat.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                            var icon = cat.icone || iconMap[slug] || 'fa-cube';
+                            var a = document.createElement('a');
+                            a.href = slug + '.html';
+                            a.innerHTML = '<i class="fa-solid ' + icon + '"></i> ' + cat.nom +
+                                ' <span class="badge success">' + (cat.product_count || 0) + '</span>';
+                            sidebarContainer.appendChild(a);
+                        });
+                    })
+                    .catch(function(e) { console.warn('Erreur chargement catégories:', e); });
+            }
+
+            loadCategories();
+
+            // ============================================================
+            // 4. MESSAGES BADGE
+            // ============================================================
+            function loadMessagesBadge() {
+                fetch('/api/messages?lu=false&limit=1', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res.success && Array.isArray(res.data)) {
+                            document.getElementById('messagesBadge').textContent = res.data.length;
+                        }
+                    })
+                    .catch(function() {});
+            }
+            loadMessagesBadge();
+
+            // ============================================================
+            // 5. LOAD CATEGORIES FOR FORM
+            // ============================================================
+            var categorySelect = document.getElementById('category');
+            var productId = null;
+            var currentCategorySlug = null;
+
+            // Récupérer l'ID du produit depuis l'URL
+            var urlParams = new URLSearchParams(window.location.search);
+            productId = urlParams.get('id');
+
+            function loadCategoriesForForm() {
+                fetch('/api/categories', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res && res.success && Array.isArray(res.data)) {
+                            categorySelect.innerHTML = '<option value="">Sélectionner une catégorie</option>';
+                            res.data.forEach(function(cat) {
+                                var opt = document.createElement('option');
+                                opt.value = cat.id;
+                                opt.textContent = cat.nom;
+                                opt.dataset.slug = cat.slug;
+                                categorySelect.appendChild(opt);
+                            });
+
+                            // Si on modifie un produit, charger ses données
+                            if (productId) {
+                                loadProduct(productId);
+                            }
+                        }
+                    })
+                    .catch(function() {
+                        // Catégories de secours
+                        var defaultCats = [
+                            { id: 1, nom: 'Salons modernes', slug: 'salons-modernes' },
+                            { id: 2, nom: 'Salons traditionnels', slug: 'salons-traditionnels' },
+                            { id: 3, nom: 'Tables', slug: 'tables' },
+                            { id: 4, nom: 'Décorations', slug: 'decorations' },
+                            { id: 5, nom: 'Meubles TV', slug: 'meubles-tv' },
+                            { id: 6, nom: 'Couloirs', slug: 'couloirs' },
+                            { id: 7, nom: 'Tissus & Rideaux', slug: 'tissus' }
+                        ];
+                        categorySelect.innerHTML = '<option value="">Sélectionner une catégorie</option>';
+                        defaultCats.forEach(function(cat) {
+                            var opt = document.createElement('option');
+                            opt.value = cat.id;
+                            opt.textContent = cat.nom;
+                            opt.dataset.slug = cat.slug;
+                            categorySelect.appendChild(opt);
+                        });
+                        if (productId) {
+                            loadProduct(productId);
+                        }
+                    });
+            }
+
+            // ============================================================
+            // 6. LOAD PRODUCT FOR EDIT
+            // ============================================================
+            function loadProduct(id) {
+                fetch('/api/produits/get-one?id=' + id, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res && res.success && res.data) {
+                            var p = res.data;
+                            document.getElementById('formTitle').innerHTML = '<i class="fa-solid fa-pen-to-square" style="color:var(--gold);"></i> Modifier le produit';
+                            document.getElementById('pageSub').textContent = 'Modifiez les informations du produit';
+
+                            // Remplir le formulaire
+                            document.getElementById('title').value = p.titre || '';
+                            document.getElementById('price').value = p.prix || '';
+                            document.getElementById('oldPrice').value = p.ancien_prix || '';
+                            document.getElementById('status').value = p.statut || 'draft';
+                            document.getElementById('dimensions').value = p.dimensions || '';
+                            document.getElementById('material').value = p.materiau || '';
+                            document.getElementById('type').value = p.type || '';
+                            document.getElementById('color').value = p.coloris || '';
+                            document.getElementById('description').value = p.description || '';
+                            document.getElementById('badge').value = p.badge || '';
+                            document.getElementById('image').value = p.image_principale || '';
+
+                            // Sélectionner la catégorie
+                            if (p.category_id) {
+                                var options = categorySelect.options;
+                                for (var i = 0; i < options.length; i++) {
+                                    if (parseInt(options[i].value) === p.category_id) {
+                                        options[i].selected = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            // Prévisualiser l'image
+                            previewImage(p.image_principale);
+
+                            // Charger la galerie de photos existante
+                            if (Array.isArray(p.images) && p.images.length > 0) {
+                                galleryImages = p.images.slice();
+                                renderGallery();
+                            }
+
+                            // Mettre à jour le bouton
+                            document.getElementById('submitText').innerHTML = '<i class="fa-solid fa-check"></i> Mettre à jour';
+                            currentCategorySlug = p.categorie_slug;
+                        }
+                    })
+                    .catch(function() {
+                        showToast('Erreur chargement du produit', 'error');
+                    });
+            }
+
+            // ============================================================
+            // 7. IMAGE PREVIEW
+            // ============================================================
+            var imageInput = document.getElementById('image');
+            var previewImg = document.getElementById('previewImg');
+            var previewContainer = document.getElementById('imagePreview');
+
+            function previewImage(url) {
+                if (url && url.trim()) {
+                    previewImg.src = url.trim();
+                    previewImg.classList.add('loaded');
+                } else {
+                    previewImg.classList.remove('loaded');
+                    previewImg.src = '';
+                }
+            }
+
+            imageInput.addEventListener('input', function() {
+                previewImage(this.value);
+            });
+
+            // ------------------------------------------------------------
+            // Compression d'image côté navigateur (Canvas) — indispensable :
+            // Vercel refuse toute requête de plus de 4.5 Mo. Une photo brute
+            // de téléphone peut peser 8-15 Mo ; en la redimensionnant et en
+            // la ré-encodant en JPEG, on descend à ~150-400 Ko par photo,
+            // ce qui permet d'en envoyer plusieurs dans la même requête.
+            // ------------------------------------------------------------
+            function compressImageFile(file, maxDimension, quality) {
+                maxDimension = maxDimension || 1600;
+                quality = quality || 0.75;
+                return new Promise(function(resolve, reject) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var img = new Image();
+                        img.onload = function() {
+                            var w = img.width;
+                            var h = img.height;
+                            if (w > maxDimension || h > maxDimension) {
+                                if (w > h) {
+                                    h = Math.round(h * (maxDimension / w));
+                                    w = maxDimension;
+                                } else {
+                                    w = Math.round(w * (maxDimension / h));
+                                    h = maxDimension;
+                                }
+                            }
+                            var canvas = document.createElement('canvas');
+                            canvas.width = w;
+                            canvas.height = h;
+                            var ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, w, h);
+                            resolve(canvas.toDataURL('image/jpeg', quality));
+                        };
+                        img.onerror = function() { reject(new Error('IMAGE_DECODE_ERROR')); };
+                        img.src = e.target.result;
+                    };
+                    reader.onerror = function() { reject(new Error('FILE_READ_ERROR')); };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // Upload depuis l'appareil (téléphone/PC) — compressé puis converti en base64
+            var imageFileInput = document.getElementById('imageFileInput');
+            var chooseImageFileBtn = document.getElementById('chooseImageFileBtn');
+            var MAX_FILE_SIZE = 15 * 1024 * 1024; // 15MB à l'origine (sera compressé ensuite)
+
+            chooseImageFileBtn.addEventListener('click', function() {
+                imageFileInput.click();
+            });
+
+            imageFileInput.addEventListener('change', function() {
+                var file = this.files && this.files[0];
+                if (!file) return;
+
+                if (!file.type.startsWith('image/')) {
+                    showToast('Veuillez choisir un fichier image.', 'error');
+                    return;
+                }
+                if (file.size > MAX_FILE_SIZE) {
+                    showToast('Image trop lourde (max 15 Mo).', 'error');
+                    return;
+                }
+
+                showToast('Compression de l\'image...', 'success');
+                compressImageFile(file, 1600, 0.75).then(function(dataUrl) {
+                    imageInput.value = dataUrl;
+                    previewImage(dataUrl);
+                }).catch(function() {
+                    showToast('Impossible de lire le fichier.', 'error');
+                });
+            });
+
+            // ============================================================
+            // 7bis. GALERIE PHOTOS (plusieurs images)
+            // ============================================================
+            var galleryImages = [];
+            var galleryGrid = document.getElementById('galleryGrid');
+            var galleryAddTile = document.getElementById('galleryAddTile');
+            var galleryFileInput = document.getElementById('galleryFileInput');
+            var MAX_GALLERY_FILE_SIZE = 15 * 1024 * 1024; // 15MB à l'origine (sera compressé ensuite)
+            var MAX_GALLERY_PHOTOS = 10; // au-delà, la requête totale risque de dépasser la limite serveur
+
+            function renderGallery() {
+                // Retirer toutes les vignettes existantes (garder le bouton "Ajouter")
+                galleryGrid.querySelectorAll('.gallery-item').forEach(function(el) { el.remove(); });
+
+                galleryImages.forEach(function(url, idx) {
+                    var item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.innerHTML = '<img src="' + url + '" alt="Photo ' + (idx + 1) + '">' +
+                        (idx === 0 ? '<span class="cover-badge">Vue 1</span>' : '') +
+                        '<button type="button" class="remove-btn" title="Retirer"><i class="fa-solid fa-xmark"></i></button>';
+                    item.querySelector('.remove-btn').addEventListener('click', function() {
+                        galleryImages.splice(idx, 1);
+                        renderGallery();
+                    });
+                    galleryGrid.insertBefore(item, galleryAddTile);
+                });
+
+                galleryAddTile.style.display = galleryImages.length >= MAX_GALLERY_PHOTOS ? 'none' : 'flex';
+            }
+
+            galleryAddTile.addEventListener('click', function() {
+                galleryFileInput.click();
+            });
+
+            galleryFileInput.addEventListener('change', function() {
+                var files = Array.prototype.slice.call(this.files || []);
+                if (!files.length) return;
+
+                if (galleryImages.length + files.length > MAX_GALLERY_PHOTOS) {
+                    showToast('Maximum ' + MAX_GALLERY_PHOTOS + ' photos par produit.', 'error');
+                }
+
+                var accepted = files.slice(0, Math.max(0, MAX_GALLERY_PHOTOS - galleryImages.length));
+                showToast('Compression des photos...', 'success');
+
+                accepted.forEach(function(file) {
+                    if (!file.type.startsWith('image/')) {
+                        showToast('Veuillez choisir uniquement des fichiers image.', 'error');
+                        return;
+                    }
+                    if (file.size > MAX_GALLERY_FILE_SIZE) {
+                        showToast('Une image dépasse 15 Mo et a été ignorée.', 'error');
+                        return;
+                    }
+                    compressImageFile(file, 1400, 0.7).then(function(dataUrl) {
+                        galleryImages.push(dataUrl);
+                        renderGallery();
+                    }).catch(function() {
+                        showToast('Impossible de lire un des fichiers.', 'error');
+                    });
+                });
+
+                // Réinitialiser pour permettre de re-sélectionner les mêmes fichiers plus tard
+                galleryFileInput.value = '';
+            });
+
+            // ============================================================
+            // 7ter. VIDÉOS DU PRODUIT
+            // ============================================================
+            var videoGrid = document.getElementById('videoGrid');
+            var videoFileInput = document.getElementById('videoFileInput');
+            var chooseVideoFileBtn = document.getElementById('chooseVideoFileBtn');
+            var videoSectionLocked = document.getElementById('videoSectionLocked');
+            var videoSectionUnlocked = document.getElementById('videoSectionUnlocked');
+            var productVideos = [];
+
+            function setVideoSectionState() {
+                var unlocked = !!productId;
+                videoSectionLocked.style.display = unlocked ? 'none' : 'block';
+                videoSectionUnlocked.style.display = unlocked ? 'block' : 'none';
+            }
+            setVideoSectionState();
+
+            function renderVideos() {
+                videoGrid.innerHTML = '';
+                productVideos.forEach(function(video) {
+                    var item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    // On préfère la miniature JPEG capturée à l'upload (fiable
+                    // partout) ; à défaut (vidéos ajoutées avant ce correctif),
+                    // on retombe sur l'ancien comportement (aperçu généré par
+                    // le navigateur, qui peut rester noir avec certains formats
+                    // comme le HEVC des iPhone).
+                    item.innerHTML =
+                        (video.posterUrl || video.poster_url
+                            ? '<img src="' + (video.posterUrl || video.poster_url) + '" alt="" />'
+                            : '<video src="' + video.url + '#t=0.5" muted preload="metadata"></video>') +
+                        '<span class="video-play-badge"><i class="fa-solid fa-play"></i></span>' +
+                        '<button type="button" class="remove-btn" title="Supprimer"><i class="fa-solid fa-xmark"></i></button>';
+                    item.querySelector('.remove-btn').addEventListener('click', function() {
+                        if (!confirm('Supprimer cette vidéo ?')) return;
+                        fetch('/api/videos?id=' + video.id, {
+                            method: 'DELETE',
+                            headers: { 'Authorization': 'Bearer ' + token }
+                        })
+                            .then(function(r) { return r.json(); })
+                            .then(function(res) {
+                                if (res && res.success) {
+                                    productVideos = productVideos.filter(function(v) { return v.id !== video.id; });
+                                    renderVideos();
+                                    showToast('Vidéo supprimée.', 'success');
+                                } else {
+                                    showToast(res.message || 'Erreur lors de la suppression.', 'error');
+                                }
+                            })
+                            .catch(function() { showToast('Erreur de connexion au serveur.', 'error'); });
+                    });
+                    videoGrid.appendChild(item);
+                });
+            }
+
+            function loadProductVideos(id) {
+                fetch('/api/videos?produitId=' + id, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        productVideos = (res && res.success && Array.isArray(res.data)) ? res.data : [];
+                        renderVideos();
+                    })
+                    .catch(function() {});
+            }
+
+            if (chooseVideoFileBtn) {
+                chooseVideoFileBtn.addEventListener('click', function() {
+                    videoFileInput.click();
+                });
+            }
+
+            if (videoFileInput) {
+                videoFileInput.addEventListener('change', function() {
+                    var files = Array.prototype.slice.call(this.files || []);
+                    videoFileInput.value = '';
+                    if (!files.length || !productId) return;
+
+                    files.forEach(function(file) {
+                        var placeholder = document.createElement('div');
+                        placeholder.className = 'gallery-item';
+                        placeholder.innerHTML = '<div class="video-progress">Préparation…</div>';
+                        videoGrid.appendChild(placeholder);
+
+                        // Affichage de la progression, avec un filet de
+                        // sécurité contre le cas observé en conditions
+                        // réelles : un tout premier événement de
+                        // progression à exactement 0% (avant que le
+                        // transfert réel ne démarre) qui, à tort, faisait
+                        // croire au code qu'une "vraie" progression était
+                        // en cours — et le texte restait alors figé sur
+                        // "0%" pendant tout l'envoi si plus aucun
+                        // événement n'arrivait ensuite (Safari/iOS
+                        // n'en renvoie généralement aucun autre). On ne
+                        // considère donc une progression "réelle" que
+                        // lorsqu'elle dépasse 0%, et un petit indicateur
+                        // animé prend le relais tant qu'aucune progression
+                        // significative n'a été vue récemment.
+                        var lastMeaningfulPct = 0;
+                        var lastUpdateTs = Date.now();
+                        var dotsCount = 0;
+                        var heartbeat = setInterval(function() {
+                            var bar = placeholder.querySelector('.video-progress');
+                            if (!bar) return;
+                            var stalled = (Date.now() - lastUpdateTs) > 4000;
+                            if (lastMeaningfulPct > 0 && !stalled) {
+                                bar.textContent = Math.round(lastMeaningfulPct) + '%';
+                            } else {
+                                dotsCount = (dotsCount + 1) % 4;
+                                bar.textContent = 'Envoi en cours' + new Array(dotsCount + 1).join('.');
+                            }
+                        }, 700);
+
+                        // On lance en parallèle : 1) l'upload de la vidéo,
+                        // 2) la capture d'une image de la vidéo dans CE
+                        // navigateur (celui qui envoie le fichier — donc
+                        // capable de décoder son propre format, y compris le
+                        // HEVC des iPhone). Si la capture échoue, on continue
+                        // quand même l'enregistrement sans miniature.
+                        Promise.all([
+                            DarChakafVideoUpload.uploadVideo(file, token, function(pct) {
+                                if (pct > 0) {
+                                    lastMeaningfulPct = pct;
+                                    lastUpdateTs = Date.now();
+                                }
+                            }, function(s) {
+                                if (s === 'preparation') {
+                                    var bar = placeholder.querySelector('.video-progress');
+                                    if (bar) bar.textContent = 'Préparation…';
+                                }
+                            }),
+                            DarChakafVideoUpload.capturePosterFrame(file)
+                        ])
+                            .then(function(results) {
+                                clearInterval(heartbeat);
+                                var url = results[0];
+                                var posterUrl = results[1];
+                                return DarChakafVideoUpload.saveVideoRecord(url, { produitId: productId, titre: file.name, posterUrl: posterUrl }, token);
+                            })
+                            .then(function(saved) {
+                                placeholder.remove();
+                                productVideos.push(saved);
+                                renderVideos();
+                                showToast('Vidéo ajoutée avec succès !', 'success');
+                            })
+                            .catch(function(err) {
+                                clearInterval(heartbeat);
+                                placeholder.remove();
+                                showToast(err.message || "Erreur lors de l'upload de la vidéo.", 'error');
+                            });
+                    });
+                });
+            }
+
+            if (productId) {
+                loadProductVideos(productId);
+            }
+
+            // ============================================================
+            // 8. SUBMIT FORM — 100% API
+            // ============================================================
+            var form = document.getElementById('productForm');
+            var submitBtn = document.getElementById('submitBtn');
+            var submitText = document.getElementById('submitText');
+            var submitSpinner = document.getElementById('submitSpinner');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Récupérer les valeurs
+                var categoryId = parseInt(categorySelect.value);
+                var title = document.getElementById('title').value.trim();
+                var price = parseFloat(document.getElementById('price').value);
+                var oldPrice = document.getElementById('oldPrice').value.trim() ? parseFloat(document.getElementById(
+                    'oldPrice').value) : null;
+                var status = document.getElementById('status').value;
+                var dimensions = document.getElementById('dimensions').value.trim();
+                var material = document.getElementById('material').value.trim();
+                var type = document.getElementById('type').value.trim();
+                var color = document.getElementById('color').value.trim();
+                var description = document.getElementById('description').value.trim();
+                var badge = document.getElementById('badge').value;
+                var image = document.getElementById('image').value.trim();
+
+                // Si aucune image principale n'est définie, utiliser la 1ère photo de la galerie
+                if (!image && galleryImages.length > 0) {
+                    image = galleryImages[0];
+                }
+
+                // Validation
+                if (!categoryId) {
+                    showToast('Veuillez sélectionner une catégorie.', 'error');
+                    categorySelect.focus();
+                    return;
+                }
+                if (!title) {
+                    showToast('Veuillez saisir un nom de produit.', 'error');
+                    document.getElementById('title').focus();
+                    return;
+                }
+                if (isNaN(price) || price <= 0) {
+                    showToast('Veuillez saisir un prix valide.', 'error');
+                    document.getElementById('price').focus();
+                    return;
+                }
+
+                // Payload
+                var payload = {
+                    titre: title,
+                    prix: price,
+                    ancien_prix: oldPrice,
+                    statut: status,
+                    dimensions: dimensions,
+                    materiau: material,
+                    type: type,
+                    coloris: color,
+                    description: description,
+                    badge: badge,
+                    image: image,
+                    images: galleryImages
+                };
+
+                // Sécurité : Vercel refuse toute requête de plus de ~4.5 Mo.
+                // On vérifie la taille totale avant d'envoyer pour éviter
+                // un échec silencieux ("Erreur de connexion au serveur").
+                var payloadSize = new Blob([JSON.stringify(payload)]).size;
+                if (payloadSize > 4.2 * 1024 * 1024) {
+                    // Durée allongée (6s au lieu de 3s) : ce message bloque
+                    // complètement l'enregistrement (aucune requête n'est
+                    // envoyée), donc un admin qui ne le voit pas croit à
+                    // tort que ses photos ont été sauvegardées.
+                    showToast('⚠️ Produit NON enregistré : trop de photos/vidéos pour une seule sauvegarde (limite serveur ~4 Mo). Retirez-en quelques-unes puis cliquez de nouveau sur "Mettre à jour".', 'error', 6000);
+                    return;
+                }
+
+                // Déterminer l'URL et la méthode
+                var categorySlug = categorySelect.options[categorySelect.selectedIndex]?.dataset?.slug || 'salons-modernes';
+                var url = '/api/produits/' + categorySlug;
+                var method = 'POST';
+
+                if (productId) {
+                    url += '?id=' + productId;
+                    method = 'PUT';
+                }
+
+                // Désactiver le bouton
+                submitBtn.disabled = true;
+                submitText.style.display = 'none';
+                submitSpinner.style.display = 'inline';
+
+                fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        submitBtn.disabled = false;
+                        submitText.style.display = 'inline';
+                        submitSpinner.style.display = 'none';
+
+                        if (res && res.success) {
+                            showToast(productId ? 'Produit modifié avec succès !' :
+                                'Produit ajouté avec succès !', 'success');
+                            // Rediriger après 1.5s
+                            setTimeout(function() {
+                                window.location.href = categorySlug + '.html';
+                            }, 1500);
+                        } else if (res && res.message === 'Non autorisé') {
+                            // Le token stocké n'est plus valide côté serveur
+                            // (session expirée). Sans ce traitement dédié,
+                            // l'utilisateur voit juste "Non autorisé" 3
+                            // secondes puis plus rien, sans comprendre quoi
+                            // faire — alors que ses photos/vidéos déjà
+                            // ajoutées sur cette page ne sont PAS perdues.
+                            // On l'invite à se reconnecter dans un nouvel
+                            // onglet (pour ne rien perdre ici), puis à
+                            // cliquer à nouveau sur "Mettre à jour".
+                            showToast('Votre session a expiré. Reconnectez-vous (dans un nouvel onglet) puis cliquez à nouveau sur "Mettre à jour" — vos photos et vidéos ne sont pas perdues.', 'error', 8000);
+                        } else {
+                            showToast(res.message || 'Erreur lors de l\'enregistrement.', 'error');
+                        }
+                    })
+                    .catch(function(err) {
+                        submitBtn.disabled = false;
+                        submitText.style.display = 'inline';
+                        submitSpinner.style.display = 'none';
+                        showToast('Erreur de connexion au serveur.', 'error');
+                        console.error(err);
+                    });
+            });
+
+            // ============================================================
+            // 9. TOAST
+            // ============================================================
+            function showToast(message, type, durationMs) {
+                var toast = document.getElementById('toast');
+                var toastMsg = document.getElementById('toastMessage');
+                toastMsg.textContent = message;
+                toast.className = 'toast ' + (type || 'success');
+                toast.classList.add('show');
+
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, durationMs || 3000);
+            }
+
+            // ============================================================
+            // 10. INIT
+            // ============================================================
+            loadCategoriesForForm();
+
+            console.log('🚀 Admin Formulaire Produit — 100% API-ready');
+
+        });
+    </script>
+
+    <script src="/assets/js/logo-sync.js" defer></script>
+</body>
+</html>

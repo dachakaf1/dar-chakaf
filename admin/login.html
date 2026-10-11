@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Connexion Admin — Dar Chakaf</title>
+    <meta name="description" content="Espace d'administration Dar Chakaf — Connectez-vous pour gérer votre boutique." />
+
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ================================================================
+           DESIGN SYSTEM — DAR CHAKAF ADMIN PREMIUM
+           ================================================================ */
+        :root {
+            --bg-void: #0a0908;
+            --bg-base: #0e0c0a;
+            --bg-panel: #15120e;
+            --bg-panel-2: #1c1712;
+            --bg-panel-raised: #221b14;
+            --border-soft: rgba(201, 169, 97, 0.14);
+            --border-strong: rgba(201, 169, 97, 0.32);
+            --gold: #c9a961;
+            --gold-bright: #e6c988;
+            --gold-dim: #8f7440;
+            --gold-glow: rgba(201, 169, 97, 0.08);
+            --gold-glow-strong: rgba(201, 169, 97, 0.15);
+            --ink: #f2ead9;
+            --ink-soft: #cdc3ae;
+            --ink-mute: #8e8471;
+            --ink-faint: #5c5546;
+            --success: #7a9b6e;
+            --danger: #b9634a;
+            --danger-light: rgba(185, 99, 74, 0.12);
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --radius-sm: 4px;
+            --radius-md: 10px;
+            --radius-lg: 18px;
+            --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.65);
+            --shadow-gold: 0 10px 40px -12px rgba(201, 169, 97, 0.35);
+            --shadow-glow: 0 0 40px rgba(201, 169, 97, 0.04);
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --transition: 0.45s var(--ease);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-base);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Fond animé subtil */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 1000px 700px at 20% 10%, rgba(201, 169, 97, 0.04), transparent 60%),
+                radial-gradient(ellipse 800px 600px at 80% 90%, rgba(138, 106, 63, 0.03), transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Motif décoratif en arrière-plan */
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            opacity: 0.03;
+            background-image:
+                repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(201, 169, 97, 0.1) 40px,
+                    rgba(201, 169, 97, 0.1) 41px);
+            pointer-events: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        /* ================================================================
+           LOGIN WRAPPER
+           ================================================================ */
+        .login-wrapper {
+            width: 100%;
+            max-width: 460px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.8s var(--ease) forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2.6rem;
+            box-shadow: var(--shadow-soft), var(--shadow-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dégradé doré subtil en haut */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.6;
+        }
+
+        /* ================================================================
+           LOGO
+           ================================================================ */
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2.2rem;
+        }
+
+        .login-logo .mark {
+            width: 64px;
+            height: 64px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--gold);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .login-logo .mark img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        .login-logo .mark .fallback-text {
+            display: none;
+        }
+        .login-logo .mark img.error ~ .fallback-text {
+            display: block;
+        }
+        .login-logo .mark img.error {
+            display: none;
+        }
+
+        .login-logo .mark::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 97, 0.1);
+            animation: pulseBorder 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseBorder {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.08);
+                opacity: 0;
+            }
+        }
+
+        .login-logo .mark:hover {
+            transform: rotate(90deg);
+            border-color: var(--gold-bright);
+        }
+
+        .login-logo h1 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--gold-bright);
+            letter-spacing: 0.04em;
+            font-weight: 600;
+        }
+
+        .login-logo .subtitle {
+            font-size: 0.78rem;
+            color: var(--ink-mute);
+            margin-top: 0.2rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .login-logo .divider {
+            width: 40px;
+            height: 1px;
+            background: var(--gold-dim);
+            margin: 0.8rem auto 0;
+            opacity: 0.4;
+        }
+
+        /* ================================================================
+           FORM
+           ================================================================ */
+        .login-form .form-group {
+            margin-bottom: 1.4rem;
+        }
+
+        .login-form .form-group label {
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            margin-bottom: 0.4rem;
+            font-weight: 400;
+        }
+
+        .login-form .form-group .input-wrap {
+            position: relative;
+        }
+
+        .login-form .form-group .input-wrap .icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-faint);
+            font-size: 0.9rem;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .login-form .form-group input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.8rem;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.92rem;
+            transition: var(--transition);
+            font-family: var(--font-body);
+        }
+
+        .login-form .form-group input:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.06);
+            background: var(--bg-panel-raised);
+        }
+
+        .login-form .form-group input:focus+.icon,
+        .login-form .form-group input:focus~.icon {
+            color: var(--gold);
+        }
+
+        .login-form .form-group input::placeholder {
+            color: var(--ink-faint);
+            font-weight: 300;
+        }
+
+        /* Toggle password */
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-faint);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .toggle-password:hover {
+            color: var(--gold-bright);
+        }
+
+        /* ================================================================
+           FORM OPTIONS
+           ================================================================ */
+        .login-form .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1.2rem 0 1.6rem;
+            font-size: 0.78rem;
+            color: var(--ink-mute);
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .login-form .form-options label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.78rem;
+            color: var(--ink-mute);
+            text-transform: none;
+            letter-spacing: 0.02em;
+        }
+
+        .login-form .form-options label input[type="checkbox"] {
+            accent-color: var(--gold);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-2);
+            transition: var(--transition);
+        }
+
+        .login-form .form-options a {
+            color: var(--ink-mute);
+            transition: var(--transition);
+            font-size: 0.78rem;
+            border-bottom: 1px solid transparent;
+        }
+
+        .login-form .form-options a:hover {
+            color: var(--gold-bright);
+            border-bottom-color: var(--gold-dim);
+        }
+
+        /* ================================================================
+           BUTTON
+           ================================================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 100%;
+            padding: 0.95rem 2rem;
+            font-size: 0.86rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, var(--gold-dim));
+            color: #14110b;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-gold::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.08));
+            pointer-events: none;
+        }
+
+        .btn-gold:hover {
+            filter: brightness(1.08);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 44px -12px rgba(201, 169, 97, 0.5);
+        }
+
+        .btn-gold:active {
+            transform: translateY(0);
+            filter: brightness(0.95);
+        }
+
+        .btn-gold:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            filter: none;
+        }
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(20, 17, 11, 0.2);
+            border-top-color: #14110b;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .btn.loading .spinner {
+            display: block;
+        }
+
+        .btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ================================================================
+           ERROR MESSAGE
+           ================================================================ */
+        .login-error {
+            display: none;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 0.8rem 1rem;
+            background: var(--danger-light);
+            border: 1px solid rgba(185, 99, 74, 0.3);
+            border-radius: var(--radius-sm);
+            color: var(--danger);
+            font-size: 0.82rem;
+            margin-top: 1.2rem;
+            line-height: 1.5;
+            animation: shake 0.4s var(--ease);
+        }
+
+        .login-error.show {
+            display: flex;
+        }
+
+        .login-error i {
+            margin-top: 0.1rem;
+            flex-shrink: 0;
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-6px);
+            }
+            40% {
+                transform: translateX(6px);
+            }
+            60% {
+                transform: translateX(-4px);
+            }
+            80% {
+                transform: translateX(4px);
+            }
+        }
+
+        /* ================================================================
+           FOOTER
+           ================================================================ */
+        .login-footer {
+            text-align: center;
+            margin-top: 1.8rem;
+            font-size: 0.72rem;
+            color: var(--ink-faint);
+        }
+
+        .login-footer .divider-line {
+            width: 60px;
+            height: 1px;
+            background: var(--border-soft);
+            margin: 0 auto 1rem;
+        }
+
+        .login-footer a {
+            color: var(--gold-dim);
+            transition: var(--transition);
+            font-weight: 400;
+        }
+
+        .login-footer a:hover {
+            color: var(--gold-bright);
+        }
+
+        .login-footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .login-footer .footer-links a {
+            font-size: 0.68rem;
+            color: var(--ink-faint);
+        }
+
+        .login-footer .footer-links a:hover {
+            color: var(--gold-dim);
+        }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 500px) {
+            .login-wrapper {
+                padding: 1rem;
+            }
+
+            .login-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .login-logo h1 {
+                font-size: 1.4rem;
+            }
+
+            .login-logo .mark {
+                width: 52px;
+                height: 52px;
+                font-size: 1.5rem;
+            }
+
+            .login-form .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+            }
+
+            .login-form .form-group input {
+                padding: 0.75rem 1rem 0.75rem 2.4rem;
+                font-size: 0.85rem;
+            }
+
+            .btn {
+                font-size: 0.78rem;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .login-footer .footer-links {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .login-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .login-logo .mark {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+
+            .login-form .form-group input {
+                padding: 0.65rem 0.8rem 0.65rem 2rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ================================================================
+           REDUCED MOTION
+           ================================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.001ms !important;
+                transition-duration: 0.001ms !important;
+            }
+
+            .login-wrapper {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+
+            .login-logo .mark::after {
+                animation: none;
+            }
+        }
+
+        /* ================================================================
+           SCROLLBAR
+           ================================================================ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-void);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-dim);
+            border-radius: 10px;
+            border: 2px solid var(--bg-void);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
+    
+
+/* ============================================================
+   DESIGN SYSTEM — Ambiance "Apple", brume dorée, TV-adaptatif
+   ============================================================ */
+*{ accent-color: var(--gold, #c9a961); }
+
+.mist-bg{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--bg-void, #0a0908);
+}
+.mist-bg::before,
+.mist-bg::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  animation: mistDrift 22s ease-in-out infinite alternate;
+}
+.mist-bg::before{
+  width: 46vw; height: 46vw;
+  top: -12vw; left: -10vw;
+  background: radial-gradient(circle, rgba(201,169,97,0.35), transparent 70%);
+}
+.mist-bg::after{
+  width: 40vw; height: 40vw;
+  bottom: -14vw; right: -8vw;
+  background: radial-gradient(circle, rgba(140,110,60,0.28), transparent 70%);
+  animation-delay: -9s;
+}
+@keyframes mistDrift{
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(3vw, 2vw) scale(1.12); }
+}
+
+.glass-panel{
+  background: rgba(21,18,14,0.55);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(201,169,97,0.18);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+}
+
+/* Bouton flottant "appel" — halo pulsé façon écran d'appel iOS */
+.fab-whatsapp{ position: relative; }
+.fab-whatsapp::before{
+  content:"";
+  position:absolute; inset:-6px;
+  border-radius:50%;
+  background: rgba(37,211,102,0.35);
+  filter: blur(6px);
+  animation: callPulse 2.2s ease-out infinite;
+  z-index:-1;
+}
+@keyframes callPulse{
+  0%   { transform: scale(0.85); opacity: 0.7; }
+  70%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Adaptation grands écrans / TV (1600px+, 4K compris) */
+@media (min-width: 1600px){
+  html{ font-size: 19px; }
+  .container, .wrap, main{ max-width: 1680px; }
+}
+@media (min-width: 2200px){
+  html{ font-size: 23px; }
+  .container, .wrap, main{ max-width: 2100px; }
+}
+</style>
+    <link rel="stylesheet" href="/assets/css/logo-frame.css">
+</head>
+<body>
+<div class="mist-bg" aria-hidden="true"></div>
+
+
+    <div class="bg-pattern"></div>
+
+    <!-- ============================================================
+    LOGIN WRAPPER
+    ============================================================ -->
+    <div class="login-wrapper">
+
+        <div class="login-card">
+
+            <!-- LOGO -->
+            <div class="login-logo">
+                <div class="mark">
+                    <img 
+                        src="/assets/logo/dar-chakaf-logo.svg" 
+                        alt="Dar Chakaf Logo"
+                        width="40" 
+                        height="40"
+                        style="width:40px;height:40px;object-fit:contain;"
+                        onerror="this.classList.add('error'); this.style.display='none'; this.parentElement.querySelector('.fallback-text').style.display='block';"
+                    />
+                    <span class="fallback-text">D</span>
+                </div>
+                <h1>Dar Chakaf</h1>
+                <p class="subtitle">Espace d'administration</p>
+                <div class="divider"></div>
+            </div>
+
+            <!-- FORM -->
+            <form class="login-form" id="loginForm" novalidate autocomplete="off">
+
+                <div class="form-group">
+                    <label for="email"><i class="fa-regular fa-envelope" style="margin-right:0.4rem;"></i> Adresse email</label>
+                    <div class="input-wrap">
+                        <span class="icon"><i class="fa-regular fa-envelope"></i></span>
+                        <input
+                        type="email"
+                        id="email"
+                        placeholder="admin@darchakaf.ma"
+                        value="admin@darchakaf.ma"
+                        required
+                        autofocus
+                        autocomplete="username"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password"><i class="fa-solid fa-lock" style="margin-right:0.4rem;"></i> Mot de passe</label>
+                    <div class="input-wrap">
+                        <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                        <input
+                        type="password"
+                        id="password"
+                        placeholder="••••••••"
+                        value="admin123"
+                        required
+                        autocomplete="current-password"
+                        />
+                        <button type="button" class="toggle-password" id="togglePassword" aria-label="Afficher le mot de passe">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label>
+                        <input type="checkbox" checked id="rememberMe" />
+                        Se souvenir de moi
+                    </label>
+                    <a href="#" id="forgotPassword">Mot de passe oublié ?</a>
+                </div>
+
+                <button type="submit" class="btn btn-gold" id="loginBtn">
+                    <span class="btn-text"><i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter</span>
+                    <span class="spinner"></span>
+                </button>
+
+                <div class="login-error" id="loginError">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="errorMessage">Identifiants incorrects. Veuillez réessayer.</span>
+                </div>
+
+            </form>
+
+            <!-- FOOTER -->
+            <div class="login-footer">
+                <div class="divider-line"></div>
+                <p>
+                    <a href="/"><i class="fa-regular fa-arrow-left"></i> Retour au site</a>
+                </p>
+                <div class="footer-links">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="/contact.html">Contact</a>
+                </div>
+                <p style="margin-top:0.8rem; font-size:0.6rem; color:var(--ink-faint);">
+                    © 2026 Dar Chakaf — Tous droits réservés
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+    SCRIPTS — 100% API
+    ============================================================ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            'use strict';
+
+            // ============================================================
+            // DOM ELEMENTS
+            // ============================================================
+            var form = document.getElementById('loginForm');
+            var emailInput = document.getElementById('email');
+            var passwordInput = document.getElementById('password');
+            var togglePassword = document.getElementById('togglePassword');
+            var loginBtn = document.getElementById('loginBtn');
+            var errorDiv = document.getElementById('loginError');
+            var errorMsg = document.getElementById('errorMessage');
+            var rememberMe = document.getElementById('rememberMe');
+            var forgotLink = document.getElementById('forgotPassword');
+
+            // ============================================================
+            // TOGGLE PASSWORD VISIBILITY
+            // ============================================================
+            togglePassword.addEventListener('click', function() {
+                var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            // ============================================================
+            // FORGOT PASSWORD (démo)
+            // ============================================================
+            forgotLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('📧 Un lien de réinitialisation vous sera envoyé à votre adresse email.\n\n(Fonctionnalité à connecter à l\'API)');
+            });
+
+            // ============================================================
+            // CHECK FOR SAVED SESSION
+            // ============================================================
+            var savedToken = localStorage.getItem('adminToken');
+            if (savedToken) {
+                // Rediriger vers le dashboard si déjà connecté
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            // ============================================================
+            // FORM SUBMIT — 100% API
+            // ============================================================
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                var email = emailInput.value.trim();
+                var password = passwordInput.value.trim();
+
+                // Réinitialiser l'erreur
+                errorDiv.classList.remove('show');
+
+                // Validation simple
+                if (!email || !password) {
+                    errorMsg.textContent = 'Veuillez remplir tous les champs.';
+                    errorDiv.classList.add('show');
+                    if (!email) { emailInput.focus(); } else { passwordInput.focus(); }
+                    return;
+                }
+
+                // Validation email basique
+                if (!email.includes('@') || !email.includes('.')) {
+                    errorMsg.textContent = 'Veuillez entrer une adresse email valide.';
+                    errorDiv.classList.add('show');
+                    emailInput.focus();
+                    return;
+                }
+
+                // État de chargement
+                loginBtn.classList.add('loading');
+                loginBtn.disabled = true;
+
+                // ============================================================
+                // CONNEXION À L'API RÉELLE
+                // ============================================================
+                fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: password })
+                })
+                .then(function(response) {
+                    return response.json().then(function(body) {
+                        if (!response.ok || !body.success) {
+                            throw new Error(body.message || 'Identifiants incorrects. Veuillez réessayer.');
+                        }
+                        return body;
+                    });
+                })
+                .then(function(body) {
+                    loginBtn.classList.remove('loading');
+                    loginBtn.disabled = false;
+
+                    // Sauvegarder les données
+                    localStorage.setItem('adminToken', body.data.token);
+                    localStorage.setItem('adminEmail', body.data.user.email);
+                    localStorage.setItem('adminName', body.data.user.name || 'Administrateur');
+                    if (rememberMe.checked) {
+                        localStorage.setItem('rememberMe', 'true');
+                    }
+                    
+                    // Redirection vers le dashboard
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(function(err) {
+                    loginBtn.classList.remove('loading');
+                    loginBtn.disabled = false;
+
+                    errorMsg.textContent = err.message || 'Email ou mot de passe incorrect. Veuillez réessayer.';
+                    errorDiv.classList.add('show');
+                    
+                    // Secouer le formulaire
+                    form.style.animation = 'shake 0.4s var(--ease)';
+                    setTimeout(function() {
+                        form.style.animation = '';
+                    }, 500);
+                    
+                    // Focus sur le champ email
+                    emailInput.focus();
+                    emailInput.select();
+                });
+
+            });
+
+            // ============================================================
+            // CLEAR ERROR ON TYPING
+            // ============================================================
+            emailInput.addEventListener('input', function() {
+                errorDiv.classList.remove('show');
+            });
+
+            passwordInput.addEventListener('input', function() {
+                errorDiv.classList.remove('show');
+            });
+
+            // ============================================================
+            // CONSOLE
+            // ============================================================
+            console.log('🚀 Dar Chakaf — Page de connexion Admin (100% API)');
+            console.log('📧 Email de test: admin@darchakaf.ma');
+            console.log('🔑 Mot de passe: admin123');
+
+        });
+    </script>
+
+    <script src="/assets/js/logo-sync.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Paramètres du site — Dar Chakaf Admin</title>
+
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ================================================================
+           ADMIN DESIGN SYSTEM — DAR CHAKAF PREMIUM
+           ================================================================ */
+        :root {
+            --bg-void: #0a0908;
+            --bg-base: #0e0c0a;
+            --bg-panel: #15120e;
+            --bg-panel-2: #1c1712;
+            --bg-panel-raised: #221b14;
+            --border-soft: rgba(201, 169, 97, 0.14);
+            --border-strong: rgba(201, 169, 97, 0.32);
+            --gold: #c9a961;
+            --gold-bright: #e6c988;
+            --gold-dim: #8f7440;
+            --gold-glow: rgba(201, 169, 97, 0.06);
+            --ink: #f2ead9;
+            --ink-soft: #cdc3ae;
+            --ink-mute: #8e8471;
+            --ink-faint: #5c5546;
+            --success: #7a9b6e;
+            --danger: #b9634a;
+            --warning: #d4a04a;
+            --info: #5b8c9e;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --fs-h1: clamp(1.8rem, 2.8vw, 2.4rem);
+            --fs-h2: clamp(1.2rem, 1.8vw, 1.5rem);
+            --gap-xs: 0.5rem;
+            --gap-sm: 1rem;
+            --gap-md: 2rem;
+            --gap-lg: 4rem;
+            --radius-sm: 4px;
+            --radius-md: 10px;
+            --radius-lg: 18px;
+            --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.65);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-gold: 0 10px 40px -12px rgba(201, 169, 97, 0.35);
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --transition: 0.45s var(--ease);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-base);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a { color: inherit; text-decoration: none; transition: var(--transition); }
+        ul { list-style: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        input, select, textarea { font-family: inherit; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-void); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; border: 2px solid var(--bg-void); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 3vw, 2.5rem);
+        }
+
+        /* ================================================================
+           ANIMATIONS
+           ================================================================ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .fade-up { animation: fadeUp 0.6s var(--ease) forwards; opacity: 0; }
+        .fade-up-delay-1 { animation-delay: 0.1s; }
+        .fade-up-delay-2 { animation-delay: 0.2s; }
+        .fade-up-delay-3 { animation-delay: 0.3s; }
+        .fade-up-delay-4 { animation-delay: 0.4s; }
+
+        /* ================================================================
+           MIST BG
+           ================================================================ */
+        .mist-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: var(--bg-void, #0a0908);
+        }
+        .mist-bg::before,
+        .mist-bg::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            animation: mistDrift 22s ease-in-out infinite alternate;
+        }
+        .mist-bg::before {
+            width: 46vw; height: 46vw;
+            top: -12vw; left: -10vw;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.35), transparent 70%);
+        }
+        .mist-bg::after {
+            width: 40vw; height: 40vw;
+            bottom: -14vw; right: -8vw;
+            background: radial-gradient(circle, rgba(140, 110, 60, 0.28), transparent 70%);
+            animation-delay: -9s;
+        }
+        @keyframes mistDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(3vw, 2vw) scale(1.12); }
+        }
+
+        /* ================================================================
+           ADMIN HEADER
+           ================================================================ */
+        .admin-header {
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 0.7rem 0;
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(21, 18, 14, 0.94);
+        }
+        .admin-header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+        }
+        .admin-header .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--gold-bright);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .admin-header .logo-text .mark {
+            width: 32px; height: 32px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: var(--gold);
+            overflow: hidden;
+        }
+        .admin-header .logo-text .mark img {
+            width: 24px; height: 24px;
+            object-fit: contain;
+        }
+        .admin-header .logo-text .mark .fallback-text {
+            display: none;
+        }
+        .admin-header .logo-text .mark img.error ~ .fallback-text {
+            display: block;
+        }
+        .admin-header .logo-text .mark img.error {
+            display: none;
+        }
+        .admin-header .logo-text .mark:hover { transform: rotate(90deg); }
+        .admin-header .logo-text span {
+            font-family: var(--font-body);
+            font-size: 0.55rem; letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            display: block; margin-top: -2px;
+        }
+        .admin-header-actions {
+            display: flex; align-items: center; gap: 1.2rem;
+        }
+        .admin-header-actions .user {
+            display: flex; align-items: center; gap: 0.6rem;
+            font-size: 0.82rem; color: var(--ink-mute);
+        }
+        .admin-header-actions .user .avatar {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+            display: flex; align-items: center; justify-content: center;
+            color: #14110b; font-weight: 600; font-size: 0.8rem;
+        }
+        .admin-header-actions .user .name { color: var(--ink-soft); font-weight: 400; }
+        .admin-header-actions .logout-btn {
+            font-size: 0.7rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .admin-header-actions .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+        /* ================================================================
+           ADMIN SIDEBAR
+           ================================================================ */
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: var(--gap-lg);
+            padding: var(--gap-md) 0 var(--gap-lg);
+            align-items: start;
+        }
+        .admin-sidebar {
+            position: sticky; top: 80px; align-self: start;
+        }
+        .admin-sidebar .nav-section { margin-bottom: 1.5rem; }
+        .admin-sidebar .nav-section .label {
+            font-size: 0.6rem; letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            padding: 0 0.8rem;
+            margin-bottom: 0.4rem;
+        }
+        .admin-sidebar a {
+            display: flex; align-items: center; gap: 0.7rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            color: var(--ink-mute);
+            transition: var(--transition);
+            border-left: 2px solid transparent;
+        }
+        .admin-sidebar a i { width: 18px; text-align: center; font-size: 0.9rem; }
+        .admin-sidebar a:hover, .admin-sidebar a.active {
+            background: var(--gold-glow);
+            color: var(--gold-bright);
+            border-left-color: var(--gold);
+        }
+        .admin-sidebar a .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.55rem;
+            padding: 0.05rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .admin-sidebar a .badge.success { background: var(--success); }
+
+        /* ================================================================
+           BUTTONS
+           ================================================================ */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.78rem; letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, var(--gold-dim));
+            color: #14110b;
+            box-shadow: var(--shadow-gold);
+        }
+        .btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        .btn-ghost { border: 1px solid var(--border-soft); color: var(--ink-mute); background: transparent; }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.65rem; }
+        .btn-xs { padding: 0.15rem 0.5rem; font-size: 0.6rem; }
+
+        /* ================================================================
+           MAIN CONTENT
+           ================================================================ */
+        .admin-main { min-width: 0; }
+
+        .page-header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: var(--gap-sm);
+            margin-bottom: var(--gap-md);
+        }
+        .page-header h1 { font-size: var(--fs-h1); color: var(--ink); font-weight: 600; }
+        .page-header .sub { font-size: 0.85rem; color: var(--ink-mute); display: block; margin-top: -2px; }
+        .page-header .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+        /* ================================================================
+           FORM
+           ================================================================ */
+        .form-container {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 2.4rem;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            margin-bottom: 0.3rem;
+            font-weight: 400;
+        }
+        .form-group label .required {
+            color: var(--danger);
+            margin-left: 0.2rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--ink);
+            font-size: 0.88rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.06);
+            background: var(--bg-panel-raised);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group .help-text {
+            font-size: 0.7rem;
+            color: var(--ink-faint);
+            margin-top: 0.2rem;
+        }
+        .form-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.6rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border-soft);
+        }
+        .form-actions .btn {
+            padding: 0.7rem 2rem;
+        }
+
+        /* Image preview */
+        .image-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.4rem;
+            position: relative;
+        }
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .image-preview img.loaded {
+            display: block;
+        }
+        .image-preview .empty-frame {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-faint);
+            font-size: 0.6rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .image-preview .empty-frame .icon {
+            font-size: 2rem;
+            opacity: 0.15;
+            margin-bottom: 0.2rem;
+        }
+        .image-preview img.loaded ~ .empty-frame {
+            display: none;
+        }
+
+        /* Hero slideshow manager */
+        .hero-slides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.8rem;
+            margin-top: 0.6rem;
+        }
+        .hero-slide-item {
+            position: relative;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-2);
+            aspect-ratio: 16/10;
+        }
+        .hero-slide-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-slide-item .hero-slide-order {
+            position: absolute;
+            top: 0.4rem;
+            left: 0.4rem;
+            background: rgba(10, 9, 8, 0.75);
+            color: var(--gold-bright);
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.1rem 0.45rem;
+            border-radius: 20px;
+        }
+        .hero-slide-actions {
+            position: absolute;
+            inset: auto 0 0 0;
+            display: flex;
+            justify-content: center;
+            gap: 0.3rem;
+            padding: 0.35rem;
+            background: linear-gradient(0deg, rgba(10,9,8,0.9), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .hero-slide-item:hover .hero-slide-actions { opacity: 1; }
+        .hero-slide-actions button {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel);
+            color: var(--ink-mute);
+            cursor: pointer;
+            font-size: 0.7rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .hero-slide-actions button:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .hero-slide-actions button.delete:hover { border-color: var(--danger); color: var(--danger); }
+        .hero-slide-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--ink-faint);
+            font-size: 0.75rem;
+            padding: 1rem;
+            border: 1px dashed var(--border-soft);
+            border-radius: var(--radius-sm);
+        }
+        .hero-slide-add-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .hero-slide-add-row input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* ================================================================
+           TOAST
+           ================================================================ */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-panel-raised);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            color: var(--ink);
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-soft);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 999;
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { border-color: var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-color: var(--danger); }
+        .toast.error i { color: var(--danger); }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 1100px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .admin-sidebar {
+                position: static;
+                display: flex; flex-wrap: wrap; gap: 0.3rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-soft);
+            }
+            .admin-sidebar .nav-section {
+                margin-bottom: 0;
+                display: flex; flex-wrap: wrap; gap: 0.2rem;
+            }
+            .admin-sidebar .nav-section .label { display: none; }
+            .admin-sidebar a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.72rem;
+                border-left: none;
+                border-radius: var(--radius-sm);
+            }
+            .admin-sidebar a i { display: none; }
+            .admin-sidebar a .badge { margin-left: 0.3rem; }
+        }
+        @media (max-width: 900px) {
+            .form-row { grid-template-columns: 1fr; }
+            .form-container { padding: 1.5rem; }
+        }
+        @media (max-width: 600px) {
+            .admin-header-inner { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+            .admin-header-actions { flex-wrap: wrap; justify-content: space-between; }
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .page-header .actions { width: 100%; justify-content: stretch; }
+            .page-header .actions .btn { flex: 1; justify-content: center; }
+            .form-container { padding: 1rem; }
+            .form-actions { flex-direction: column; }
+            .form-actions .btn { width: 100%; justify-content: center; }
+            .toast { left: 1rem; right: 1rem; bottom: 1rem; }
+        }
+        @media (max-width: 400px) {
+            .form-actions { flex-direction: column; }
+        }
+
+        @media (min-width: 1600px) {
+            html { font-size: 19px; }
+            .container { max-width: 1680px; }
+        }
+        @media (min-width: 2200px) {
+            html { font-size: 23px; }
+            .container { max-width: 2100px; }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/logo-frame.css">
+</head>
+<body>
+    <div class="mist-bg" aria-hidden="true"></div>
+
+    <!-- ============================================================
+    ADMIN HEADER
+    ============================================================ -->
+    <header class="admin-header">
+        <div class="container admin-header-inner">
+            <div class="logo-text">
+                <span class="mark">
+                    <img 
+                        src="/assets/logo/dar-chakaf-logo.svg" 
+                        alt="Dar Chakaf Logo"
+                        width="24" 
+                        height="24"
+                        style="width:24px;height:24px;object-fit:contain;"
+                        onerror="this.classList.add('error'); this.style.display='none'; this.parentElement.querySelector('.fallback-text').style.display='block';"
+                    />
+                    <span class="fallback-text">D</span>
+                </span>
+                <span>Dar Chakaf <span>Administration</span></span>
+            </div>
+            <div class="admin-header-actions">
+                <span class="user">
+                    <span class="avatar" id="adminAvatar">A</span>
+                    <span class="name" id="adminName">Administrateur</span>
+                </span>
+                <a href="../login.html" class="logout-btn" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    ADMIN LAYOUT
+    ============================================================ -->
+    <div class="container admin-layout">
+
+        <!-- SIDEBAR -->
+        <nav class="admin-sidebar">
+            <div class="nav-section">
+                <span class="label">Navigation</span>
+                <a href="../dashboard.html"><i class="fa-solid fa-gauge-high"></i> Tableau de bord</a>
+                <a href="../categories/liste.html"><i class="fa-solid fa-layer-group"></i> Catégories</a>
+                <a href="../galerie/liste.html"><i class="fa-solid fa-images"></i> Galerie</a>
+                <a href="../messages/liste.html"><i class="fa-solid fa-envelope"></i> Messages <span class="badge" id="messagesBadge">0</span></a>
+                <a href="../devis/liste.html"><i class="fa-solid fa-file-invoice"></i> Demandes de devis</a>
+                <a href="../blog/liste.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="../newsletter/liste.html"><i class="fa-solid fa-paper-plane"></i> Newsletter</a>
+                <a href="../utilisateurs/liste.html"><i class="fa-solid fa-users"></i> Utilisateurs</a>
+                <a href="infos-site.html" class="active"><i class="fa-solid fa-gear"></i> Paramètres</a>
+                <a href="../apropos/edit.html"><i class="fa-solid fa-book-open"></i> Page À propos</a>
+                <a href="../logs/activite.html"><i class="fa-solid fa-clock-rotate-left"></i> Logs</a>
+            </div>
+            <div class="nav-section">
+                <span class="label">Produits</span>
+                <div id="sidebarProducts">
+                    <!-- Rempli dynamiquement -->
+                </div>
+                <a href="../produits/produit-form.html"><i class="fa-solid fa-plus"></i> Ajouter un produit</a>
+            </div>
+        </nav>
+
+        <!-- ============================================================
+        MAIN CONTENT
+        ============================================================ -->
+        <main class="admin-main">
+
+            <!-- Page Header -->
+            <div class="page-header fade-up">
+                <div>
+                    <h1><i class="fa-solid fa-gear" style="color:var(--gold);"></i> Paramètres du site</h1>
+                    <span class="sub" id="pageSub">Configurer les informations générales du site</span>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-ghost" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Actualiser</button>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            FORM — 100% API
+            ============================================================ -->
+            <div class="form-container fade-up fade-up-delay-1">
+                <form id="settingsForm" novalidate>
+
+                    <!-- Logo -->
+                    <div class="form-group">
+                        <label for="logo">Logo</label>
+                        <input type="file" id="logoFile" accept="image/*" style="display:none;" />
+                        <input type="text" id="logo" placeholder="URL du logo (Ex: /assets/logo/dar-chakaf-logo.svg)" />
+                        <div class="cover-tools" style="display:flex; gap:0.6rem; margin-top:0.5rem;">
+                            <button type="button" class="btn btn-ghost btn-xs" id="chooseLogoFile"><i class="fa-solid fa-upload"></i> Choisir une image</button>
+                            <button type="button" class="btn btn-ghost btn-xs" id="clearLogoFile"><i class="fa-regular fa-trash-can"></i> Vider</button>
+                        </div>
+                        <div class="image-preview" id="logoPreview">
+                            <img id="logoPreviewImg" src="" alt="Aperçu logo" />
+                            <div class="empty-frame">
+                                <span class="icon">🖼️</span>
+                                <span>Aucun logo</span>
+                            </div>
+                        </div>
+                        <div class="help-text">Choisissez une image depuis votre appareil ou collez une URL. Le nouveau logo s'affichera automatiquement sur tout le site dès l'enregistrement.</div>
+                    </div>
+
+                    <!-- Image Notre histoire -->
+                    <div class="form-group">
+                        <label for="storyImage">Image — Notre histoire</label>
+                        <input type="file" id="storyImageFile" accept="image/*" style="display:none;" />
+                        <input type="text" id="storyImage" placeholder="URL ou image de l'atelier" />
+                        <div class="cover-tools" style="display:flex; gap:0.6rem; margin-top:0.5rem;">
+                            <button type="button" class="btn btn-ghost btn-xs" id="chooseStoryImageFile"><i class="fa-solid fa-upload"></i> Choisir une image</button>
+                            <button type="button" class="btn btn-ghost btn-xs" id="clearStoryImageFile"><i class="fa-regular fa-trash-can"></i> Vider</button>
+                        </div>
+                        <div class="image-preview" id="storyImagePreview">
+                            <img id="storyImagePreviewImg" src="" alt="Aperçu image Notre histoire" />
+                            <div class="empty-frame"><span class="icon">🔨</span><span>Aucune image</span></div>
+                        </div>
+                        <div class="help-text">Cette image remplace le marteau dans la section « Notre histoire » de l'accueil.</div>
+
+                        <div style="margin-top:1rem; padding-top:1rem; border-top:1px dashed var(--border, #444);">
+                            <label style="font-size:0.85rem;">Ou une vidéo à la place (optionnel)</label>
+                            <div class="help-text">Si une vidéo est ajoutée ici, elle remplace la photo ci-dessus dans la section « Notre histoire ». Retirez-la pour revenir à la photo.</div>
+
+                            <div id="storyVideoPreview" style="margin:0.6rem 0; display:none;">
+                                <video id="storyVideoPreviewPlayer" muted loop autoplay playsinline style="width:100%; max-width:320px; border-radius:8px; display:block;"></video>
+                            </div>
+
+                            <input type="file" id="storyVideoFile" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,video/ogg" style="display:none;" />
+                            <div class="cover-tools" style="display:flex; gap:0.6rem; align-items:center;">
+                                <button type="button" class="btn btn-ghost btn-xs" id="chooseStoryVideoFile"><i class="fa-solid fa-video"></i> Choisir une vidéo</button>
+                                <button type="button" class="btn btn-ghost btn-xs" id="removeStoryVideoBtn" style="display:none;"><i class="fa-regular fa-trash-can"></i> Retirer la vidéo</button>
+                                <span id="storyVideoUploadStatus" style="font-size:0.8rem; color:var(--ink-mute);"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Diaporama Hero (page d'accueil) -->
+                    <div class="form-group">
+                        <label>Images de fond — Page d'accueil (diaporama)</label>
+                        <div class="help-text">Ajoutez une ou plusieurs images : avec 2 images ou plus, elles défilent automatiquement toutes les 4 secondes sur la page d'accueil. Cliquez sur une image pour changer son ordre ou la supprimer.</div>
+
+                        <div class="hero-slides-grid" id="heroSlidesList">
+                            <div class="hero-slide-empty">Chargement…</div>
+                        </div>
+
+                        <input type="file" id="heroSlideFile" accept="image/*" style="display:none;" />
+                        <div class="hero-slide-add-row">
+                            <input type="text" id="heroSlideUrl" placeholder="Coller un lien https://... de l'image" />
+                            <button type="button" class="btn btn-ghost btn-sm" id="chooseHeroSlideFile"><i class="fa-solid fa-upload"></i> Choisir une image</button>
+                            <button type="button" class="btn btn-gold btn-sm" id="addHeroSlideBtn"><i class="fa-solid fa-plus"></i> Ajouter au diaporama</button>
+                        </div>
+                    </div>
+
+                    <!-- Vidéo de fond — Page d'accueil -->
+                    <div class="form-group">
+                        <label>Vidéo de fond — Page d'accueil <span class="help-text">(optionnel, remplace le diaporama d'images ci-dessus)</span></label>
+                        <div class="help-text">Si une vidéo est définie ici, elle s'affiche en fond de la page d'accueil à la place des images. Retirez-la pour revenir au diaporama de photos.</div>
+
+                        <div id="heroVideoPreview" style="margin:0.6rem 0; display:none;">
+                            <video id="heroVideoPreviewPlayer" muted loop autoplay playsinline style="width:100%; max-width:420px; border-radius:8px; display:block;"></video>
+                        </div>
+
+                        <input type="file" id="heroVideoFile" accept="video/mp4,video/webm,video/quicktime,video/x-matroska,video/ogg" style="display:none;" />
+                        <div class="hero-slide-add-row">
+                            <button type="button" class="btn btn-ghost btn-sm" id="chooseHeroVideoFile"><i class="fa-solid fa-video"></i> Choisir une vidéo</button>
+                            <button type="button" class="btn btn-ghost btn-sm" id="removeHeroVideoBtn" style="display:none;"><i class="fa-solid fa-trash-can"></i> Retirer la vidéo</button>
+                            <span id="heroVideoUploadStatus" style="font-size:0.8rem; color:var(--ink-mute);"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Téléphone -->
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="text" id="phone" placeholder="Ex: +212 6 00 00 00 00" />
+                        </div>
+                        <!-- WhatsApp -->
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp</label>
+                            <input type="text" id="whatsapp" placeholder="Ex: +212 6 00 00 00 00" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Ex: contact@darchakaf.ma" />
+                        </div>
+                        <!-- Adresse -->
+                        <div class="form-group">
+                            <label for="address">Adresse</label>
+                            <input type="text" id="address" placeholder="Ex: Zone Industrielle Sidi Maârouf, Casablanca" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Lien Google Maps -->
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label for="mapsLink">Lien Google Maps</label>
+                            <input type="text" id="mapsLink" placeholder="Collez ici le lien Google Maps de votre showroom (bouton Partager sur Google Maps)" />
+                            <div class="help-text">Ouvrez votre showroom sur Google Maps → Partager → Copier le lien, et collez-le ici. La carte affichée sur la page Contact se mettra à jour automatiquement.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Horaires -->
+                        <div class="form-group">
+                            <label for="hours">Horaires</label>
+                            <input type="text" id="hours" placeholder="Ex: Lun-Ven: 9h - 19h, Sam: 10h - 16h" />
+                        </div>
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="description">Description du site</label>
+                            <textarea id="description" placeholder="Description courte du site (utilisée dans le footer et SEO)"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Facebook -->
+                        <div class="form-group">
+                            <label for="facebook">Facebook</label>
+                            <input type="text" id="facebook" placeholder="https://facebook.com/darchakaf" />
+                        </div>
+                        <!-- Instagram -->
+                        <div class="form-group">
+                            <label for="instagram">Instagram</label>
+                            <input type="text" id="instagram" placeholder="https://instagram.com/darchakaf" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- TikTok -->
+                        <div class="form-group">
+                            <label for="tiktok">TikTok</label>
+                            <input type="text" id="tiktok" placeholder="https://tiktok.com/@darchakaf" />
+                        </div>
+                        <!-- LinkedIn -->
+                        <div class="form-group">
+                            <label for="linkedin">LinkedIn</label>
+                            <input type="text" id="linkedin" placeholder="https://linkedin.com/company/darchakaf" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Google Analytics -->
+                        <div class="form-group">
+                            <label for="gaId">Google Analytics (ID de mesure GA4)</label>
+                            <input type="text" id="gaId" placeholder="G-XXXXXXXXXX" />
+                        </div>
+                        <!-- Tawk.to -->
+                        <div class="form-group">
+                            <label for="tawktoId">Chat en direct — Tawk.to (Widget ID)</label>
+                            <input type="text" id="tawktoId" placeholder="ex: 65abc123.../1h..." />
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-gold" id="submitBtn">
+                            <span id="submitText"><i class="fa-solid fa-check"></i> Enregistrer</span>
+                            <span id="submitSpinner" style="display:none;"><i class="fa-solid fa-spinner fa-spin"></i> Enregistrement...</span>
+                        </button>
+                        <button type="reset" class="btn btn-ghost">Réinitialiser</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Opération réussie !</span>
+    </div>
+
+    <!-- ============================================================
+    SCRIPTS — 100% API-READY
+    ============================================================ -->
+    <script src="/assets/js/video-upload.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            'use strict';
+
+            // ============================================================
+            // 1. USER INFO & SESSION
+            // ============================================================
+            var adminName = localStorage.getItem('adminName') || 'Administrateur';
+            document.getElementById('adminName').textContent = adminName;
+            document.getElementById('adminAvatar').textContent = adminName.charAt(0).toUpperCase();
+
+            var token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                    localStorage.clear();
+                    window.location.href = '../login.html';
+                }
+            });
+
+            // ============================================================
+            // 2. ICON MAP
+            // ============================================================
+            var iconMap = {
+                'salons-modernes': 'fa-couch',
+                'salons-traditionnels': 'fa-mosque',
+                'tables': 'fa-table',
+                'decorations': 'fa-vector-square',
+                'meubles-tv': 'fa-tv',
+                'couloirs': 'fa-door-open',
+                'tissus': 'fa-scroll'
+            };
+
+            // ============================================================
+            // 3. LOAD CATEGORIES FOR SIDEBAR
+            // ============================================================
+            function loadCategories() {
+                fetch('/api/categories', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (!res.success || !Array.isArray(res.data)) return;
+                        var cats = res.data;
+
+                        var sidebarContainer = document.getElementById('sidebarProducts');
+                        sidebarContainer.innerHTML = '';
+                        cats.forEach(function(cat) {
+                            var slug = cat.slug || cat.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                            var icon = cat.icone || iconMap[slug] || 'fa-cube';
+                            var a = document.createElement('a');
+                            a.href = '../produits/' + slug + '.html';
+                            a.innerHTML = '<i class="fa-solid ' + icon + '"></i> ' + cat.nom +
+                                ' <span class="badge success">' + (cat.product_count || 0) + '</span>';
+                            sidebarContainer.appendChild(a);
+                        });
+                    })
+                    .catch(function(e) { console.warn('Erreur chargement catégories:', e); });
+            }
+
+            loadCategories();
+
+            // ============================================================
+            // 4. MESSAGES BADGE
+            // ============================================================
+            function loadMessagesBadge() {
+                fetch('/api/messages?lu=false&limit=1', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res.success && Array.isArray(res.data)) {
+                            document.getElementById('messagesBadge').textContent = res.data.length;
+                        }
+                    })
+                    .catch(function() {});
+            }
+            loadMessagesBadge();
+
+            // ============================================================
+            // 5. LOAD SITE SETTINGS — 100% API
+            // ============================================================
+            var settingsData = {};
+
+            function loadSettings() {
+                fetch('/api/parametres', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res && res.success && res.data) {
+                            settingsData = res.data;
+                            populateForm(settingsData);
+                        }
+                    })
+                    .catch(function() {
+                        // Données de secours si l'API n'est pas disponible
+                        var defaultSettings = {
+                            logo: '/assets/logo/dar-chakaf-logo.svg',
+                            image_hero: '/assets/images/hero.jpg',
+                            telephone: '+212 6 00 00 00 00',
+                            whatsapp: '+212 6 00 00 00 00',
+                            email: 'contact@darchakaf.ma',
+                            adresse: 'Zone Industrielle Sidi Maârouf, Casablanca, Maroc',
+                            horaires: 'Lun-Ven: 9h - 19h, Sam: 10h - 16h',
+                            description: 'Dar Chakaf — Artisanat marocain de luxe, meubles et décoration traditionnelle.',
+                            facebook: 'https://facebook.com/darchakaf',
+                            instagram: 'https://instagram.com/darchakaf',
+                            tiktok: 'https://tiktok.com/@darchakaf',
+                            linkedin: '',
+                            story_image: ''
+                        };
+                        settingsData = defaultSettings;
+                        populateForm(defaultSettings);
+                    });
+            }
+
+            function populateForm(data) {
+                document.getElementById('logo').value = data.logo || '';
+                document.getElementById('phone').value = data.telephone || '';
+                document.getElementById('whatsapp').value = data.whatsapp || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('address').value = data.adresse || '';
+                document.getElementById('mapsLink').value = data.maps_link || '';
+                document.getElementById('hours').value = data.horaires || '';
+                document.getElementById('description').value = data.description || '';
+                document.getElementById('facebook').value = data.facebook || '';
+                document.getElementById('instagram').value = data.instagram || '';
+                document.getElementById('tiktok').value = data.tiktok || '';
+                document.getElementById('linkedin').value = data.linkedin || '';
+                document.getElementById('gaId').value = data.ga_measurement_id || '';
+                document.getElementById('tawktoId').value = data.tawkto_widget_id || '';
+                document.getElementById('storyImage').value = data.story_image || '';
+
+                // Vidéo de fond (page d'accueil)
+                settingsData.video_hero = data.video_hero || '';
+                updateHeroVideoPreview(settingsData.video_hero);
+
+                // Vidéo — section "Notre histoire"
+                settingsData.story_video = data.story_video || '';
+                updateStoryVideoPreview(settingsData.story_video);
+
+                // Prévisualiser les images
+                previewImage('logo', data.logo);
+                previewImage('storyImage', data.story_image);
+            }
+
+            // ============================================================
+            // 6. IMAGE PREVIEW
+            // ============================================================
+            function previewImage(fieldId, url) {
+                var previewImg = document.getElementById(fieldId + 'PreviewImg');
+                var container = document.getElementById(fieldId + 'Preview');
+
+                if (url && url.trim()) {
+                    previewImg.src = url.trim();
+                    previewImg.classList.add('loaded');
+                } else {
+                    previewImg.classList.remove('loaded');
+                    previewImg.src = '';
+                }
+            }
+
+            document.getElementById('logo').addEventListener('input', function() {
+                previewImage('logo', this.value);
+            });
+            document.getElementById('storyImage').addEventListener('input', function() {
+                previewImage('storyImage', this.value);
+            });
+
+            // ============================================================
+            // Compression fiable des images (même logique que la Galerie).
+            // Les photos de téléphone (3-12 Mo) dépassaient la limite du
+            // serveur une fois converties en base64 (+33% de poids), ce qui
+            // faisait échouer l'enregistrement silencieusement une fois sur
+            // deux selon la photo choisie. On redimensionne + recompresse
+            // systématiquement en JPEG léger avant d'envoyer.
+            // ============================================================
+            var MAX_SOURCE_FILE_SIZE = 25 * 1024 * 1024; // 25 Mo — tolérant, on compresse après
+            var TARGET_DATA_URL_SIZE = 1.5 * 1024 * 1024; // ~1.5 Mo une fois encodé en base64
+            var MAX_DIMENSION = 1600; // px, côté le plus long
+            var MIN_VALID_DATA_URL_SIZE = 3000;
+
+            function drawToCanvas(source, srcW, srcH, preserveTransparency) {
+                var w = srcW, h = srcH;
+                if (w > h && w > MAX_DIMENSION) { h = Math.round(h * (MAX_DIMENSION / w)); w = MAX_DIMENSION; }
+                else if (h >= w && h > MAX_DIMENSION) { w = Math.round(w * (MAX_DIMENSION / h)); h = MAX_DIMENSION; }
+
+                var canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(source, 0, 0, w, h);
+
+                // Le logo (PNG/SVG avec fond transparent) doit rester en PNG :
+                // le convertir en JPEG remplit la transparence en noir, ce qui
+                // donnait un carré noir au lieu d'un fond transparent.
+                if (preserveTransparency) {
+                    return canvas.toDataURL('image/png');
+                }
+
+                var quality = 0.85;
+                var dataUrl = canvas.toDataURL('image/jpeg', quality);
+                while (dataUrl.length > TARGET_DATA_URL_SIZE && quality > 0.35) {
+                    quality -= 0.15;
+                    dataUrl = canvas.toDataURL('image/jpeg', quality);
+                }
+                return dataUrl;
+            }
+
+            function compressViaImageBitmap(file, preserveTransparency) {
+                return createImageBitmap(file).then(function(bitmap) {
+                    var dataUrl = drawToCanvas(bitmap, bitmap.width, bitmap.height, preserveTransparency);
+                    bitmap.close && bitmap.close();
+                    return dataUrl;
+                });
+            }
+
+            function compressViaImageElement(file, preserveTransparency) {
+                return new Promise(function(resolve, reject) {
+                    var img = new Image();
+                    var objectUrl = URL.createObjectURL(file);
+                    img.onload = function() {
+                        URL.revokeObjectURL(objectUrl);
+                        try { resolve(drawToCanvas(img, img.naturalWidth, img.naturalHeight, preserveTransparency)); }
+                        catch (e) { reject(e); }
+                    };
+                    img.onerror = function() {
+                        URL.revokeObjectURL(objectUrl);
+                        reject(new Error('UNREADABLE_IMAGE'));
+                    };
+                    img.src = objectUrl;
+                });
+            }
+
+            function withTimeout(promise, ms) {
+                return new Promise(function(resolve, reject) {
+                    var timer = setTimeout(function() { reject(new Error('TIMEOUT')); }, ms);
+                    promise.then(function(v) { clearTimeout(timer); resolve(v); },
+                                 function(e) { clearTimeout(timer); reject(e); });
+                });
+            }
+
+            function singleCompressAttempt(file, preserveTransparency) {
+                var attempt = (typeof createImageBitmap === 'function')
+                    ? compressViaImageBitmap(file, preserveTransparency).catch(function() { return compressViaImageElement(file, preserveTransparency); })
+                    : compressViaImageElement(file, preserveTransparency);
+
+                return withTimeout(attempt, 15000).then(function(dataUrl) {
+                    if (!dataUrl || dataUrl.length < MIN_VALID_DATA_URL_SIZE) throw new Error('BLANK_IMAGE');
+                    return dataUrl;
+                });
+            }
+
+            function delay(ms) { return new Promise(function(resolve) { setTimeout(resolve, ms); }); }
+
+            function compressImageFile(file, preserveTransparency) {
+                return singleCompressAttempt(file, preserveTransparency).catch(function() {
+                    return delay(400).then(function() { return singleCompressAttempt(file, preserveTransparency); });
+                });
+            }
+
+            function bindImagePicker(textId, fileId, chooseId, clearId, preserveTransparency) {
+                var textInput = document.getElementById(textId);
+                var fileInput = document.getElementById(fileId);
+                var chooseBtn = document.getElementById(chooseId);
+                var clearBtn = document.getElementById(clearId);
+                var isProcessing = false;
+
+                if (chooseBtn) chooseBtn.addEventListener('click', function() { fileInput.click(); });
+                if (fileInput) fileInput.addEventListener('change', function() {
+                    var file = this.files && this.files[0];
+                    if (!file) return;
+                    if (isProcessing) return;
+
+                    if (!file.type.startsWith('image/')) { showToast('Veuillez choisir une image.', 'error'); fileInput.value = ''; return; }
+                    if (file.size > MAX_SOURCE_FILE_SIZE) { showToast('Image trop lourde (max 25 Mo).', 'error'); fileInput.value = ''; return; }
+
+                    isProcessing = true;
+                    if (chooseBtn) chooseBtn.disabled = true;
+
+                    compressImageFile(file, preserveTransparency)
+                        .then(function(dataUrl) {
+                            textInput.value = dataUrl;
+                            previewImage(textId, dataUrl);
+                        })
+                        .catch(function() {
+                            showToast("Cette photo n'a pas pu être traitée correctement (fréquent avec certaines photos iPhone/iPad). Réessayez, ou reprenez la photo puis réessayez.", 'error');
+                        })
+                        .then(function() {
+                            isProcessing = false;
+                            if (chooseBtn) chooseBtn.disabled = false;
+                            fileInput.value = '';
+                        });
+                });
+                if (clearBtn) clearBtn.addEventListener('click', function() { textInput.value = ''; previewImage(textId, ''); });
+            }
+            bindImagePicker('logo', 'logoFile', 'chooseLogoFile', 'clearLogoFile', true);
+            bindImagePicker('storyImage', 'storyImageFile', 'chooseStoryImageFile', 'clearStoryImageFile', false);
+
+            // ============================================================
+            // 6bis. VIDÉO DE FOND — PAGE D'ACCUEIL
+            // ============================================================
+            var heroVideoPreview = document.getElementById('heroVideoPreview');
+            var heroVideoPreviewPlayer = document.getElementById('heroVideoPreviewPlayer');
+            var removeHeroVideoBtn = document.getElementById('removeHeroVideoBtn');
+            var heroVideoUploadStatus = document.getElementById('heroVideoUploadStatus');
+            var heroVideoFile = document.getElementById('heroVideoFile');
+            var chooseHeroVideoFile = document.getElementById('chooseHeroVideoFile');
+
+            function updateHeroVideoPreview(url) {
+                if (url) {
+                    heroVideoPreviewPlayer.src = url;
+                    heroVideoPreview.style.display = 'block';
+                    removeHeroVideoBtn.style.display = '';
+                } else {
+                    heroVideoPreviewPlayer.removeAttribute('src');
+                    heroVideoPreview.style.display = 'none';
+                    removeHeroVideoBtn.style.display = 'none';
+                }
+            }
+
+            chooseHeroVideoFile.addEventListener('click', function() {
+                heroVideoFile.click();
+            });
+
+            heroVideoFile.addEventListener('change', function() {
+                var file = this.files && this.files[0];
+                heroVideoFile.value = '';
+                if (!file) return;
+
+                chooseHeroVideoFile.disabled = true;
+                heroVideoUploadStatus.textContent = 'Préparation…';
+
+                // Filet de sécurité : un tout premier événement de
+                // progression à exactement 0% ne compte pas comme une
+                // "vraie" progression (observé en conditions réelles :
+                // sinon le texte restait figé sur "Envoi 0%..." pendant
+                // tout l'envoi si aucun autre événement n'arrivait
+                // ensuite). Un indicateur animé prend le relais tant
+                // qu'aucune progression significative n'a été vue
+                // récemment (utile aussi sur Safari/iOS, qui ne remonte
+                // généralement aucune progression du tout).
+                var heroLastPct = 0;
+                var heroLastUpdateTs = Date.now();
+                var heroDots = 0;
+                var heroHeartbeat = setInterval(function() {
+                    var stalled = (Date.now() - heroLastUpdateTs) > 4000;
+                    if (heroLastPct > 0 && !stalled) {
+                        heroVideoUploadStatus.textContent = 'Envoi ' + Math.round(heroLastPct) + '%...';
+                    } else {
+                        heroDots = (heroDots + 1) % 4;
+                        heroVideoUploadStatus.textContent = 'Envoi en cours' + new Array(heroDots + 1).join('.') + ' (peut prendre plusieurs minutes sur iPhone/iPad, ne fermez pas cette page)';
+                    }
+                }, 700);
+
+                DarChakafVideoUpload.uploadVideo(file, token, function(pct) {
+                    if (pct > 0) {
+                        heroLastPct = pct;
+                        heroLastUpdateTs = Date.now();
+                    }
+                })
+                    .then(function(url) {
+                        clearInterval(heroHeartbeat);
+                        settingsData.video_hero = url;
+                        updateHeroVideoPreview(url);
+                        heroVideoUploadStatus.textContent = 'Vidéo prête — cliquez sur "Enregistrer" pour l\'appliquer.';
+                    })
+                    .catch(function(err) {
+                        clearInterval(heroHeartbeat);
+                        heroVideoUploadStatus.textContent = '';
+                        showToast(err.message || "Erreur lors de l'upload de la vidéo.", 'error');
+                    })
+                    .then(function() {
+                        chooseHeroVideoFile.disabled = false;
+                    });
+            });
+
+            removeHeroVideoBtn.addEventListener('click', function() {
+                settingsData.video_hero = '';
+                updateHeroVideoPreview('');
+                heroVideoUploadStatus.textContent = '';
+            });
+
+            // ============================================================
+            // 6ter. VIDÉO — SECTION "NOTRE HISTOIRE"
+            // ============================================================
+            var storyVideoPreview = document.getElementById('storyVideoPreview');
+            var storyVideoPreviewPlayer = document.getElementById('storyVideoPreviewPlayer');
+            var removeStoryVideoBtn = document.getElementById('removeStoryVideoBtn');
+            var storyVideoUploadStatus = document.getElementById('storyVideoUploadStatus');
+            var storyVideoFile = document.getElementById('storyVideoFile');
+            var chooseStoryVideoFile = document.getElementById('chooseStoryVideoFile');
+
+            function updateStoryVideoPreview(url) {
+                if (url) {
+                    storyVideoPreviewPlayer.src = url;
+                    storyVideoPreview.style.display = 'block';
+                    removeStoryVideoBtn.style.display = '';
+                } else {
+                    storyVideoPreviewPlayer.removeAttribute('src');
+                    storyVideoPreview.style.display = 'none';
+                    removeStoryVideoBtn.style.display = 'none';
+                }
+            }
+
+            chooseStoryVideoFile.addEventListener('click', function() {
+                storyVideoFile.click();
+            });
+
+            storyVideoFile.addEventListener('change', function() {
+                var file = this.files && this.files[0];
+                storyVideoFile.value = '';
+                if (!file) return;
+
+                chooseStoryVideoFile.disabled = true;
+                storyVideoUploadStatus.textContent = 'Préparation…';
+
+                // Filet de sécurité : voir le commentaire équivalent sur
+                // la vidéo hero un peu plus haut dans ce fichier — un
+                // premier événement de progression à 0% ne doit pas
+                // suffire à figer l'affichage.
+                var storyLastPct = 0;
+                var storyLastUpdateTs = Date.now();
+                var storyDots = 0;
+                var storyHeartbeat = setInterval(function() {
+                    var stalled = (Date.now() - storyLastUpdateTs) > 4000;
+                    if (storyLastPct > 0 && !stalled) {
+                        storyVideoUploadStatus.textContent = 'Envoi ' + Math.round(storyLastPct) + '%...';
+                    } else {
+                        storyDots = (storyDots + 1) % 4;
+                        storyVideoUploadStatus.textContent = 'Envoi en cours' + new Array(storyDots + 1).join('.') + ' (peut prendre plusieurs minutes sur iPhone/iPad, ne fermez pas cette page)';
+                    }
+                }, 700);
+
+                DarChakafVideoUpload.uploadVideo(file, token, function(pct) {
+                    if (pct > 0) {
+                        storyLastPct = pct;
+                        storyLastUpdateTs = Date.now();
+                    }
+                })
+                    .then(function(url) {
+                        clearInterval(storyHeartbeat);
+                        settingsData.story_video = url;
+                        updateStoryVideoPreview(url);
+                        storyVideoUploadStatus.textContent = 'Vidéo prête — cliquez sur "Enregistrer" pour l\'appliquer.';
+                    })
+                    .catch(function(err) {
+                        clearInterval(storyHeartbeat);
+                        storyVideoUploadStatus.textContent = '';
+                        showToast(err.message || "Erreur lors de l'upload de la vidéo.", 'error');
+                    })
+                    .then(function() {
+                        chooseStoryVideoFile.disabled = false;
+                    });
+            });
+
+            removeStoryVideoBtn.addEventListener('click', function() {
+                settingsData.story_video = '';
+                updateStoryVideoPreview('');
+                storyVideoUploadStatus.textContent = '';
+            });
+
+            // ============================================================
+            // 7. SUBMIT FORM — 100% API
+            // ============================================================
+            var form = document.getElementById('settingsForm');
+            var submitBtn = document.getElementById('submitBtn');
+            var submitText = document.getElementById('submitText');
+            var submitSpinner = document.getElementById('submitSpinner');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Récupérer les valeurs
+                var payload = {
+                    logo: document.getElementById('logo').value.trim(),
+                    image_hero: settingsData.image_hero || '',
+                    story_image: document.getElementById('storyImage').value.trim(),
+                    telephone: document.getElementById('phone').value.trim(),
+                    whatsapp: document.getElementById('whatsapp').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    adresse: document.getElementById('address').value.trim(),
+                    maps_link: document.getElementById('mapsLink').value.trim(),
+                    horaires: document.getElementById('hours').value.trim(),
+                    description: document.getElementById('description').value.trim(),
+                    facebook: document.getElementById('facebook').value.trim(),
+                    instagram: document.getElementById('instagram').value.trim(),
+                    tiktok: document.getElementById('tiktok').value.trim(),
+                    linkedin: document.getElementById('linkedin').value.trim(),
+                    ga_measurement_id: document.getElementById('gaId').value.trim(),
+                    tawkto_widget_id: document.getElementById('tawktoId').value.trim(),
+                    video_hero: settingsData.video_hero || '',
+                    story_video: settingsData.story_video || ''
+                };
+
+                // Désactiver le bouton
+                submitBtn.disabled = true;
+                submitText.style.display = 'none';
+                submitSpinner.style.display = 'inline';
+
+                fetch('/api/parametres', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        submitBtn.disabled = false;
+                        submitText.style.display = 'inline';
+                        submitSpinner.style.display = 'none';
+
+                        if (res && res.success) {
+                            showToast('Paramètres mis à jour avec succès !', 'success');
+                            settingsData = payload;
+                        } else {
+                            showToast(res.message || 'Erreur lors de l\'enregistrement.', 'error');
+                        }
+                    })
+                    .catch(function(err) {
+                        submitBtn.disabled = false;
+                        submitText.style.display = 'inline';
+                        submitSpinner.style.display = 'none';
+                        showToast('Erreur de connexion au serveur.', 'error');
+                        console.error(err);
+                    });
+            });
+
+            // ============================================================
+            // 7bis. HERO SLIDESHOW MANAGER — 100% API
+            // ============================================================
+            var heroSlidesList = document.getElementById('heroSlidesList');
+            var heroSlideUrlInput = document.getElementById('heroSlideUrl');
+            var heroSlideFileInput = document.getElementById('heroSlideFile');
+            var heroSlides = [];
+
+            function loadHeroSlides() {
+                fetch('/api/hero-images')
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        heroSlides = (res && res.success && Array.isArray(res.data)) ? res.data : [];
+                        renderHeroSlides();
+                    })
+                    .catch(function() {
+                        heroSlides = [];
+                        renderHeroSlides();
+                    });
+            }
+
+            function renderHeroSlides() {
+                if (!heroSlidesList) return;
+                if (heroSlides.length === 0) {
+                    heroSlidesList.innerHTML = '<div class="hero-slide-empty">Aucune image — l\'image par défaut du site sera utilisée.</div>';
+                    return;
+                }
+                heroSlidesList.innerHTML = heroSlides.map(function(slide, index) {
+                    return '<div class="hero-slide-item" data-id="' + slide.id + '">' +
+                        '<span class="hero-slide-order">' + (index + 1) + '</span>' +
+                        '<img src="' + slide.url + '" alt="Image ' + (index + 1) + '" />' +
+                        '<div class="hero-slide-actions">' +
+                            '<button type="button" class="up" title="Monter"><i class="fa-solid fa-arrow-up"></i></button>' +
+                            '<button type="button" class="down" title="Descendre"><i class="fa-solid fa-arrow-down"></i></button>' +
+                            '<button type="button" class="delete" title="Supprimer"><i class="fa-regular fa-trash-can"></i></button>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            }
+
+            function saveHeroOrder() {
+                var ids = heroSlides.map(function(s) { return s.id; });
+                fetch('/api/hero-images', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ order: ids })
+                }).catch(function() {});
+            }
+
+            if (heroSlidesList) {
+                heroSlidesList.addEventListener('click', function(e) {
+                    var btn = e.target.closest('button');
+                    if (!btn) return;
+                    var item = e.target.closest('.hero-slide-item');
+                    var id = parseInt(item.getAttribute('data-id'), 10);
+                    var index = heroSlides.findIndex(function(s) { return s.id === id; });
+                    if (index === -1) return;
+
+                    if (btn.classList.contains('delete')) {
+                        fetch('/api/hero-images?id=' + id, {
+                            method: 'DELETE',
+                            headers: { 'Authorization': 'Bearer ' + token }
+                        })
+                            .then(function(r) { return r.json(); })
+                            .then(function(res) {
+                                if (res.success) {
+                                    heroSlides.splice(index, 1);
+                                    renderHeroSlides();
+                                    showToast('Image supprimée du diaporama.', 'success');
+                                } else {
+                                    showToast(res.message || 'Erreur lors de la suppression.', 'error');
+                                }
+                            })
+                            .catch(function() { showToast('Erreur lors de la suppression.', 'error'); });
+                    } else if (btn.classList.contains('up') && index > 0) {
+                        var tmp = heroSlides[index - 1];
+                        heroSlides[index - 1] = heroSlides[index];
+                        heroSlides[index] = tmp;
+                        renderHeroSlides();
+                        saveHeroOrder();
+                    } else if (btn.classList.contains('down') && index < heroSlides.length - 1) {
+                        var tmp2 = heroSlides[index + 1];
+                        heroSlides[index + 1] = heroSlides[index];
+                        heroSlides[index] = tmp2;
+                        renderHeroSlides();
+                        saveHeroOrder();
+                    }
+                });
+            }
+
+            function addHeroSlide(url) {
+                if (!url) return;
+                fetch('/api/hero-images', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ url: url })
+                })
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res.success) {
+                            heroSlides.push(res.data);
+                            renderHeroSlides();
+                            heroSlideUrlInput.value = '';
+                            showToast('Image ajoutée au diaporama !', 'success');
+                        } else {
+                            showToast(res.message || "Erreur lors de l'ajout.", 'error');
+                        }
+                    })
+                    .catch(function() { showToast("Erreur lors de l'ajout.", 'error'); });
+            }
+
+            var addHeroSlideBtn = document.getElementById('addHeroSlideBtn');
+            if (addHeroSlideBtn) {
+                addHeroSlideBtn.addEventListener('click', function() {
+                    addHeroSlide(heroSlideUrlInput.value.trim());
+                });
+            }
+
+            var chooseHeroSlideFileBtn = document.getElementById('chooseHeroSlideFile');
+            if (chooseHeroSlideFileBtn) {
+                chooseHeroSlideFileBtn.addEventListener('click', function() { heroSlideFileInput.click(); });
+            }
+            if (heroSlideFileInput) {
+                heroSlideFileInput.addEventListener('change', function() {
+                    var file = this.files && this.files[0];
+                    if (!file) return;
+                    if (!file.type.startsWith('image/')) { showToast('Veuillez choisir une image.', 'error'); return; }
+                    if (file.size > 4 * 1024 * 1024) { showToast('Image trop lourde (max 4 Mo).', 'error'); return; }
+                    var reader = new FileReader();
+                    reader.onload = function(e) { addHeroSlide(e.target.result); };
+                    reader.onerror = function() { showToast('Impossible de lire l\'image.', 'error'); };
+                    reader.readAsDataURL(file);
+                    heroSlideFileInput.value = '';
+                });
+            }
+
+            // ============================================================
+            // 8. REFRESH
+            // ============================================================
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                var original = this.innerHTML;
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Chargement...';
+                this.disabled = true;
+
+                loadSettings();
+                loadHeroSlides();
+                setTimeout(function() {
+                    document.getElementById('refreshBtn').innerHTML = original;
+                    document.getElementById('refreshBtn').disabled = false;
+                    showToast('Données actualisées !', 'success');
+                }, 800);
+            });
+
+            // ============================================================
+            // 9. TOAST
+            // ============================================================
+            function showToast(message, type) {
+                var toast = document.getElementById('toast');
+                var toastMsg = document.getElementById('toastMessage');
+                toastMsg.textContent = message;
+                toast.className = 'toast ' + (type || 'success');
+                toast.classList.add('show');
+
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // ============================================================
+            // 10. INIT
+            // ============================================================
+            loadSettings();
+            loadHeroSlides();
+
+            console.log('🚀 Admin Paramètres — 100% API-ready');
+
+        });
+    </script>
+
+    <script src="/assets/js/logo-sync.js" defer></script>
+</body>
+</html>

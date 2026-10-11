@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Galerie — Dar Chakaf</title>
+    <meta name="description" content="Découvrez nos réalisations en mobilier et décoration d'intérieur." />
+
+    <link rel="canonical" href="https://darchakaf.ma/galerie.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Galerie — Dar Chakaf" />
+    <meta property="og:description" content="Découvrez nos réalisations en mobilier et décoration d'intérieur." />
+    <meta property="og:url" content="https://darchakaf.ma/galerie.html" />
+    <meta property="og:image" content="https://darchakaf.ma/assets/images/hero.jpg" />
+    <meta property="og:locale" content="fr_MA" />
+    <meta property="og:site_name" content="Dar Chakaf" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Galerie — Dar Chakaf" />
+    <meta name="twitter:description" content="Découvrez nos réalisations en mobilier et décoration d'intérieur." />
+    <meta name="twitter:image" content="https://darchakaf.ma/assets/images/hero.jpg" />
+
+    <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ================================================================
+           DESIGN SYSTEM — DAR CHAKAF PREMIUM
+           ================================================================ */
+        :root {
+            --bg-void: #0a0908;
+            --bg-base: #0e0c0a;
+            --bg-panel: #15120e;
+            --bg-panel-2: #1c1712;
+            --bg-panel-raised: #221b14;
+            --border-soft: rgba(201, 169, 97, 0.14);
+            --border-strong: rgba(201, 169, 97, 0.32);
+            --gold: #c9a961;
+            --gold-bright: #e6c988;
+            --gold-dim: #8f7440;
+            --ink: #f2ead9;
+            --ink-soft: #cdc3ae;
+            --ink-mute: #8e8471;
+            --ink-faint: #5c5546;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Jost', sans-serif;
+            --fs-h1: clamp(2.4rem, 4.6vw, 3.8rem);
+            --gap-sm: 1rem;
+            --gap-md: 2rem;
+            --gap-lg: 4rem;
+            --radius-md: 10px;
+            --radius-lg: 18px;
+            --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.65);
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
+            --transition: 0.45s var(--ease);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-base);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            width: 100%;
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 4vw, 3rem);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 1.8rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: var(--transition);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold) 60%, var(--gold-dim));
+            color: #14110b;
+        }
+        .btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        .btn-ghost { border: 1px solid var(--border-strong); color: var(--ink); background: transparent; }
+        .btn-ghost:hover { background: rgba(201, 169, 97, 0.08); border-color: var(--gold); color: var(--gold-bright); }
+
+        .mist-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: var(--bg-void);
+        }
+        .mist-bg::before, .mist-bg::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            animation: mistDrift 22s ease-in-out infinite alternate;
+        }
+        .mist-bg::before {
+            width: 46vw; height: 46vw;
+            top: -12vw; left: -10vw;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.35), transparent 70%);
+        }
+        .mist-bg::after {
+            width: 40vw; height: 40vw;
+            bottom: -14vw; right: -8vw;
+            background: radial-gradient(circle, rgba(140, 110, 60, 0.28), transparent 70%);
+            animation-delay: -9s;
+        }
+        @keyframes mistDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(3vw, 2vw) scale(1.12); }
+        }
+
+        /* ================================================================
+           HEADER
+           ================================================================ */
+        #site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            padding: 1.5rem 0;
+            transition: var(--transition);
+            background: linear-gradient(to bottom, rgba(10, 9, 8, 0.85), transparent);
+        }
+        #site-header.scrolled {
+            padding: 0.9rem 0;
+            background: rgba(10, 9, 8, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--gap-md);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            letter-spacing: 0.04em;
+            color: var(--ink);
+            flex-shrink: 0;
+        }
+        .logo-mark {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: var(--bg-panel);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .logo-mark img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+            display: block;
+        }
+        .logo-mark .fallback-text {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--gold);
+            display: none;
+        }
+        .logo-mark img.error ~ .fallback-text { display: block; }
+        .logo-mark img.error { display: none; }
+        .logo:hover .logo-mark { transform: rotate(90deg); border-color: var(--gold-bright); }
+        .logo-text strong { color: var(--gold-bright); font-weight: 600; }
+        .logo-text span {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            letter-spacing: 0.32em;
+            color: var(--ink-mute);
+            text-transform: uppercase;
+            margin-top: -2px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 2.4rem;
+        }
+        .main-nav a {
+            font-size: 0.82rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            position: relative;
+            padding: 0.4rem 0;
+            transition: color 0.3s;
+        }
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 1px;
+            width: 0;
+            background: var(--gold);
+            transition: width 0.35s var(--ease);
+        }
+        .main-nav a:hover, .main-nav a.active { color: var(--gold-bright); }
+        .main-nav a:hover::after, .main-nav a.active::after { width: 100%; }
+
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-panel {
+            position: absolute;
+            top: calc(100% + 1.4rem);
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            width: 620px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 1.6rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow-soft);
+            pointer-events: none;
+        }
+        .nav-dropdown:hover .nav-dropdown-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        .nav-dropdown-panel a {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.65rem 0.8rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            text-transform: none;
+            letter-spacing: 0.01em;
+            color: var(--ink-soft);
+        }
+        .nav-dropdown-panel a i { color: var(--gold); width: 16px; font-size: 0.85rem; }
+        .nav-dropdown-panel a:hover { background: rgba(201, 169, 97, 0.08); color: var(--gold-bright); }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.1rem;
+        }
+        .nav-icon-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-soft);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-soft);
+            transition: var(--transition);
+        }
+        .nav-icon-btn:hover { border-color: var(--gold); color: var(--gold-bright); }
+
+        .burger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-soft);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            background: transparent;
+        }
+        .burger span {
+            width: 16px;
+            height: 1px;
+            background: var(--ink);
+            transition: var(--transition);
+        }
+        .burger.open span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+        .burger.open span:nth-child(2) { opacity: 0; }
+        .burger.open span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(360px, 86vw);
+            height: 100vh;
+            background: var(--bg-panel);
+            border-left: 1px solid var(--border-soft);
+            z-index: 950;
+            padding: 6.5rem 2rem 2rem;
+            transition: right 0.5s var(--ease);
+            overflow-y: auto;
+        }
+        .mobile-drawer.open { right: 0; }
+        .mobile-drawer a {
+            display: block;
+            padding: 0.95rem 0;
+            border-bottom: 1px solid var(--border-soft);
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+        }
+        .mobile-drawer .sub-link {
+            padding-left: 1rem;
+            font-size: 0.8rem;
+            color: var(--ink-mute);
+            border-bottom: none;
+            text-transform: none;
+        }
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 940;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .drawer-overlay.open { opacity: 1; visibility: visible; }
+
+        @media (max-width: 900px) {
+            #site-header {
+                padding: calc(0.65rem + env(safe-area-inset-top)) 0 0.65rem;
+                background: rgba(10, 9, 8, 0.72);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border-bottom: 1px solid rgba(201, 169, 97, 0.14);
+            }
+            #site-header.scrolled { padding: calc(0.55rem + env(safe-area-inset-top)) 0 0.55rem; }
+            .nav-wrap { gap: 0.75rem; }
+            .main-nav,
+            .nav-actions .btn-ghost,
+            .nav-actions .dc-header-icon,
+            .nav-actions .dc-lang-switch-mount { display: none !important; }
+            .nav-actions { margin-left: auto; gap: 0; }
+            .burger {
+                display: flex !important;
+                position: relative;
+                z-index: 980;
+                width: 44px;
+                height: 44px;
+                background: rgba(10, 9, 8, 0.58);
+                border-color: rgba(201, 169, 97, 0.45);
+            }
+            .mobile-drawer {
+                width: min(340px, 88vw);
+                padding: calc(5.2rem + env(safe-area-inset-top)) 1.35rem 2rem;
+                background: rgba(18, 15, 11, 0.98);
+                box-shadow: -28px 0 70px rgba(0, 0, 0, 0.42);
+            }
+            .mobile-drawer-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+                margin-bottom: 1rem;
+            }
+            .mobile-drawer-actions a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.45rem;
+                padding: 0.8rem 0.55rem;
+                border: 1px solid rgba(201, 169, 97, 0.28);
+                border-radius: 999px;
+                background: rgba(201, 169, 97, 0.08);
+                font-size: 0.72rem;
+                letter-spacing: 0.08em;
+            }
+            .mobile-drawer-actions a:first-child { grid-column: 1 / -1; }
+        }
+
+        /* ================================================================
+           PAGE HERO
+           ================================================================ */
+        .page-hero {
+            padding: 12rem 0 4rem;
+            text-align: center;
+            position: relative;
+        }
+        .page-hero h1 {
+            font-size: var(--fs-h1);
+            color: var(--ink);
+        }
+        .page-hero p {
+            color: var(--ink-mute);
+            max-width: 600px;
+            margin: 1rem auto 0;
+            font-size: 1.05rem;
+        }
+        .page-hero .breadcrumb {
+            font-size: 0.78rem;
+            color: var(--ink-faint);
+            margin-top: 0.5rem;
+            letter-spacing: 0.06em;
+        }
+        .page-hero .breadcrumb a { color: var(--gold-dim); transition: var(--transition); }
+        .page-hero .breadcrumb a:hover { color: var(--gold-bright); }
+
+        /* ================================================================
+           GALLERY
+           ================================================================ */
+        .gallery-filters {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: var(--gap-md);
+        }
+        .gfilter {
+            padding: 0.55rem 1.3rem;
+            border: 1px solid var(--border-soft);
+            border-radius: 30px;
+            font-size: 0.76rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--ink-mute);
+            transition: var(--transition);
+            cursor: pointer;
+            background: transparent;
+        }
+        .gfilter:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .gfilter.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #14110b;
+            font-weight: 500;
+        }
+
+        .masonry {
+            columns: 4 240px;
+            column-gap: 1.6rem;
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.6rem;
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-panel-2);
+            cursor: zoom-in;
+            transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+            aspect-ratio: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+        }
+        .masonry-item:hover {
+            transform: scale(1.02);
+            z-index: 2;
+            border-color: var(--gold-dim);
+        }
+        .masonry-item .empty-frame {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--ink-faint);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            min-height: 180px;
+        }
+        .masonry-item .empty-frame .icon {
+            font-size: 3rem;
+            opacity: 0.35;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .masonry-item .empty-frame .label {
+            font-size: 0.55rem;
+            color: var(--ink-mute);
+        }
+        .masonry-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.7s var(--ease);
+        }
+        .masonry-item img.loaded {
+            display: block;
+        }
+        .masonry-item img.loaded ~ .empty-frame {
+            display: none;
+        }
+        .masonry-item:hover img.loaded {
+            transform: scale(1.05);
+        }
+        .masonry-item .zoom-ic {
+            position: absolute;
+            top: 0.9rem;
+            right: 0.9rem;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(10, 9, 8, 0.7);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-bright);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 3;
+        }
+        .masonry-item:hover .zoom-ic { opacity: 1; }
+
+        .masonry-item.tall { grid-row: span 2; aspect-ratio: 3/4; }
+        .masonry-item.wide { grid-column: span 2; aspect-ratio: 16/9; }
+
+        .gallery-loading {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--ink-mute);
+            font-size: 0.9rem;
+        }
+        .gallery-loading .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--border-soft);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-error {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--danger);
+            font-size: 0.9rem;
+        }
+        .gallery-error i { font-size: 2.5rem; opacity: 0.3; margin-bottom: 1rem; display: block; }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ============================================================
+           LIGHTBOX
+           ============================================================ */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(16px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s var(--ease), visibility 0.5s var(--ease);
+            padding: 2rem;
+        }
+        #lightbox.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        #lightbox .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            position: relative;
+            animation: zoomIn 0.5s var(--ease);
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.92); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        #lightbox img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-soft);
+        }
+        #lightbox .lightbox-close {
+            position: absolute;
+            top: -3.2rem;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border-soft);
+            background: rgba(10, 9, 8, 0.8);
+            color: var(--ink);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        #lightbox .lightbox-close:hover {
+            border-color: var(--gold);
+            color: var(--gold-bright);
+            transform: rotate(90deg);
+        }
+        #lightbox .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border-soft);
+            background: rgba(10, 9, 8, 0.7);
+            color: var(--ink);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        #lightbox .lightbox-nav:hover {
+            border-color: var(--gold);
+            color: var(--gold-bright);
+            background: rgba(10, 9, 8, 0.9);
+        }
+        #lightbox .lightbox-nav.prev { left: -3.5rem; }
+        #lightbox .lightbox-nav.next { right: -3.5rem; }
+
+        @media (max-width: 900px) {
+            #lightbox .lightbox-nav.prev { left: 0.5rem; }
+            #lightbox .lightbox-nav.next { right: 0.5rem; }
+            #lightbox .lightbox-close { top: 0.5rem; right: 0.5rem; }
+            #lightbox { padding: 1rem; }
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            background: var(--bg-void);
+            border-top: 1px solid var(--border-soft);
+            padding-top: var(--gap-lg);
+            margin-top: var(--gap-xl);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+            gap: var(--gap-lg);
+            padding-bottom: var(--gap-lg);
+        }
+        .footer-brand p {
+            color: var(--ink-mute);
+            font-size: 0.88rem;
+            line-height: 1.8;
+            margin: 1.4rem 0 1.6rem;
+            max-width: 32ch;
+        }
+        .footer-col h5 {
+            font-size: 0.76rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold-bright);
+            margin-bottom: 1.4rem;
+            font-family: var(--font-body);
+            font-weight: 600;
+        }
+        .footer-col ul li { margin-bottom: 0.85rem; }
+        .footer-col ul li a {
+            font-size: 0.86rem;
+            color: var(--ink-mute);
+            transition: var(--transition);
+        }
+        .footer-col ul li a:hover { color: var(--gold-bright); padding-left: 4px; }
+        .footer-hours li {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.84rem;
+            color: var(--ink-mute);
+            margin-bottom: 0.7rem;
+        }
+        .footer-hours li span:last-child { color: var(--ink-soft); }
+        .footer-bottom {
+            border-top: 1px solid var(--border-soft);
+            padding: 1.6rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-bottom p { font-size: 0.78rem; color: var(--ink-faint); }
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.6rem;
+        }
+        .footer-bottom-links a {
+            font-size: 0.78rem;
+            color: var(--ink-faint);
+            transition: color var(--transition);
+        }
+        .footer-bottom-links a:hover { color: var(--gold-bright); }
+        .contact-socials-footer {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.8rem;
+        }
+        .contact-socials-footer a {
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--border-soft);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--ink-mute);
+        }
+        .contact-socials-footer a:hover { border-color: var(--gold); color: var(--gold-bright); transform: translateY(-3px); }
+
+        @media (max-width: 1100px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 2.4rem; }
+            .masonry { columns: 2 160px; }
+            .page-hero { padding: 8rem 0 2rem; }
+        }
+        @media (max-width: 400px) {
+            .masonry { columns: 1 1fr; }
+        }
+
+        .floating-actions {
+            position: fixed;
+            right: 1.6rem;
+            bottom: 1.6rem;
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .fab {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+        .fab-whatsapp {
+            background: #25d366;
+            color: #0c2b17;
+            position: relative;
+        }
+        .fab-whatsapp::before {
+            content: "";
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: rgba(37, 211, 102, 0.35);
+            filter: blur(6px);
+            animation: callPulse 2.2s ease-out infinite;
+            z-index: -1;
+        }
+        @keyframes callPulse {
+            0% { transform: scale(0.85); opacity: 0.7; }
+            70% { transform: scale(1.6); opacity: 0; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .fab-whatsapp:hover { transform: scale(1.08); }
+        .fab-top {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-strong);
+            color: var(--gold);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+        }
+        .fab-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .fab-top:hover { background: var(--gold); color: #14110b; border-color: var(--gold); }
+    </style>
+    <link rel="stylesheet" href="/assets/css/logo-frame.css">
+    <link rel="stylesheet" href="/assets/css/site-features.css">
+</head>
+<body>
+
+    <div class="mist-bg" aria-hidden="true"></div>
+
+    <!-- ============================================================
+    HEADER
+    ============================================================ -->
+    <header id="site-header">
+        <div class="container nav-wrap">
+            <a href="/" class="logo">
+                <span class="logo-mark">
+                    <img 
+                        src="/assets/logo/dar-chakaf-logo.svg" 
+                        alt="Dar Chakaf Logo"
+                        width="34" 
+                        height="34"
+                        style="width:34px;height:34px;object-fit:contain;"
+                        onerror="this.classList.add('error'); this.style.display='none'; this.parentElement.querySelector('.fallback-text').style.display='block';"
+                    />
+                    <span class="fallback-text">D</span>
+                </span>
+                <span class="logo-text">
+                    <strong>Dar Chakaf</strong>
+                    <span>Ameublement &amp; Décoration</span>
+                </span>
+            </a>
+
+            <nav class="main-nav">
+                <a href="/" data-i18n="nav.home">Accueil</a>
+                <div class="nav-dropdown">
+                    <a href="#">Produits <i class="fa-solid fa-chevron-down" style="font-size:0.6rem;"></i></a>
+                    <div class="nav-dropdown-panel" id="navDropdownPanel">
+                        <!-- Rempli dynamiquement -->
+                    </div>
+                </div>
+                <a href="/galerie.html" class="active" data-i18n="nav.gallery">Galerie</a>
+                <a href="/blog.html" data-i18n="nav.blog">Blog</a>
+                <a href="/a-propos.html" data-i18n="nav.about">À propos</a>
+                <a href="/contact.html" data-i18n="nav.contact">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <span class="dc-lang-switch-mount"></span>
+                <a href="/favoris.html" class="dc-header-icon" title="Mes favoris" aria-label="Favoris"><i class="fa-regular fa-heart"></i><span class="dc-badge" data-wishlist-count style="display:none;"></span></a>
+                <a href="/comparateur.html" class="dc-header-icon" title="Comparateur" aria-label="Comparateur"><i class="fa-solid fa-scale-balanced"></i><span class="dc-badge" data-compare-count style="display:none;"></span></a>
+                <a href="/devis.html" class="btn btn-ghost btn-sm">Demander un devis <span data-devis-count style="display:none;">(0)</span></a>
+                <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <nav class="mobile-drawer" id="mobileDrawer">
+        <div class="mobile-drawer-actions">
+            <a href="/devis.html"><i class="fa-regular fa-file-lines"></i> Devis</a>
+            <a href="/favoris.html"><i class="fa-regular fa-heart"></i> Favoris</a>
+            <a href="/comparateur.html"><i class="fa-solid fa-scale-balanced"></i> Comparer</a>
+        </div>
+        <a href="/" data-i18n="nav.home">Accueil</a>
+        <div id="mobileDrawerLinks"></div>
+        <a href="/galerie.html" data-i18n="nav.gallery">Galerie</a>
+        <a href="/blog.html" data-i18n="nav.blog">Blog</a>
+        <a href="/a-propos.html" data-i18n="nav.about">À propos</a>
+        <a href="/contact.html" data-i18n="nav.contact">Contact</a>
+    </nav>
+
+    <!-- ============================================================
+    PAGE HERO
+    ============================================================ -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="eyebrow centered">Galerie</div>
+            <h1>Nos réalisations</h1>
+            <p id="galleryDescription">Une sélection de projets livrés chez nos clients — salons, espaces de réception et intérieurs complets.</p>
+            <div class="breadcrumb">
+                <a href="/" data-i18n="nav.home">Accueil</a> <span style="color:var(--ink-faint);">/</span> Galerie
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    GALLERY — 100% API
+    ============================================================ -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <div class="gallery-filters" id="galleryFilters">
+                <button class="gfilter active" data-filter="all">Tout</button>
+                <!-- Rempli dynamiquement -->
+            </div>
+
+            <div class="masonry" id="masonryGrid">
+                <div class="gallery-loading">
+                    <div class="spinner"></div>
+                    <p>Chargement des images...</p>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top: var(--gap-md);">
+                <p style="color:var(--ink-faint); font-size:0.85rem;" id="galleryCount"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    LIGHTBOX
+    ============================================================ -->
+    <div id="lightbox">
+        <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+        <button class="lightbox-nav prev" id="lightboxPrev"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="lightbox-content">
+            <img id="lightboxImg" src="" alt="Aperçu galerie">
+            <video id="lightboxVideo" controls playsinline webkit-playsinline="true" preload="metadata" style="display:none; max-width:90vw; max-height:80vh;"></video>
+            <div id="lightboxCaption" style="display:none; text-align:center; color:#f4e9d8; margin-top:1rem; max-width:600px;">
+                <div id="lightboxTitre" style="font-family:'Playfair Display', serif; font-size:1.1rem; margin-bottom:0.3rem;"></div>
+                <div id="lightboxDescription" style="font-size:0.9rem; color:#c9bda4; line-height:1.5;"></div>
+            </div>
+        </div>
+        <button class="lightbox-nav next" id="lightboxNext"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <span class="logo-mark">
+                            <img src="/assets/logo/dar-chakaf-logo.svg" alt="Dar Chakaf" width="34" height="34" style="width:34px;height:34px;object-fit:contain;" onerror="this.style.display='none'; this.parentElement.textContent='D';"/>
+                        </span>
+                        <span class="logo-text"><strong>Dar Chakaf</strong><span>Ameublement &amp; Décoration</span></span>
+                    </a>
+                    <p id="footerDescription">Fabricant marocain de mobilier haut de gamme, sur mesure, alliant tradition et modernité depuis 2009.</p>
+                    <div class="contact-socials-footer">
+                        <a href="#" title="Facebook" data-social="facebook" style="display:none"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" title="Instagram" data-social="instagram" style="display:none"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" title="TikTok" data-social="tiktok" style="display:none"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" title="LinkedIn" data-social="linkedin" style="display:none"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/212600000000" data-social="whatsapp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                    <div style="margin-top:20px;">
+                        <h5 style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin-bottom:8px;" data-i18n="footer.newsletter_title">Restez informé(e)</h5>
+                        <p style="font-size:0.85rem;color:var(--ink-mute);margin-bottom:4px;" data-i18n="footer.newsletter_desc">Nouveautés, offres et inspirations déco directement par email.</p>
+                        <form class="dc-newsletter-form" data-newsletter-form>
+                            <input type="email" placeholder="Votre adresse email" data-i18n-placeholder="footer.newsletter_placeholder" required>
+                            <button type="submit"><i class="fa-regular fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h5 data-i18n="footer.products">Produits</h5>
+                    <ul id="footerProducts">
+                        <li><a href="/produits/salons-modernes.html">Salons modernes</a></li>
+                        <li><a href="/produits/salons-traditionnels.html">Salons traditionnels</a></li>
+                        <li><a href="/produits/tables.html">Tables</a></li>
+                        <li><a href="/produits/decorations.html">Décorations</a></li>
+                        <li><a href="/produits/meubles-tv.html">Meubles TV</a></li>
+                        <li><a href="/produits/couloirs.html">Couloirs &amp; Entrées</a></li>
+                        <li><a href="/produits/tissus.html">Tissus &amp; Rideaux</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5 data-i18n="footer.company">Entreprise</h5>
+                    <ul>
+                        <li><a href="/a-propos.html" data-i18n="nav.about">À propos</a></li>
+                        <li><a href="/galerie.html" data-i18n="nav.gallery">Galerie</a></li>
+                        <li><a href="/blog.html" data-i18n="nav.blog">Blog</a></li>
+                        <li><a href="/contact.html" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5 data-i18n="footer.hours">Horaires du showroom</h5>
+                    <ul class="footer-hours">
+                        <li><span>Lun – Ven</span><span>9h00 – 19h00</span></li>
+                        <li><span>Samedi</span><span>10h00 – 18h00</span></li>
+                        <li><span>Dimanche</span><span>Fermé</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Dar Chakaf. Tous droits réservés.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    FLOATING ACTIONS
+    ============================================================ -->
+    <div class="floating-actions">
+        <a href="https://wa.me/212600000000" data-social="whatsapp" class="fab fab-whatsapp" title="WhatsApp" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <button class="fab fab-top" id="backToTop" title="Retour en haut">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- ============================================================
+    SCRIPTS — 100% API
+    ============================================================ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            'use strict';
+
+            var token = localStorage.getItem('adminToken');
+
+            // ============================================================
+            // 1. HEADER SCROLL
+            // ============================================================
+            var header = document.getElementById('site-header');
+            var backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function() {
+                var y = window.scrollY;
+                header.classList.toggle('scrolled', y > 60);
+                backToTop.classList.toggle('show', y > 700);
+            }, { passive: true });
+
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // ============================================================
+            // 2. MOBILE DRAWER
+            // ============================================================
+            var burger = document.getElementById('burgerBtn');
+            var drawer = document.getElementById('mobileDrawer');
+            var overlay = document.getElementById('drawerOverlay');
+
+            function toggleDrawer(force) {
+                var open = typeof force === 'boolean' ? force : !drawer.classList.contains('open');
+                drawer.classList.toggle('open', open);
+                overlay.classList.toggle('open', open);
+                burger.classList.toggle('open', open);
+                document.body.style.overflow = open ? 'hidden' : '';
+            }
+
+            burger.addEventListener('click', function() { toggleDrawer(); });
+            overlay.addEventListener('click', function() { toggleDrawer(false); });
+            drawer.querySelectorAll('a').forEach(function(a) {
+                a.addEventListener('click', function() { toggleDrawer(false); });
+            });
+
+            // ============================================================
+            // 3. ICON MAP
+            // ============================================================
+            var iconMap = {
+                'salons-modernes': 'fa-couch',
+                'salons-traditionnels': 'fa-mosque',
+                'tables': 'fa-table',
+                'decorations': 'fa-vector-square',
+                'meubles-tv': 'fa-tv',
+                'couloirs': 'fa-door-open',
+                'tissus': 'fa-scroll'
+            };
+
+            // ============================================================
+            // 4. LOAD CATEGORIES FOR FILTERS + NAV + FOOTER
+            // ============================================================
+            function loadCategories() {
+                fetch('/api/categories')
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (!res.success || !Array.isArray(res.data)) return;
+                        var cats = res.data;
+
+                        // Nav dropdown
+                        var navDropdown = document.getElementById('navDropdownPanel');
+                        if (navDropdown) {
+                            navDropdown.innerHTML = '';
+                            cats.forEach(function(cat) {
+                                var slug = cat.slug || cat.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                                var icon = cat.icone || iconMap[slug] || 'fa-cube';
+                                var a = document.createElement('a');
+                                a.href = '/produits/' + slug + '.html';
+                                a.innerHTML = '<i class="fa-solid ' + icon + '"></i> ' + cat.nom;
+                                navDropdown.appendChild(a);
+                            });
+                            var allLink = document.createElement('a');
+                            allLink.href = '/galerie.html';
+                            allLink.innerHTML = '<i class="fa-solid fa-images"></i> Toute la galerie';
+                            navDropdown.appendChild(allLink);
+                        }
+
+                        // Mobile drawer
+                        var mobileLinks = document.getElementById('mobileDrawerLinks');
+                        if (mobileLinks) {
+                            mobileLinks.innerHTML = '';
+                            cats.forEach(function(cat) {
+                                var slug = cat.slug || cat.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                                var a = document.createElement('a');
+                                a.className = 'sub-link';
+                                a.href = '/produits/' + slug + '.html';
+                                a.textContent = '— ' + cat.nom;
+                                mobileLinks.appendChild(a);
+                            });
+                            var allLinkMobile = document.createElement('a');
+                            allLinkMobile.className = 'sub-link';
+                            allLinkMobile.href = '/galerie.html';
+                            allLinkMobile.textContent = '— Toute la galerie';
+                            mobileLinks.appendChild(allLinkMobile);
+                        }
+
+                        // Gallery filters
+                        var filtersContainer = document.getElementById('galleryFilters');
+                        if (filtersContainer) {
+                            var html = '<button class="gfilter active" data-filter="all">Tout</button>';
+                            cats.forEach(function(cat) {
+                                var slug = cat.slug || cat.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                                html += '<button class="gfilter" data-filter="' + slug + '">' + cat.nom + '</button>';
+                            });
+                            filtersContainer.innerHTML = html;
+
+                            // Filter logic
+                            filtersContainer.querySelectorAll('.gfilter').forEach(function(btn) {
+                                btn.addEventListener('click', function() {
+                                    filtersContainer.querySelectorAll('.gfilter').forEach(function(b) {
+                                        b.classList.remove('active');
+                                    });
+                                    btn.classList.add('active');
+                                    var f = btn.getAttribute('data-filter');
+                                    loadGallery(f);
+                                });
+                            });
+                        }
+                    })
+                    .catch(function(e) { console.warn('Erreur chargement catégories:', e); });
+            }
+
+            loadCategories();
+
+            // ============================================================
+            // 5. LOAD GALLERY IMAGES — 100% API, ZERO FAKE
+            // ============================================================
+            var allImages = [];
+            var currentImageIndex = 0;
+
+            function loadGallery(filter) {
+                var grid = document.getElementById('masonryGrid');
+                grid.innerHTML = '<div class="gallery-loading"><div class="spinner"></div><p>Chargement des images...</p></div>';
+
+                var url = '/api/galerie?limit=100';
+                if (filter && filter !== 'all') {
+                    url += '&category=' + filter;
+                }
+
+                Promise.all([
+                    fetch(url, { headers: token ? { 'Authorization': 'Bearer ' + token } : {} }).then(function(r) { return r.json(); }),
+                    fetch('/api/videos?limit=100').then(function(r) { return r.json(); }).catch(function() { return { success: false, data: [] }; })
+                ])
+                .then(function(results) {
+                    var res = results[0];
+                    var videosRes = results[1];
+                    var images = (res && res.success && Array.isArray(res.data)) ? res.data : [];
+                    var videos = (videosRes && videosRes.success && Array.isArray(videosRes.data)) ? videosRes.data : [];
+                    videos = videos.map(function(v) {
+                        v.type = 'video';
+                        if (filter && filter !== 'all' && v.categorie_slug !== filter) return null;
+                        return v;
+                    }).filter(Boolean);
+
+                    if (images.length > 0 || videos.length > 0) {
+                        // Les vidéos d'abord (plus engageantes), puis les photos.
+                        allImages = videos.concat(images);
+                        renderGallery(allImages);
+                        var countLabel = allImages.length + (allImages.length > 1 ? ' médias' : ' média');
+                        document.getElementById('galleryCount').textContent = countLabel;
+                        document.getElementById('galleryDescription').textContent = 
+                            'Une sélection de ' + allImages.length + ' réalisations — salons, espaces de réception et intérieurs complets.';
+                    } else {
+                        grid.innerHTML = `
+                            <div class="gallery-error">
+                                <i class="fa-regular fa-image"></i>
+                                <p>Aucune image trouvée</p>
+                                <p style="font-size:0.8rem;color:var(--ink-faint);">Ajoutez des images via l'administration</p>
+                            </div>
+                        `;
+                        document.getElementById('galleryCount').textContent = '0 image';
+                    }
+                })
+                .catch(function(err) {
+                    console.error('Erreur chargement galerie:', err);
+                    grid.innerHTML = `
+                        <div class="gallery-error">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <p>Erreur de chargement</p>
+                            <p style="font-size:0.8rem;color:var(--ink-faint);">Vérifiez que le serveur est en marche</p>
+                        </div>
+                    `;
+                    document.getElementById('galleryCount').textContent = 'Erreur';
+                });
+            }
+
+            function renderGallery(images) {
+                var grid = document.getElementById('masonryGrid');
+                if (!images || images.length === 0) {
+                    grid.innerHTML = `
+                        <div class="gallery-error">
+                            <i class="fa-regular fa-image"></i>
+                            <p>Aucune image trouvée</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                var html = '';
+                images.forEach(function(img, index) {
+                    var sizeClass = '';
+                    if (index % 5 === 0) sizeClass = 'tall';
+                    if (index % 7 === 0) sizeClass = 'wide';
+
+                    var isVideo = img.type === 'video';
+                    var mediaHtml = '';
+                    if (isVideo && img.url) {
+                        // Miniature JPEG capturée à l'upload (fiable partout) si
+                        // dispo, sinon on retombe sur l'ancien aperçu généré par
+                        // le navigateur (peut rester noir avec le HEVC iPhone).
+                        var galPosterUrl = img.posterUrl || img.poster_url;
+                        mediaHtml = (galPosterUrl
+                                ? '<img src="' + galPosterUrl + '" alt="' + (img.titre || 'Vidéo') + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />'
+                                : '<video src="' + img.url + '#t=0.5" muted preload="metadata" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></video>') +
+                            '<div class="empty-frame" style="display:none;"><span class="icon">🎬</span><span>' + (img.titre || 'Vidéo introuvable') + '</span></div>' +
+                            '<span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.2); color:#fff; font-size:2rem; pointer-events:none;"><i class="fa-solid fa-circle-play"></i></span>';
+                    } else if (img.url) {
+                        mediaHtml = '<img src="' + img.url + '" alt="' + (img.titre || 'Image') + '" loading="lazy" onload="this.classList.add(\'loaded\')" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';" />' +
+                            '<div class="empty-frame" style="display:none;"><span class="icon">🖼️</span><span>' + (img.titre || 'Image introuvable') + '</span><span class="label">' + (img.categorie_nom || 'Collection') + '</span></div>';
+                    } else {
+                        mediaHtml = `
+                            <div class="empty-frame">
+                                <span class="icon">🖼️</span>
+                                <span>${img.titre || 'Image sans URL'}</span>
+                                <span class="label">${img.categorie_nom || 'Collection'}</span>
+                            </div>
+                        `;
+                    }
+
+                    html += `
+                        <div class="masonry-item ${sizeClass}" data-cat="${img.categorie_slug || ''}" data-index="${index}" style="position:relative;">
+                            ${mediaHtml}
+                            <span class="zoom-ic"><i class="fa-solid ${isVideo ? 'fa-expand' : 'fa-magnifying-glass'}"></i></span>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = html;
+
+                // Sécurité : certaines images (ex: photo envoyée depuis l'appareil, en base64)
+                // sont déjà chargées au moment de l'insertion dans le DOM et l'événement
+                // "onload" peut être manqué — on les révèle quand même explicitement.
+                grid.querySelectorAll('img').forEach(function(im) {
+                    if (im.complete && im.naturalWidth > 0) im.classList.add('loaded');
+                });
+
+                // Lightbox click
+                grid.querySelectorAll('.masonry-item').forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        var index = parseInt(this.dataset.index);
+                        if (!isNaN(index) && allImages[index]) {
+                            openLightbox(index);
+                        }
+                    });
+                });
+            }
+
+            // ============================================================
+            // 6. LIGHTBOX
+            // ============================================================
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightboxImg');
+            var lightboxVideo = document.getElementById('lightboxVideo');
+            var lightboxCaption = document.getElementById('lightboxCaption');
+            var lightboxTitre = document.getElementById('lightboxTitre');
+            var lightboxDescription = document.getElementById('lightboxDescription');
+
+            function openLightbox(index) {
+                currentImageIndex = index;
+                var img = allImages[index];
+                if (!img) return;
+
+                if (img.type === 'video') {
+                    lightboxImg.style.display = 'none';
+                    lightboxImg.src = '';
+                    lightboxVideo.style.display = 'block';
+                    lightboxVideo.src = img.url || '';
+                    var lbPosterUrl = img.posterUrl || img.poster_url;
+                    if (lbPosterUrl) {
+                        lightboxVideo.setAttribute('poster', lbPosterUrl);
+                    } else {
+                        lightboxVideo.removeAttribute('poster');
+                    }
+                    lightboxVideo.load();
+                    var lbPlayPromise = lightboxVideo.play();
+                    if (lbPlayPromise && typeof lbPlayPromise.catch === 'function') {
+                        lbPlayPromise.catch(function() {
+                            lightboxVideo.muted = true;
+                            lightboxVideo.play().catch(function() {});
+                        });
+                    }
+                } else {
+                    lightboxVideo.pause();
+                    lightboxVideo.style.display = 'none';
+                    lightboxVideo.removeAttribute('src');
+                    lightboxImg.style.display = 'block';
+                    lightboxImg.src = img.url || '/assets/images/placeholder.jpg';
+                    lightboxImg.alt = img.titre || 'Image';
+                }
+
+                if (img.titre || img.description) {
+                    lightboxTitre.textContent = img.titre || '';
+                    lightboxDescription.textContent = img.description || '';
+                    lightboxCaption.style.display = 'block';
+                } else {
+                    lightboxCaption.style.display = 'none';
+                }
+
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('open');
+                lightboxVideo.pause();
+                document.body.style.overflow = '';
+            }
+
+            function navigateLightbox(direction) {
+                var newIndex = currentImageIndex + direction;
+                if (newIndex < 0) newIndex = allImages.length - 1;
+                if (newIndex >= allImages.length) newIndex = 0;
+                openLightbox(newIndex);
+            }
+
+            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+            document.getElementById('lightboxPrev').addEventListener('click', function(e) {
+                e.stopPropagation();
+                navigateLightbox(-1);
+            });
+            document.getElementById('lightboxNext').addEventListener('click', function(e) {
+                e.stopPropagation();
+                navigateLightbox(1);
+            });
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            });
+
+            // ============================================================
+            // 7. LOAD SITE INFO FOR FOOTER
+            // ============================================================
+            // Synced live from Admin > Paramètres. Every icon/button with
+            // data-social="facebook|instagram|tiktok|whatsapp" on the page gets
+            // its href updated here. If a link isn't set in admin, the icon is
+            // hidden instead of pointing nowhere ("#").
+            function applySocialLinks(info) {
+                if (!info) return;
+                var waDigits = info.whatsapp ? info.whatsapp.replace(/[^0-9]/g, '') : '';
+                // Maroc : un numéro local commence par 0 (ex: 0717178872).
+                // wa.me a besoin du format international sans le 0 (212717178872).
+                if (waDigits && waDigits.charAt(0) === '0') waDigits = '212' + waDigits.substring(1);
+                var waLink = waDigits ? ('https://wa.me/' + waDigits) : null;
+                function sync(selector, url) {
+                    document.querySelectorAll(selector).forEach(function(a) {
+                        if (url) {
+                            a.href = url;
+                            a.style.display = '';
+                        } else {
+                            a.style.display = 'none';
+                        }
+                    });
+                }
+                sync('[data-social="whatsapp"]', waLink);
+                sync('[data-social="facebook"]', info.facebook);
+                sync('[data-social="instagram"]', info.instagram);
+                sync('[data-social="tiktok"]', info.tiktok);
+                sync('[data-social="linkedin"]', info.linkedin);
+            }
+
+            function loadSiteInfo() {
+                fetch('/api/parametres')
+                    .then(function(r) { return r.json(); })
+                    .then(function(res) {
+                        if (res && res.success && res.data) {
+                            var info = res.data;
+                            if (info.description) {
+                                var descEl = document.getElementById('footerDescription');
+                                if (descEl) descEl.textContent = info.description;
+                            }
+                            applySocialLinks(info);
+                        }
+                    })
+                    .catch(function() {});
+            }
+            loadSiteInfo();
+
+            // ============================================================
+            // 8. INIT
+            // ============================================================
+            loadGallery('all');
+
+            console.log('🚀 Dar Chakaf — Galerie (100% API, zéro fake)');
+
+        });
+    </script>
+
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/site-features.js"></script>
+    <script src="/assets/js/logo-sync.js" defer></script>
+</body>
+</html>
