@@ -725,6 +725,17 @@ ${allUrls.map((u) => `  <url>
     }
 });
 
+// Avis clients (la page d'accueil appelle /api/avis)
+app.all('/api/avis', async (req, res) => {
+    try {
+        const handler = require('./api/avis/index');
+        await handler(req, res);
+    } catch (error) {
+        console.error('❌ Erreur avis:', error);
+        res.status(500).json({ success: false, message: 'Erreur interne du serveur' });
+    }
+});
+
 // Logs
 app.get('/api/logs', async (req, res) => {
     try {
